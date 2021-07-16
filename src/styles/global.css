@@ -2,38 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol';
+  overscroll-behavior-y: none;
+  background: var(--colors-bg);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+button {
+  cursor: default;
 }
 
-* {
-  box-sizing: border-box;
-  outline: none;
-  -webkit-font-smoothing: antialiased;
-  /* user-select: none; 
-} 
-
-.focus-ring {
-  box-shadow: 0 0 0 1px rgb(50 151 211 / 30%), 0 1px 1px 0 rgb(0 0 0 / 7%),
-    0 0 0 4px rgb(50 151 211 / 30%);
-}
-
-*/
-
-body {
-  font-family: 'Inter', sans-serif;
-}
-
-body > * {
-  margin-right: 20px;
+[type='text'],
+[type='email'],
+[type='url'],
+[type='password'],
+[type='number'],
+[type='date'],
+[type='datetime-local'],
+[type='month'],
+[type='search'],
+[type='tel'],
+[type='time'],
+[type='week'],
+[multiple],
+textarea,
+select {
+  appearance: none;
+  /* background-color: #fff; */
 }
