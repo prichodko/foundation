@@ -33,11 +33,11 @@ type Props = ButtonProps | LinkProps
 
 const Button = (props: Props, ref: Ref<HTMLButtonElement>) => {
   if ('href' in props) {
-    const { href, children, external, ...buttonProps } = props
+    const { href, children, external, ...linkProps } = props
 
     return (
       <Link href={href} external={external}>
-        <BaseButton as="a" {...buttonProps}>
+        <BaseButton as="a" {...linkProps}>
           {children}
         </BaseButton>
       </Link>
