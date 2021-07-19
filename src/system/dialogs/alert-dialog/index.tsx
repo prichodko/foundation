@@ -28,6 +28,7 @@ interface Props {
   actionLabel?: string
   action: () => void | Promise<void>
   onCancel?: () => void
+  variant?: 'danger'
 }
 
 const AlertDialog = (props: Props) => {
@@ -38,6 +39,7 @@ const AlertDialog = (props: Props) => {
     actionLabel = 'Confirm',
     onCancel,
     action,
+    variant,
   } = props
 
   const state = useDialogState()
@@ -82,7 +84,7 @@ const AlertDialog = (props: Props) => {
           >
             {cancelLabel}
           </Button>
-          <Button onPress={handleAction} loading={loading}>
+          <Button variant={variant} onPress={handleAction} loading={loading}>
             {actionLabel}
           </Button>
         </Footer>
