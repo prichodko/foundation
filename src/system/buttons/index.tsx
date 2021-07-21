@@ -1,2 +1,2 @@
 export { Button } from './button'
-export { ButtonPrimitive } from './button-primitive'
+export { ButtonBase } from './button-base'

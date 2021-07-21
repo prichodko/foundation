@@ -1,8 +1,8 @@
 import { styled } from 'stitches.config'
 
-import { ButtonPrimitive } from '../button-primitive'
+import { ButtonBase } from '../button-base'
 
-export const BaseButton = styled(ButtonPrimitive, {
+export const BaseButton = styled(ButtonBase, {
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',

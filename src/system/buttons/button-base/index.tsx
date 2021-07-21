@@ -7,7 +7,7 @@ interface Props extends AriaButtonProps {
   className?: string
 }
 
-const ButtonPrimitive = (props: Props, ref: Ref<HTMLButtonElement>) => {
+const ButtonBase = (props: Props, ref: Ref<HTMLButtonElement>) => {
   const domRef = useRef<HTMLButtonElement>(null)
 
   const { buttonProps } = useButton({ ...props }, domRef)
@@ -21,6 +21,6 @@ const ButtonPrimitive = (props: Props, ref: Ref<HTMLButtonElement>) => {
   )
 }
 
-const _ButtonPrimitive = forwardRef(ButtonPrimitive)
-export { _ButtonPrimitive as ButtonPrimitive }
-export type { Props as ButtonPrimitiveProps }
+const _ButtonBase = forwardRef(ButtonBase)
+export { _ButtonBase as ButtonBase }
+export type { Props as ButtonBaseProps }
