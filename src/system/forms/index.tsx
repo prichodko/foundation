@@ -50,15 +50,15 @@ const Form = <Values extends {}>(props: Props<Values>) => {
   )
 }
 
-interface FieldProps {
+export interface FormFieldProps {
   name?: string
-  rules: UseControllerProps['rules']
+  rules?: UseControllerProps['rules']
 }
 
 const useField = ({
   name,
   rules,
-}: FieldProps): Partial<UseControllerReturn> => {
+}: FormFieldProps): Partial<UseControllerReturn> => {
   if (!name) {
     return {}
   }
