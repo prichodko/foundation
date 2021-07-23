@@ -1,6 +1,6 @@
 import { styled } from 'stitches.config'
 
-import { InputBase } from './input-base'
+import { Input as InputBase } from '../input'
 
 export const Input = styled(InputBase, {
   display: 'block',
@@ -45,12 +45,4 @@ export const Input = styled(InputBase, {
     borderColor: '$gray6',
     placeholder: '$gray9',
   },
-})
-
-export const Error = styled('span', {
-  display: 'flex',
-  fontSize: '$small',
-  color: '$red11',
-  marginTop: '$1',
-  marginLeft: '$1',
 })
