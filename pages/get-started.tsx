@@ -1,3 +1,3 @@
-import { GetStarted } from '~/pages/get-started'
+import { GetStartedPage } from '~/pages/get-started'
 
-export default GetStarted
+export default GetStartedPage

@@ -1,3 +1,3 @@
-import { Login } from '~/pages/login'
+import { LoginPage } from '~/pages/login'
 
-export default Login
+export default LoginPage

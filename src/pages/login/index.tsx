@@ -1,3 +1,5 @@
+import { NextPage } from 'next'
+
 import { Link } from '~/components/link'
 import { Button } from '~/system/buttons'
 import { Form, SubmitHandler } from '~/system/forms'
@@ -8,7 +10,7 @@ interface FormValues {
   password: string
 }
 
-export const Login = () => {
+export const LoginPage: NextPage = () => {
   const handleSubmit: SubmitHandler<FormValues> = async values => {
     console.log(values)
     return new Promise(resolve => setTimeout(resolve, 2000))
@@ -32,6 +34,7 @@ export const Login = () => {
           <div className="grid gap-3 mb-6">
             <TextInput
               name="email"
+              label="Email"
               placeholder="Email"
               autoComplete="username"
               rules={{ required: true, validate: value => !!value.trim() }}
@@ -39,6 +42,7 @@ export const Login = () => {
             <TextInput
               name="password"
               type="password"
+              label="Password"
               placeholder="Password"
               autoComplete="current-password"
               rules={{ required: true }}
