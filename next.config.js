@@ -1,18 +1,15 @@
 /**
- * @type {import('next/dist/next-server/server/config-shared').NextConfig}
+ * @type {import('next/dist/server/config-shared').NextConfig}
  */
+
 const config = {
   reactStrictMode: true,
   poweredByHeader: false,
-  devIndicators: {
-    // autoPrerender: false,
+  eslint: {
+    dirs: ['pages', 'src'],
   },
-  experimental: {
-    // profiling: false,
-    // reactMode: 'legacy',
-    // stats: false,
-  },
-  future: {},
+  // future: {},
+  // experimental: {},
 }
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
