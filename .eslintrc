@@ -1,3 +1,42 @@
 {
-  "extends": ["next", "next/core-web-vitals"]
+  "root": true,
+
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    // "plugin:@typescript-eslint/recommended",
+    "next",
+    "next/core-web-vitals",
+    "prettier"
+  ],
+
+  "rules": {
+    // runtime errors
+    "import/no-unresolved": 2,
+    "import/named": 2,
+    "import/namespace": 2,
+    "import/default": 2,
+    "import/export": 2,
+
+    // red flags (thus, warnings)
+    "import/no-named-as-default": 1,
+    "import/no-named-as-default-member": 1,
+    "import/no-duplicates": 1,
+    "import/order": [
+      2,
+      {
+        "pathGroups": [
+          {
+            "pattern": "~/**",
+            "group": "external"
+          }
+        ]
+      }
+    ],
+
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/consistent-type-imports": [
+      1,
+      { "prefer": "type-imports" }
+    ]
+  }
 }

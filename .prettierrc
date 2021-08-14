@@ -1,7 +1,5 @@
 {
   "semi": false,
   "singleQuote": true,
-  "arrowParens": "avoid",
-  "importOrder": ["^~/(.*)$", "^[./]"],
-  "importOrderSeparation": true
+  "arrowParens": "avoid"
 }
