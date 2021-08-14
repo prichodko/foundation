@@ -9,6 +9,7 @@
     "lint": "next lint",
     "format": "prettier --write '{pages,src}/**/*.{ts,tsx,css}'",
     "type-check": "tsc",
+    "test:e2e": "playwright test",
     "analyze": "ANALYZE=true yarn build",
     "prepare": "husky install"
   },
@@ -63,6 +64,7 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^11.0.1",
     "@trivago/prettier-plugin-sort-imports": "^2.0.2",
+    "@playwright/test": "^1.14.0",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/node": "^16.4.1",
     "@types/react": "^17.0.14",
