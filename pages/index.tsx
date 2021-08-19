@@ -1,3 +1,3 @@
-import { IndexPage } from '~/pages/index'
+import { Homepage } from '~/pages/homepage/index'
 
-export default IndexPage
+export default Homepage
