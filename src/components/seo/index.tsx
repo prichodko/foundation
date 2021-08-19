@@ -3,11 +3,11 @@ import Head from 'next/head'
 interface Props {
   title: string
   description: string
-  image: string
+  imageSrc?: string
 }
 
 export const SEO = (props: Props) => {
-  const { title, description, image } = props
+  const { title, description, imageSrc } = props
 
   return (
     <Head>
@@ -19,13 +19,13 @@ export const SEO = (props: Props) => {
       <meta property="og:url" content="https://example.com" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
+      {imageSrc && <meta property="og:image" content={imageSrc} />}
 
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content="https://example.com" />
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={image} />
+      {imageSrc && <meta property="twitter:image" content={imageSrc} />}
     </Head>
   )
 }
