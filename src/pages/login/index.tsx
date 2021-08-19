@@ -1,8 +1,9 @@
-import { NextPage } from 'next'
+import type { NextPage } from 'next'
 
 import { Link } from '~/components/link'
 import { Button } from '~/system/buttons'
-import { Form, SubmitHandler } from '~/system/forms'
+import type { SubmitHandler } from '~/system/forms'
+import { Form } from '~/system/forms'
 import { TextInput } from '~/system/inputs/text-input'
 
 interface FormValues {
