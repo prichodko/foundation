@@ -1,4 +1,5 @@
 import * as MenuPrimitive from '@radix-ui/react-dropdown-menu'
+
 import { styled } from 'stitches.config'
 
 export const Content = styled(MenuPrimitive.Content, {
@@ -25,8 +26,8 @@ export const Item = styled(MenuPrimitive.Item, {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
-  fontSize: 13,
-  padding: '8px 12px',
+  fontSize: '$small',
+  padding: '8px 10px',
   borderRadius: 6,
   cursor: 'default',
   outline: 'none',

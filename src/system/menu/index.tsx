@@ -1,3 +1,6 @@
+import type { ReactElement } from 'react'
+import { cloneElement, useState } from 'react'
+
 import { Root, Trigger } from '@radix-ui/react-dropdown-menu'
 import type { DropdownMenuContentOwnProps } from '@radix-ui/react-dropdown-menu'
 import {
@@ -12,7 +15,6 @@ import type {
   MenuCheckboxItemOwnProps,
 } from '@radix-ui/react-menu'
 import { Slot } from '@radix-ui/react-slot'
-import { cloneElement, ReactElement, useState } from 'react'
 
 import {
   Content,
