@@ -1,7 +1,8 @@
+import type { Ref, InputHTMLAttributes } from 'react'
+import { forwardRef, useRef } from 'react'
+
 import { composeRefs } from '@radix-ui/react-compose-refs'
 import { useTextField } from '@react-aria/textfield'
-import { forwardRef, Ref } from 'react'
-import { InputHTMLAttributes, useRef } from 'react'
 
 interface Props {
   name?: string
@@ -15,7 +16,8 @@ interface Props {
   invalid?: boolean
   className?: string
   id?: string
-  autoComplete?: string // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautocomplete
+  /* https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautocomplete */
+  autoComplete?: string
   autoFocus?: boolean
   maxLength?: number
   minLength?: number

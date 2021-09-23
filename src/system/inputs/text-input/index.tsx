@@ -1,11 +1,16 @@
+import type { Ref } from 'react'
+import { forwardRef } from 'react'
+
 import { composeRefs } from '@radix-ui/react-compose-refs'
 import { useId } from '@radix-ui/react-id'
-import { forwardRef, Ref } from 'react'
 
-import { Field, FieldProps } from '~/system/field'
+import type { FieldProps } from '~/system/field'
+import { Field } from '~/system/field'
+import type { FormFieldProps } from '~/system/forms'
+import { useField } from '~/system/forms'
 
-import { FormFieldProps, useField } from '../../forms'
 import type { InputProps } from '../input'
+
 import { Input } from './style'
 
 interface Props extends InputProps, FieldProps, FormFieldProps {}
@@ -22,7 +27,7 @@ const TextInput = (props: Props, ref: Ref<HTMLInputElement>) => {
   const errorMessage = fieldState?.error?.message ?? error
 
   return (
-    <Field id={inputId} label={label} error={errorMessage}>
+    <Field htmlFor={inputId} label={label} error={errorMessage}>
       <Input
         {...props}
         {...field}
