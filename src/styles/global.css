@@ -2,13 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  overscroll-behavior-y: none;
-  background: var(--colors-bg);
+@layer base {
+  button,
+  [role='button'] {
+    cursor: default;
+  }
 }
 
-button {
-  cursor: default;
+html,
+body {
+  /* Load  fonts */
+  font-family: var(--fonts-sans);
+
+  /* Make type rendering look crisper */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Enable kerning and optional ligatures */
+  text-rendering: optimizeLegibility;
+
+  /* Deactivate auto-enlargement of small text in Safari */
+  text-size-adjust: 100%;
+}
+
+/**
+   * Form elements render using OS defaults,
+   * so font-family inheritance must be specifically declared
+   */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+}
+
+body {
+  /* overscroll-behavior-y: none; */
+  background: var(--colors-bg);
 }
 
 [type='text'],
@@ -28,4 +59,8 @@ textarea,
 select {
   appearance: none;
   /* background-color: #fff; */
+}
+
+:focus:not(.focus-visible) {
+  outline: none;
 }
