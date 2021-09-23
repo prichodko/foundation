@@ -1,14 +1,19 @@
+import { forwardRef } from 'react'
+import type { Ref } from 'react'
+
+import { composeRefs } from '@radix-ui/react-compose-refs'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { useId } from '@radix-ui/react-id'
-import React from 'react'
-import { ReactElement } from 'react'
 
-import { Field, FieldProps } from '../field'
-import { FormFieldProps, useField } from '../forms'
+import type { FieldProps } from '../field'
+import { Field } from '../field'
+import type { FormFieldProps } from '../forms'
+import { useField } from '../forms'
+
 import { Trigger } from './style'
 
 interface Props extends FieldProps, FormFieldProps {
-  children: ReactElement[]
+  children: React.ReactElement[]
   value?: string
   defaultValue?: string
   onChange?: (value: string) => void
@@ -20,7 +25,7 @@ interface Props extends FieldProps, FormFieldProps {
   error?: string
 }
 
-const Select = (props: Props) => {
+const Select = (props: Props, ref: Ref<HTMLSelectElement>) => {
   const { children, value, placeholder, label, error } = props
 
   const { field, fieldState, formState } = useField(props)
@@ -32,28 +37,28 @@ const Select = (props: Props) => {
   const errorMessage = fieldState?.error?.message ?? error
 
   return (
-    <Field id={triggerId} label={label} error={errorMessage}>
-      <>
-        <Trigger
-          {...field}
-          id={triggerId}
-          aria-invalid={invalid}
-          data-empty={field?.value === '' || value === ''}
-          disabled={disabled}
-        >
-          {placeholder && (
-            <option value="" hidden disabled>
-              {placeholder}
-            </option>
-          )}
-          {children}
-        </Trigger>
-        <ChevronDownIcon
-          className="h-3.5 w-3.5 absolute top-1/2 -translate-y-1/2 right-3 pointer-events-none"
-          aria-hidden="true"
-          focusable={false}
-        />
-      </>
+    <Field htmlFor={triggerId} label={label} error={errorMessage}>
+      <Trigger
+        ref={composeRefs(ref, field?.ref)}
+        value={value ?? field?.value}
+        {...field}
+        id={triggerId}
+        aria-invalid={invalid}
+        data-empty={field?.value === '' || value === ''}
+        disabled={disabled}
+      >
+        {placeholder && (
+          <option value="" hidden disabled>
+            {placeholder}
+          </option>
+        )}
+        {children}
+      </Trigger>
+      <ChevronDownIcon
+        className="h-3.5 w-3.5 absolute top-[11px] right-3 pointer-events-none"
+        aria-hidden
+        focusable={false}
+      />
     </Field>
   )
 }
@@ -68,7 +73,7 @@ const SelectOption = (props: OptionProps) => {
   return <option value={value}>{children}</option>
 }
 
-Select.Option = SelectOption
+const _Select = Object.assign(forwardRef(Select), { Option: SelectOption })
 
-export { Select }
+export { _Select as Select }
 export type { Props as SelectProps }
