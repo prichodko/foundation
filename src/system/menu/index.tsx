@@ -2,19 +2,18 @@ import type { ReactElement } from 'react'
 import { cloneElement, useState } from 'react'
 
 import { Root, Trigger } from '@radix-ui/react-dropdown-menu'
-import type { DropdownMenuContentOwnProps } from '@radix-ui/react-dropdown-menu'
+import type { DropdownMenuContentProps } from '@radix-ui/react-dropdown-menu'
 import {
   DotFilledIcon,
   CheckIcon,
   ChevronRightIcon,
 } from '@radix-ui/react-icons'
 import type {
-  MenuItemOwnProps,
-  MenuRadioItemOwnProps,
-  MenuRadioGroupOwnProps,
-  MenuCheckboxItemOwnProps,
+  MenuItemProps,
+  MenuRadioItemProps,
+  MenuRadioGroupProps,
+  MenuCheckboxItemProps,
 } from '@radix-ui/react-menu'
-import { Slot } from '@radix-ui/react-slot'
 
 import {
   Content,
@@ -43,7 +42,7 @@ const MenuTrigger = (props: Props) => {
 
   return (
     <Root open={open} onOpenChange={setOpen}>
-      <Trigger as={Slot}>
+      <Trigger asChild>
         {cloneElement(trigger, { onPress: () => setOpen(true) })}
       </Trigger>
       {content}
@@ -51,7 +50,7 @@ const MenuTrigger = (props: Props) => {
   )
 }
 
-interface MenuProps extends DropdownMenuContentOwnProps {
+interface MenuProps extends DropdownMenuContentProps {
   children: ReactElement[]
 }
 
@@ -74,28 +73,28 @@ const Submenu = (props: SubmenuProps) => {
 
   return (
     <Root>
-      <Item as={TriggerItem}>
+      <TriggerItem>
         {label}
         <RightSlot>
           <ChevronRightIcon />
         </RightSlot>
-      </Item>
+      </TriggerItem>
       <Menu sideOffset={10} {...menuProps} />
     </Root>
   )
 }
 
-interface MenuItemProps extends MenuItemOwnProps {
+interface ItemProps extends MenuItemProps {
   children: string
 }
 
-const MenuItem = (props: MenuItemProps) => {
+const MenuItem = (props: ItemProps) => {
   const { children, ...itemProps } = props
 
   return <Item {...itemProps}>{children}</Item>
 }
 
-interface CheckboxItemProps extends MenuCheckboxItemOwnProps {
+interface CheckboxItemProps extends MenuCheckboxItemProps {
   children: string
 }
 
@@ -103,16 +102,16 @@ const MenuCheckboxItem = (props: CheckboxItemProps) => {
   const { children, ...checkboxItemProps } = props
 
   return (
-    <Item as={CheckboxItem} {...checkboxItemProps}>
+    <CheckboxItem {...checkboxItemProps}>
       {children}
       <ItemIndicator>
         <CheckIcon />
       </ItemIndicator>
-    </Item>
+    </CheckboxItem>
   )
 }
 
-interface RadioGroupProps extends MenuRadioGroupOwnProps {
+interface RadioGroupProps extends MenuRadioGroupProps {
   children: ReactElement[]
 }
 
@@ -121,7 +120,7 @@ const MenuRadioGroup = (props: RadioGroupProps) => {
   return <RadioGroup {...radioGroupProps}>{children}</RadioGroup>
 }
 
-interface RadioItemProps extends MenuRadioItemOwnProps {
+interface RadioItemProps extends MenuRadioItemProps {
   children: string
 }
 
@@ -129,12 +128,12 @@ const MenuRadioItem = (props: RadioItemProps) => {
   const { children, ...radioItemProps } = props
 
   return (
-    <Item as={RadioItem} {...radioItemProps}>
+    <RadioItem {...radioItemProps}>
       {children}
       <ItemIndicator>
         <DotFilledIcon />
       </ItemIndicator>
-    </Item>
+    </RadioItem>
   )
 }
 
