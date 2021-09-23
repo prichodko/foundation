@@ -12,7 +12,6 @@
   "rules": {
     // runtime errors
     "import/no-unresolved": 2,
-    "import/named": 2,
     "import/namespace": 2,
     "import/default": 2,
     "import/export": 2,
@@ -21,15 +20,30 @@
     "import/no-named-as-default": 1,
     "import/no-named-as-default-member": 1,
     "import/no-duplicates": 1,
+
+    // auto-fixable import order
     "import/order": [
       2,
       {
+        "newlines-between": "always",
         "pathGroups": [
           {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "before"
+          },
+
+          {
             "pattern": "~/**",
-            "group": "external"
+            "group": "external",
+            "position": "after"
           }
-        ]
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "warnOnUnassignedImports": true,
+        "alphabetize": {
+          "order": "asc"
+        }
       }
     ],
 
