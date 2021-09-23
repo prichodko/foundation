@@ -1,7 +1,8 @@
 import { DialogOverlay } from '@radix-ui/react-dialog'
-import { styled } from 'stitches.config'
 
-const Overlay = styled(DialogOverlay, {
+import { styled } from '~/styles/config'
+
+export const Overlay = styled(DialogOverlay, {
   position: 'fixed',
   top: 0,
   right: 0,
@@ -9,5 +10,3 @@ const Overlay = styled(DialogOverlay, {
   left: 0,
   backgroundColor: 'rgba(0, 0, 0, .35)',
 })
-
-export { Overlay }

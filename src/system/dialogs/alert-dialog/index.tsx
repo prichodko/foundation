@@ -1,32 +1,21 @@
-import { Root } from '@radix-ui/react-alert-dialog'
 import { useRef, useState } from 'react'
 
+import { Title, Description } from '@radix-ui/react-alert-dialog'
+
 import { Button } from '~/system/buttons'
+import { Heading } from '~/system/heading'
+import { Text } from '~/system/text'
 
-import { useDialog } from '../dialog'
-import { useDialogState } from '../hooks/use-dialog-state'
-import { Overlay } from '../overlay'
-import { Content, Container, Footer, Title, Description } from './style'
+import { DialogTrigger, useDialogClose } from '../dialog-trigger'
 
-export const useAlertDialog = (props: Props) => {
-  const dialog = useDialog(AlertDialog)
-
-  const open = (override?: Partial<Props>) => {
-    dialog.open({ ...props, ...override })
-  }
-
-  return {
-    ...dialog,
-    open,
-  }
-}
+import { Content, Container, Footer } from './style'
 
 interface Props {
   title: string
   description: string
-  cancelLabel?: string
   actionLabel?: string
-  action: () => void | Promise<void>
+  cancelLabel?: string
+  onAction: () => void | Promise<void>
   onCancel?: () => void
   variant?: 'danger'
 }
@@ -37,61 +26,75 @@ const AlertDialog = (props: Props) => {
     description,
     cancelLabel = 'Cancel',
     actionLabel = 'Confirm',
+    onAction,
     onCancel,
-    action,
     variant,
   } = props
 
-  const state = useDialogState()
+  const close = useDialogClose()
 
   const [loading, setLoading] = useState(false)
   const cancelRef = useRef<HTMLButtonElement>(null)
-
-  const handleCancel = () => {
-    state.close()
-    onCancel?.()
-  }
-
-  const handleAction = async () => {
-    try {
-      setLoading(true)
-      await action()
-      state.close()
-    } catch (error) {
-      setLoading(false)
-    }
-  }
 
   const handleOpenAutoFocus = (event: Event) => {
     event.preventDefault()
     cancelRef.current?.focus()
   }
 
+  const handleCancel = () => {
+    close()
+    onCancel?.()
+  }
+
+  const handleAction = async () => {
+    try {
+      setLoading(true)
+      await onAction()
+      setLoading(false)
+      close()
+    } catch (error) {}
+  }
+
   return (
-    <Root {...state}>
-      <Overlay />
-      <Content onOpenAutoFocus={handleOpenAutoFocus}>
-        <Container>
-          <Title className="text-lg font-medium">{title}</Title>
-          <Description className="text-sm">{description}</Description>
-        </Container>
-        <Footer>
-          <Button
-            ref={cancelRef}
-            onPress={handleCancel}
-            variant="outline"
-            disabled={loading}
-          >
-            {cancelLabel}
-          </Button>
-          <Button variant={variant} onPress={handleAction} loading={loading}>
-            {actionLabel}
-          </Button>
-        </Footer>
-      </Content>
-    </Root>
+    <Content onOpenAutoFocus={handleOpenAutoFocus}>
+      <Container>
+        <Text as={Title} align="center" size="16" weight="500" className="mb-3">
+          {title}
+        </Text>
+        <Text as={Description} align="center" color="secondary">
+          {description}
+        </Text>
+      </Container>
+      <Footer>
+        <Button
+          ref={cancelRef}
+          onPress={handleCancel}
+          variant="outline"
+          disabled={loading}
+        >
+          {cancelLabel}
+        </Button>
+        <Button variant={variant} onPress={handleAction} loading={loading}>
+          {actionLabel}
+        </Button>
+      </Footer>
+    </Content>
   )
 }
 
-export { AlertDialog }
+interface AlertDialogTriggerProps extends Props {
+  children: React.ReactElement
+}
+
+const AlertDialogTrigger = (props: AlertDialogTriggerProps) => {
+  const { children, ...alertDialogProps } = props
+
+  return (
+    <DialogTrigger dialog={() => <AlertDialog {...alertDialogProps} />}>
+      {children}
+    </DialogTrigger>
+  )
+}
+
+export { AlertDialogTrigger }
 export type { Props as AlertDialogProps }

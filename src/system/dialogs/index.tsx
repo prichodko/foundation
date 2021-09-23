@@ -1,2 +1,3 @@
+export { DialogTrigger } from './dialog-trigger'
 export { Dialog } from './dialog'
-export { AlertDialog } from './alert-dialog'
+export { AlertDialogTrigger } from './alert-dialog'
