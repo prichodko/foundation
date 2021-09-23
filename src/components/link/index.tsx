@@ -4,9 +4,16 @@ import React, { cloneElement, forwardRef } from 'react'
 import NextLink from 'next/link'
 import type { LinkProps } from 'next/link'
 
-interface Props extends LinkProps {
-  children: ReactElement | string
+import type { Routes } from '~/config/routes'
+import { Text } from '~/system/text'
+
+interface BaseProps extends Omit<LinkProps, 'passHref'> {
+  href: Routes
   external?: boolean
+}
+
+interface Props extends BaseProps {
+  children: ReactElement | string
   className?: string
 }
 
@@ -20,9 +27,9 @@ const Link = (props: Props, ref: Ref<HTMLAnchorElement>) => {
   return (
     <NextLink {...linkProps} passHref>
       {typeof children === 'string' ? (
-        <a ref={ref} className={className} {...externalProps}>
+        <Text as="a" ref={ref} className={className} {...externalProps}>
           {children}
-        </a>
+        </Text>
       ) : (
         cloneElement(children, externalProps)
       )}
@@ -32,4 +39,4 @@ const Link = (props: Props, ref: Ref<HTMLAnchorElement>) => {
 
 const _Link = forwardRef(Link)
 export { _Link as Link }
-export type { Props as LinkProps }
+export type { BaseProps as LinkProps }
