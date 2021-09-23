@@ -1,23 +1,25 @@
-import { Root as LabelPrimitive } from '@radix-ui/react-label'
-import { styled } from 'stitches.config'
+import { styled, theme } from '~/styles/config'
 
 export const Wrapper = styled('div', {
   position: 'relative',
 })
 
-export const Label = styled(LabelPrimitive, {
+export const Label = styled('label', {
   display: 'flex',
-  fontSize: '$small',
-  fontWeight: '$400',
-  color: '$gray12',
+  fontSize: theme.fontSizes[10],
+  fontWeight: theme.fontWeights[500],
+  color: theme.colors.gray12,
   marginBottom: 2,
   userSelect: 'none',
+  textTransform: 'uppercase',
 })
 
 export const Error = styled('span', {
   display: 'flex',
-  fontSize: '$small',
-  color: '$red11',
-  marginTop: '$1',
-  marginLeft: '$1',
+  fontSize: theme.fontSizes[10],
+  fontWeight: theme.fontWeights[500],
+  color: theme.colors.red11,
+  marginTop: 4,
+  marginLeft: 4,
+  textTransform: 'uppercase',
 })

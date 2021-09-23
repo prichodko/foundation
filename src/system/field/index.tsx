@@ -1,31 +1,23 @@
-import { cloneElement, ReactElement } from 'react'
-
 import { Wrapper, Label, Error } from './style'
 
 interface Props {
-  label: string
+  label?: string
   error?: string
 }
 
 interface InnerProps extends Props {
-  id: string
-  children: ReactElement
-  showLabel?: boolean
+  htmlFor: string
+  children: React.ReactNode
 }
 
 const Field = (props: InnerProps) => {
-  const { id, children, label, showLabel = false, error } = props
-
-  const errorId = `${id}-error`
+  const { htmlFor, children, label, error } = props
 
   return (
     <Wrapper>
-      {showLabel && <Label htmlFor={id}>{label}</Label>}
-      {cloneElement(children, {
-        'aria-label': showLabel ? undefined : label,
-        'aria-errormessage': error ? errorId : undefined,
-      })}
-      {error && <Error id={errorId}>{error}</Error>}
+      {label && <Label htmlFor={htmlFor}>{label}</Label>}
+      {children}
+      {error && <Error>{error}</Error>}
     </Wrapper>
   )
 }
