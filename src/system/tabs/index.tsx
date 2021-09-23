@@ -1,5 +1,4 @@
 import { Children, cloneElement } from 'react'
-import type { ReactElement, ReactNode } from 'react'
 
 import type { TabsProps } from '@radix-ui/react-tabs'
 
@@ -7,7 +6,7 @@ import { Root, List, Trigger, Content } from './style'
 
 interface Props extends TabsProps {
   tabs: string[]
-  children: ReactElement[]
+  children: React.ReactElement[]
 }
 
 const Tabs = (props: Props) => {
@@ -32,7 +31,7 @@ const Tabs = (props: Props) => {
 }
 
 interface TabsPanelProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 const TabsPanel = (props: TabsPanelProps) => {
