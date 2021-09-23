@@ -1,35 +1,39 @@
-import type { NextPage } from 'next'
+import type { Page } from 'next'
 
 import { Link } from '~/components/link'
 import { Button } from '~/system/buttons'
-import type { SubmitHandler } from '~/system/forms'
-import { Form } from '~/system/forms'
+import type { FormSubmitHandler } from '~/system/forms'
+import { Form } from '~/system/forms/form'
+import { Heading } from '~/system/heading'
 import { TextInput } from '~/system/inputs/text-input'
+import { Text } from '~/system/text'
 
 interface FormValues {
   email: string
   password: string
 }
 
-export const LoginPage: NextPage = () => {
-  const handleSubmit: SubmitHandler<FormValues> = async values => {
+export const LoginPage: Page = () => {
+  const handleSubmit: FormSubmitHandler<FormValues> = async values => {
     console.log(values)
     return new Promise(resolve => setTimeout(resolve, 2000))
   }
 
   return (
-    <div className="h-screen flex items-center">
+    <div className="flex items-center h-screen">
       <div className="w-full max-w-sm mx-auto">
-        <h1 className="text-3xl font-bold mb-4 text-center">Welcome Back</h1>
-        <div className="text-sm mb-6 text-center text-gray-700">
-          {"Don't have an account?"}{' '}
+        <Heading align="center" size="32" className="mb-3">
+          Welcome Back
+        </Heading>
+        <Text align="center" color="secondary" className="mb-6">
+          {"Don't"} have an account?{' '}
           <Link href="/get-started" className="underline">
             Sign up for free
           </Link>
-        </div>
+        </Text>
 
         <Form<FormValues>
-          values={{ email: '', password: '' }}
+          defaultValues={{ email: '', password: '' }}
           onSubmit={handleSubmit}
         >
           <div className="grid gap-3 mb-6">
@@ -53,12 +57,11 @@ export const LoginPage: NextPage = () => {
             Log In
           </Button>
         </Form>
-        <div className="flex items-center mt-6 flex-col">
-          <Link href="/" className="text-sm hover:underline">
+        <div className="flex flex-col items-center mt-6">
+          <Link href="/" className="hover:underline">
             Forgot password?
           </Link>
-
-          <div className="text-xs text-center mt-8 text-gray-500">
+          <Text size="12" align="center" color="secondary" className="mt-8">
             This site is protected by reCAPTCHA and the Google{' '}
             <a className="underline" href="https://policies.google.com/privacy">
               Privacy Policy
@@ -68,7 +71,7 @@ export const LoginPage: NextPage = () => {
               Terms of Service
             </a>{' '}
             apply.
-          </div>
+          </Text>
         </div>
       </div>
     </div>
