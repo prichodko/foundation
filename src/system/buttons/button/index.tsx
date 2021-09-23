@@ -1,31 +1,25 @@
-import type { ReactNode, Ref } from 'react'
+import type { Ref } from 'react'
 import { forwardRef } from 'react'
 
-import type { AriaBaseButtonProps } from '@react-types/button'
-import type { PressEvents, FocusableProps } from '@react-types/shared'
-import type { Routes } from 'next/link'
-
 import { Link } from '~/components/link'
+import type { LinkProps as BaseLinkProps } from '~/components/link'
+import type { VariantProps } from '~/styles/config'
+
+import type { BaseButtonProps } from '..'
 
 import { Root } from './style'
 
 interface BaseProps {
-  children: ReactNode
-  variant?: 'default' | 'outline' | 'minimal' | 'danger'
-  width?: 'full'
+  children: React.ReactNode
+  variant?: VariantProps<typeof Root>['variant']
+  width?: VariantProps<typeof Root>['width']
 }
 
-interface ButtonProps
-  extends BaseProps,
-    PressEvents,
-    FocusableProps,
-    AriaBaseButtonProps {
+interface ButtonProps extends BaseProps, BaseButtonProps {
   loading?: boolean
-  disabled?: boolean
 }
 
-interface LinkProps extends BaseProps {
-  href: Routes
+interface LinkProps extends BaseProps, BaseLinkProps {
   external?: boolean
 }
 
@@ -44,44 +38,42 @@ const Button = (props: Props, ref: Ref<HTMLButtonElement>) => {
     )
   }
 
-  const { loading, disabled, children, ...buttonProps } = props
+  const { disabled, loading, children, ...buttonProps } = props
 
   return (
     <Root
       {...buttonProps}
       ref={ref}
-      isDisabled={disabled || loading}
-      css={{ paddingLeft: loading ? 32 : undefined }}
+      disabled={disabled || loading}
+      loading={loading}
     >
-      {loading && <Loader />}
+      {loading && (
+        <svg
+          className="animate-spin absolute left-[9px] top-[9px]"
+          fill="none"
+          viewBox="0 0 24 24"
+          width={16}
+          height={16}
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          />
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          />
+        </svg>
+      )}
       {children}
     </Root>
   )
 }
-
-const Loader = () => (
-  <svg
-    className="animate-spin absolute left-[9px] top-[9px]"
-    fill="none"
-    viewBox="0 0 24 24"
-    width={16}
-    height={16}
-  >
-    <circle
-      className="opacity-25"
-      cx="12"
-      cy="12"
-      r="10"
-      stroke="currentColor"
-      strokeWidth="4"
-    />
-    <path
-      className="opacity-75"
-      fill="currentColor"
-      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-    />
-  </svg>
-)
 
 const _Button = forwardRef(Button)
 

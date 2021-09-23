@@ -1,35 +1,30 @@
+import { styled, theme } from '~/styles/config'
+
 import { BaseButton } from '../base-button'
 
-import { styled } from 'stitches.config'
-
 export const Root = styled(BaseButton, {
+  fontSize: theme.fontSizes[12],
+  fontWeight: theme.fontWeights[500],
   position: 'relative',
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
-  borderRadius: 4,
+  borderRadius: theme.radii.element,
   padding: '8px 12px',
   borderWidth: 1,
-  fontSize: '$small',
-  fontWeight: '$400',
   transitionProperty: 'background-color, border-color, color, fill, stroke',
   transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
   transitionDuration: '150ms',
-  outline: 'none',
-
-  '&:focus': {
-    ring: 2,
-  },
 
   '&:disabled': {
-    background: '$gray8',
-    color: '$gray11',
-    borderColor: '$gray6',
+    background: theme.colors.gray8,
+    color: theme.colors.gray11,
+    borderColor: theme.colors.gray6,
 
     '&:hover': {
-      background: '$gray8',
-      color: '$gray11',
-      borderColor: '$gray6',
+      background: theme.colors.gray8,
+      color: theme.colors.gray11,
+      borderColor: theme.colors.gray6,
       cursor: 'not-allowed',
     },
   },
@@ -37,43 +32,49 @@ export const Root = styled(BaseButton, {
   variants: {
     variant: {
       default: {
-        background: '$button-default-background',
-        color: '$button-default-text',
-        borderColor: '$button-default-border',
+        background: theme.colors.gray12,
+        color: theme.colors.gray1,
+        borderColor: theme.colors.gray12,
 
         '&:hover': {
-          background: '$button-outline-background',
-          color: '$button-outline-text',
+          background: theme.colors.gray1,
+          color: theme.colors.gray12,
         },
       },
       outline: {
-        background: '$button-outline-background',
-        color: '$button-outline-text',
-        borderColor: '$button-outline-border',
+        background: theme.colors.gray1,
+        color: theme.colors.gray12,
+        borderColor: theme.colors.gray12,
 
         '&:hover': {
-          background: '$button-default-background',
-          color: '$button-default-text',
+          background: theme.colors.gray12,
+          color: theme.colors.gray1,
         },
       },
       minimal: {
-        background: '$button-minimal-background',
-        color: '$button-minimal-text',
-        borderColor: '$button-minimal-border',
+        background: theme.colors.gray1,
+        color: theme.colors.gray12,
+        borderColor: theme.colors.transparent,
 
         '&:hover': {
-          background: '$button-default-background',
-          color: '$button-default-text',
+          background: theme.colors.gray12,
+          color: theme.colors.gray1,
         },
       },
       danger: {
-        background: '$button-danger-background',
-        color: '$button-danger-text',
-        borderColor: '$button-danger-border',
+        background: theme.colors.red9,
+        color: theme.colors.gray1,
+        borderColor: theme.colors.red9,
 
         '&:hover': {
-          background: '$button-danger-background-hover',
+          background: theme.colors.red10,
         },
+      },
+    },
+
+    loading: {
+      true: {
+        paddingLeft: 32,
       },
     },
 
