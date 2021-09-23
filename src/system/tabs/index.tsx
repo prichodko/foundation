@@ -1,9 +1,11 @@
-import type { TabsOwnProps } from '@radix-ui/react-tabs'
-import { Children, cloneElement, ReactElement, ReactNode } from 'react'
+import { Children, cloneElement } from 'react'
+import type { ReactElement, ReactNode } from 'react'
+
+import type { TabsProps } from '@radix-ui/react-tabs'
 
 import { Root, List, Trigger, Content } from './style'
 
-interface Props extends TabsOwnProps {
+interface Props extends TabsProps {
   tabs: string[]
   children: ReactElement[]
 }
