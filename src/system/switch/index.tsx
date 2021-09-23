@@ -1,25 +1,34 @@
-import { ReactNode } from 'react'
+import { useId } from '@radix-ui/react-id'
 
-import { Label, LabelProps } from '~/system/label'
+import type { FormFieldProps } from '~/system/forms'
+import { useField } from '~/system/forms'
+import { Label } from '~/system/label'
 
 import { Root, Thumb } from './style'
 
-interface Props {
-  checked: boolean
-  onChange: (checked: boolean) => void
+interface Props extends FormFieldProps {
+  checked?: boolean
+  onChange?: (checked: boolean) => void
   required?: boolean
   disabled?: boolean
-  children: ReactNode
+  children: React.ReactNode
 }
 
 const Switch = (props: Props) => {
-  const { checked, onChange, required, disabled, children } = props
+  const { checked, onChange, required, children } = props
+
+  const switchId = useId()
+
+  const { field, formState } = useField(props)
+
+  const disabled = props.disabled || formState?.isSubmitting
 
   return (
     <Label label={children}>
       <Root
-        checked={checked}
-        onCheckedChange={onChange}
+        id={switchId}
+        checked={checked ?? field?.value}
+        onCheckedChange={onChange ?? field?.onChange}
         required={required}
         disabled={disabled}
       >
