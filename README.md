@@ -1,5 +1,7 @@
 # Foundation
 
+> State of the Art Frontend Development Environment
+
 ## Development
 
 Clone the project
