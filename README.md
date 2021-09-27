@@ -22,7 +22,7 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/prichodko/<PROJECT_NAME>.git
+  git clone https://github.com/<USERNAME>/<PROJECT_NAME>.git
 ```
 
 Go to the project directory
