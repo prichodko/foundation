@@ -2,8 +2,7 @@ import { useRef, useState } from 'react'
 
 import { Title, Description } from '@radix-ui/react-alert-dialog'
 
-import { Button } from '~/system/buttons'
-import { Heading } from '~/system/heading'
+import { Button } from '~/system/button'
 import { Text } from '~/system/text'
 
 import { DialogTrigger, useDialogClose } from '../dialog-trigger'

@@ -1,4 +1,4 @@
-import { Button } from '~/system/buttons'
+import { Button } from '~/system/button'
 
 import { ThemeSwitcher } from './components/theme-switcher'
 

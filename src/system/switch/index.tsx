@@ -1,7 +1,7 @@
 import { useId } from '@radix-ui/react-id'
 
-import type { FormFieldProps } from '~/system/forms'
-import { useField } from '~/system/forms'
+import type { FormFieldProps } from '~/system/form'
+import { useField } from '~/system/form'
 import { Label } from '~/system/label'
 
 import { Root, Thumb } from './style'

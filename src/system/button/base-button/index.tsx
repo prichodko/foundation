@@ -3,15 +3,16 @@ import { useRef, forwardRef } from 'react'
 
 import { composeRefs } from '@radix-ui/react-compose-refs'
 import { useButton } from '@react-aria/button'
-import type { PressEvents, PressEvent } from '@react-types/shared'
+import type { PressEvent } from '@react-types/shared'
 
-interface Props extends PressEvents {
+interface Props {
   children: React.ReactNode
   type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
   className?: string
   autoFocus?: boolean
-  onClick?: (e: PressEvent) => void
+  onPress?: (e: PressEvent) => void
+  onClick?: () => void
 }
 
 const BaseButton = (props: Props, ref: Ref<HTMLButtonElement>) => {
@@ -20,6 +21,7 @@ const BaseButton = (props: Props, ref: Ref<HTMLButtonElement>) => {
   const domRef = useRef<HTMLButtonElement>(null)
 
   const { buttonProps } = useButton(
+    // @ts-ignore
     { isDisabled: props.disabled, onPress: onClick, ...rest },
     domRef
   )

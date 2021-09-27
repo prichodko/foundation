@@ -1,7 +1,7 @@
 import { Title } from '@radix-ui/react-dialog'
 import { Cross2Icon } from '@radix-ui/react-icons'
 
-import { Button } from '~/system/buttons'
+import { Button } from '~/system/button'
 import { Icon } from '~/system/icon'
 import { Text } from '~/system/text'
 

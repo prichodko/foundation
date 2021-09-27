@@ -50,6 +50,7 @@
     "@babel/core": "^7.15.5",
     "@next/bundle-analyzer": "^11.1.2",
     "@playwright/test": "^1.15.0",
+    "@react-types/shared": "^3.9.0",
     "@storybook/addon-actions": "^6.3.8",
     "@storybook/addon-essentials": "^6.3.8",
     "@storybook/addon-links": "^6.3.8",

@@ -1,11 +1,11 @@
 import type { Page } from 'next'
 
 import { Link } from '~/components/link'
-import { Button } from '~/system/buttons'
-import type { FormSubmitHandler } from '~/system/forms'
-import { Form } from '~/system/forms/form'
+import { Button } from '~/system/button'
+import type { FormSubmitHandler } from '~/system/form'
+import { Form } from '~/system/form/form'
 import { Heading } from '~/system/heading'
-import { TextInput } from '~/system/inputs/text-input'
+import { TextInput } from '~/system/input/text-input'
 import { Text } from '~/system/text'
 
 interface FormValues {

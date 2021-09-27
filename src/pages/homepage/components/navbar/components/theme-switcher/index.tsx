@@ -1,7 +1,7 @@
 import { SunIcon, MoonIcon } from '@radix-ui/react-icons'
 import { useTheme } from 'next-themes'
 
-import { BaseButton } from '~/system/buttons'
+import { BaseButton } from '~/system/button'
 
 interface Props {}
 

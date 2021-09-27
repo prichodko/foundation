@@ -7,8 +7,8 @@ import { useId } from '@radix-ui/react-id'
 
 import type { FieldProps } from '../field'
 import { Field } from '../field'
-import type { FormFieldProps } from '../forms'
-import { useField } from '../forms'
+import type { FormFieldProps } from '../form'
+import { useField } from '../form'
 
 import { Trigger } from './style'
 
