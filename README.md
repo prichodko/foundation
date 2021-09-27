@@ -12,8 +12,8 @@
 - [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Radix](https://www.radix-ui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
 - [Stitches](https://stitches.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
 - [Playwright](https://playwright.dev/)
 - [Storybook](https://storybook.js.org/)
 
@@ -59,7 +59,7 @@ To run `ESLint`
 yarn lint
 ```
 
-To format using `Prettier`
+To run `Prettier`
 
 ```bash
 yarn format
