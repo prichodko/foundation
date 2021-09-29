@@ -9,7 +9,7 @@ import { DialogTrigger, Dialog, AlertDialogTrigger } from '~/system/dialog'
 import { Heading } from '~/system/heading'
 import { TextInput } from '~/system/input'
 import { MenuTrigger, Menu } from '~/system/menu'
-import { Popover } from '~/system/popover'
+import { Popover, PopoverTrigger } from '~/system/popover'
 import { RadioGroup } from '~/system/radio-group'
 import { Select } from '~/system/select'
 import { Switch } from '~/system/switch'
@@ -283,7 +283,10 @@ export const Homepage: Page = () => {
       </Section>
 
       <Section heading="Popover" center>
-        <Popover trigger={<Button>Trigger</Button>}>Content</Popover>
+        <PopoverTrigger>
+          <Button>Trigger</Button>
+          <Popover>Content</Popover>
+        </PopoverTrigger>
       </Section>
     </div>
   )

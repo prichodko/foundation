@@ -1,26 +1,41 @@
+import { useState } from 'react'
+
 import type { PopoverContentProps } from '@radix-ui/react-popover'
 import { Root, Trigger } from '@radix-ui/react-popover'
 
 import { Content } from './style'
 
-interface TriggerProps extends PopoverContentProps {
-  trigger: React.ReactElement
-  children: React.ReactNode
+interface TriggerProps {
+  children: [React.ReactElement, React.ReactElement]
 }
 
-const Popover = (props: TriggerProps) => {
-  const { trigger, children, ...contentProps } = props
+const PopoverTrigger = (props: TriggerProps) => {
+  const { children } = props
 
-  const { sideOffset = 8 } = contentProps
+  const [open, setOpen] = useState(false)
+
+  const [trigger, content] = children
 
   return (
-    <Root>
+    <Root open={open} onOpenChange={setOpen}>
       <Trigger asChild>{trigger}</Trigger>
-      <Content sideOffset={sideOffset} {...contentProps}>
-        {children}
-      </Content>
+      {content}
     </Root>
   )
 }
 
-export { Popover }
+interface PopoverProps extends PopoverContentProps {}
+
+const Popover = (props: PopoverProps) => {
+  const { children, ...contentProps } = props
+
+  const { sideOffset = 8 } = contentProps
+
+  return (
+    <Content sideOffset={sideOffset} {...contentProps}>
+      {children}
+    </Content>
+  )
+}
+
+export { PopoverTrigger, Popover }
