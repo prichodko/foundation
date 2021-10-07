@@ -3,6 +3,7 @@ import { SSRProvider } from '@react-aria/ssr'
 import { ThemeProvider } from 'next-themes'
 import type { AppProps } from 'next/app'
 
+import { UrqlProvider } from '~/components/urql'
 import { useKeyboardShortcuts } from '~/hooks/use-keyboard-shortcuts'
 import { darkTheme } from '~/styles/config'
 import '~/styles/global.css'
@@ -25,7 +26,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     >
       <SSRProvider>
         <IdProvider>
-          <Component {...pageProps} />
+          <UrqlProvider>
+            <Component {...pageProps} />
+          </UrqlProvider>
         </IdProvider>
       </SSRProvider>
     </ThemeProvider>
