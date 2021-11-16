@@ -3,18 +3,22 @@ import { applyMiddleware } from 'graphql-middleware'
 import type { NextApiRequest } from 'next'
 
 import type { Context } from './context'
-import { permissions } from './lib/permissions'
 import { prisma } from './lib/prisma'
+import { permissions } from './permissions'
 import { schema } from './schema'
 
-const context = async ({}: { req: NextApiRequest }): Promise<Context> => {
-  const user = (await prisma.user.findUnique({
-    where: {
-      id: '',
-    },
-  }))!
+interface Options {
+  req: NextApiRequest
+}
 
-  return { db: prisma, user }
+const context = async ({}: Options): Promise<Context> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: 'ckvqsw77v0033itoaonqj4b35',
+    },
+  })
+
+  return { db: prisma, user: user! }
 }
 
 export const server = new ApolloServer({
