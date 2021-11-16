@@ -1,0 +1,6 @@
+mutation ViewJob($id: ID!) {
+  viewJob(id: $id) {
+    id
+    viewCount
+  }
+}
