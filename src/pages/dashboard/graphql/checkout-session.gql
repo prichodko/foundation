@@ -1,0 +1,6 @@
+query CheckoutSession($id: ID!) {
+  checkoutSession(id: $id) {
+    id
+    amount
+  }
+}

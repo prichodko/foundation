@@ -1,0 +1,5 @@
+mutation CreateJob($input: CreateJobInput!) {
+  createJob(input: $input) {
+    ...UserJob
+  }
+}
