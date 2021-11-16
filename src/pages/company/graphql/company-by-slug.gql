@@ -1,0 +1,20 @@
+query CompanyBySlug($slug: String!) {
+  companyBySlug(slug: $slug) {
+    id
+    name
+    slug
+    twitter
+    description
+    website
+    viewCount
+    jobs {
+      id
+      position
+      description
+      tags {
+        id
+        name
+      }
+    }
+  }
+}
