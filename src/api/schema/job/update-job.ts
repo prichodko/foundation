@@ -8,7 +8,7 @@ export const UpdateJob = mutationField('updateJob', {
       definition(t) {
         t.id('id')
         t.string('position')
-        t.string('role')
+        t.field('role', { type: 'JobRole' })
         t.string('description')
         t.string('applyUrl')
         t.boolean('remote')

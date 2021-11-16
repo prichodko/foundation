@@ -10,6 +10,7 @@ generates:
     plugins:
       - "typescript"
     config:
+      constEnums: true
       scalars:
         DateTime: Date
   src/:

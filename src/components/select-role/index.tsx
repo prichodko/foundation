@@ -1,7 +1,26 @@
 import { Select } from '~/system/select'
+import type { JobRole } from '~/types/graphql'
 
 interface Props {
   name: string
+}
+
+const options: Record<JobRole, string> = {
+  AccountingAndFinance: 'Accounting & Finance',
+  Administration: 'Administration',
+  BusinessDevelopment: 'Business Development',
+  CustomerService: 'Customer Service',
+  Design: 'Design',
+  Engineering: 'Engineering',
+  IT: 'IT',
+  Legal: 'Legal',
+  MarketingAndCommunications: 'Marketing & Communications',
+  Operations: 'Operations',
+  PeopleAndHR: 'People & HR',
+  Product: 'Product',
+  QualityAssurance: 'Quality Assurance',
+  Sales: 'Sales',
+  Other: 'Other',
 }
 
 export const SelectRole = (props: Props) => {
@@ -9,27 +28,11 @@ export const SelectRole = (props: Props) => {
 
   return (
     <Select label="Role" name={name}>
-      <Select.Option value="Accounting & Finance">
-        Accounting & Finance
-      </Select.Option>
-      <Select.Option value="Administration">Administration</Select.Option>
-      <Select.Option value="Customer Service">Customer Service</Select.Option>
-      <Select.Option value="Design">Design</Select.Option>
-      <Select.Option value="IT">IT</Select.Option>
-      <Select.Option value="Legal">Legal</Select.Option>
-      <Select.Option value="Marketing & Communications">
-        Marketing & Communications
-      </Select.Option>
-      <Select.Option value="Operations">Operations</Select.Option>
-      <Select.Option value="Engineering">Engineering</Select.Option>
-      <Select.Option value="People & HR">People & HR</Select.Option>
-      <Select.Option value="Product">Product</Select.Option>
-      <Select.Option value="Quality Assurance">Quality Assurance</Select.Option>
-      <Select.Option value="Sales">Sales</Select.Option>
-      <Select.Option value="Business Development">
-        Business Development
-      </Select.Option>
-      <Select.Option value="Other">Other</Select.Option>
+      {Object.entries(options).map(([key, value]) => (
+        <Select.Option key={key} value={key}>
+          {value}
+        </Select.Option>
+      ))}
     </Select>
   )
 }

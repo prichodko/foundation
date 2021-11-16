@@ -45,7 +45,7 @@ export interface NexusGenInputs {
     description: string // String!
     position: string // String!
     remote: boolean // Boolean!
-    role: string // String!
+    role: NexusGenEnums['JobRole'] // JobRole!
     tags: string[] // [ID!]!
   }
   CreateTagInput: {
@@ -86,7 +86,7 @@ export interface NexusGenInputs {
     id: string // ID!
     position: string // String!
     remote: boolean // Boolean!
-    role: string // String!
+    role: NexusGenEnums['JobRole'] // JobRole!
     tags: string[] // [ID!]!
   }
   UpdateUserInput: {
@@ -95,7 +95,10 @@ export interface NexusGenInputs {
   }
 }
 
-export interface NexusGenEnums {}
+export interface NexusGenEnums {
+  JobRole: prisma.JobRole
+  JobStatus: prisma.JobStatus
+}
 
 export interface NexusGenScalars {
   String: string
@@ -143,7 +146,9 @@ export interface NexusGenUnions {}
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes &
+  NexusGenScalars &
+  NexusGenEnums
 
 export interface NexusGenFieldTypes {
   CheckoutSessionResult: {
@@ -188,7 +193,8 @@ export interface NexusGenFieldTypes {
     liked: boolean // Boolean!
     position: string // String!
     remote: boolean // Boolean!
-    role: string // String!
+    role: NexusGenEnums['JobRole'] // JobRole!
+    status: NexusGenEnums['JobStatus'] // JobStatus!
     tags: NexusGenRootTypes['Tag'][] // [Tag!]!
     updatedAt: NexusGenScalars['DateTime'] // DateTime!
     viewCount: number // Int!
@@ -283,7 +289,8 @@ export interface NexusGenFieldTypeNames {
     liked: 'Boolean'
     position: 'String'
     remote: 'Boolean'
-    role: 'String'
+    role: 'JobRole'
+    status: 'JobStatus'
     tags: 'Tag'
     updatedAt: 'DateTime'
     viewCount: 'Int'
@@ -418,7 +425,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects
 
 export type NexusGenInputNames = keyof NexusGenInputs
 
-export type NexusGenEnumNames = never
+export type NexusGenEnumNames = keyof NexusGenEnums
 
 export type NexusGenInterfaceNames = never
 

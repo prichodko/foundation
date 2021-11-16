@@ -14,7 +14,7 @@ interface Options {
 const context = async ({}: Options): Promise<Context> => {
   const user = await prisma.user.findUnique({
     where: {
-      id: 'ckvqsw77v0033itoaonqj4b35',
+      id: 'ckw2e39m2195108mfox34yhz1',
     },
   })
 
