@@ -1,5 +1,9 @@
 import { styled, theme } from '~/styles/config'
 
+export const Wrapper = styled('div', {
+  position: 'relative',
+})
+
 export const Trigger = styled('select', {
   display: 'block',
   width: '100%',
