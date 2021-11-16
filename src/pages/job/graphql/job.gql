@@ -1,0 +1,21 @@
+query Job($id: ID!) {
+  job(id: $id) {
+    id
+    position
+    role
+    description
+    applyUrl
+    viewCount
+    tags {
+      id
+      name
+    }
+    company {
+      id
+      name
+      email
+      website
+      twitter
+    }
+  }
+}
