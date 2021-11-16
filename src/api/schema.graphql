@@ -43,7 +43,7 @@ input CreateJobInput {
   description: String!
   position: String!
   remote: Boolean!
-  role: String!
+  role: JobRole!
   tags: [ID!]!
 }
 
@@ -84,10 +84,36 @@ type Job {
   liked: Boolean!
   position: String!
   remote: Boolean!
-  role: String!
+  role: JobRole!
+  status: JobStatus!
   tags: [Tag!]!
   updatedAt: DateTime!
   viewCount: Int!
+}
+
+enum JobRole {
+  AccountingAndFinance
+  Administration
+  BusinessDevelopment
+  CustomerService
+  Design
+  Engineering
+  IT
+  Legal
+  MarketingAndCommunications
+  Operations
+  Other
+  PeopleAndHR
+  Product
+  QualityAssurance
+  Sales
+}
+
+enum JobStatus {
+  Archived
+  Closed
+  Draft
+  Live
 }
 
 type Mutation {
@@ -142,7 +168,7 @@ input UpdateJobInput {
   id: ID!
   position: String!
   remote: Boolean!
-  role: String!
+  role: JobRole!
   tags: [ID!]!
 }
 

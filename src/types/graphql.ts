@@ -66,7 +66,7 @@ export type CreateJobInput = {
   description: Scalars['String']
   position: Scalars['String']
   remote: Scalars['Boolean']
-  role: Scalars['String']
+  role: JobRole
   tags: Array<Scalars['ID']>
 }
 
@@ -103,10 +103,36 @@ export type Job = {
   liked: Scalars['Boolean']
   position: Scalars['String']
   remote: Scalars['Boolean']
-  role: Scalars['String']
+  role: JobRole
+  status: JobStatus
   tags: Array<Tag>
   updatedAt: Scalars['DateTime']
   viewCount: Scalars['Int']
+}
+
+export const enum JobRole {
+  AccountingAndFinance = 'AccountingAndFinance',
+  Administration = 'Administration',
+  BusinessDevelopment = 'BusinessDevelopment',
+  CustomerService = 'CustomerService',
+  Design = 'Design',
+  Engineering = 'Engineering',
+  It = 'IT',
+  Legal = 'Legal',
+  MarketingAndCommunications = 'MarketingAndCommunications',
+  Operations = 'Operations',
+  Other = 'Other',
+  PeopleAndHr = 'PeopleAndHR',
+  Product = 'Product',
+  QualityAssurance = 'QualityAssurance',
+  Sales = 'Sales',
+}
+
+export const enum JobStatus {
+  Archived = 'Archived',
+  Closed = 'Closed',
+  Draft = 'Draft',
+  Live = 'Live',
 }
 
 export type Mutation = {
@@ -231,7 +257,7 @@ export type UpdateJobInput = {
   id: Scalars['ID']
   position: Scalars['String']
   remote: Scalars['Boolean']
-  role: Scalars['String']
+  role: JobRole
   tags: Array<Scalars['ID']>
 }
 

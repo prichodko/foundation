@@ -1,4 +1,4 @@
-import { objectType } from 'nexus'
+import { enumType, objectType } from 'nexus'
 
 export * from './get-job'
 export * from './get-jobs'
@@ -8,6 +8,18 @@ export * from './add-like'
 export * from './remove-like'
 export * from './view-job'
 
+import { JobRole, JobStatus } from '.prisma/client'
+
+export const JobRoleEnum = enumType({
+  name: 'JobRole',
+  members: Object.keys(JobRole),
+})
+
+export const JobStatusEnum = enumType({
+  name: 'JobStatus',
+  members: Object.keys(JobStatus),
+})
+
 export const Job = objectType({
   name: 'Job',
   definition(t) {
@@ -15,10 +27,11 @@ export const Job = objectType({
     t.date('createdAt')
     t.date('updatedAt')
     t.string('position')
-    t.string('role')
+    t.field('role', { type: 'JobRole' })
     t.string('description')
     t.string('applyUrl')
     t.boolean('remote')
+    t.field('status', { type: 'JobStatus' })
     t.int('viewCount')
     t.list.field('tags', {
       type: 'Tag',
