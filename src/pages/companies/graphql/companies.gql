@@ -1,0 +1,10 @@
+query Companies {
+  companies {
+    id
+    name
+    slug
+    description
+    website
+    twitter
+  }
+}
