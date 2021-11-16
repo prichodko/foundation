@@ -1,0 +1,105 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String      @id @default(cuid())
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+  email            String      @unique
+  name             String
+  company          Company?
+  jobs             Job[]
+  likes            UserLikes[]
+  stripeCustomerId String?     @map("stripe_customer_id")
+
+  @@map(name: "users")
+}
+
+model UserLikes {
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+  job    Job    @relation(fields: [jobId], references: [id])
+  jobId  String @map("job_id")
+
+  @@id([userId, jobId])
+  @@map(name: "user_likes")
+}
+
+model Company {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  name        String
+  slug        String   @unique
+  description String   @default("")
+  email       String
+  website     String
+  twitter     String?
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @unique @map("user_id")
+  viewCount   Int      @default(0) @map("view_count")
+
+  @@map(name: "companies")
+}
+
+enum JobStatus {
+  Draft
+  Live
+  Closed
+  Archived
+}
+
+enum JobRole {
+  AccountingAndFinance
+  Administration
+  CustomerService
+  Design
+  IT
+  Legal
+  MarketingAndCommunications
+  Operations
+  Engineering
+  PeopleAndHR
+  Product
+  QualityAssurance
+  Sales
+  BusinessDevelopment
+  Other
+}
+
+model Job {
+  id          String      @id @default(cuid())
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  position    String
+  role        JobRole
+  description String
+  applyUrl    String      @map("apply_url")
+  remote      Boolean
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String      @map("user_id")
+  likedBy     UserLikes[]
+  tags        Tag[]
+  viewCount   Int         @default(0) @map("view_count")
+  status      JobStatus   @default(Draft)
+
+  @@map(name: "jobs")
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  name      String   @unique
+  jobs      Job[]
+
+  @@map(name: "tags")
+}
