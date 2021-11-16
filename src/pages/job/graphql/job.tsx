@@ -13,7 +13,7 @@ export type JobQuery = {
     __typename?: 'Job'
     id: string
     position: string
-    role: string
+    role: Types.JobRole
     description: string
     applyUrl: string
     viewCount: number
