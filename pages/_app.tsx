@@ -48,7 +48,7 @@ const glitch = keyframes({
 
 const Glitch = styled('h1', {
   color: 'white',
-  fontSize: '8rem',
+  fontSize: '6rem',
   fontWeight: 700,
   textTransform: 'uppercase',
   position: 'relative',
@@ -79,7 +79,7 @@ const Glitch = styled('h1', {
 
 const ComingSoon = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-12">
+    <div className="flex items-center justify-center min-h-screen bg-[#000]">
       <Glitch>
         <span aria-hidden="true">COMING SOON</span>
         COMING SOON

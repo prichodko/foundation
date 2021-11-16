@@ -38,7 +38,7 @@ textarea {
 }
 
 body {
-  /* overscroll-behavior-y: none; */
+  overscroll-behavior: none;
   background: var(--colors-background);
 }
 
