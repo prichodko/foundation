@@ -1,15 +1,27 @@
 import path from 'path'
 
-import { makeSchema } from 'nexus'
+import { GraphQLDateTime } from 'graphql-scalars'
+import { decorateType, makeSchema } from 'nexus'
 
+import * as checkout from './checkout'
+import * as city from './city'
+import * as company from './company'
+import * as job from './job'
+import * as objects from './objects'
+import * as tag from './tag'
 import * as user from './user'
+
+const DateTime = decorateType(GraphQLDateTime, {
+  sourceType: 'Date',
+  asNexusMethod: 'date',
+})
 
 export const schema = makeSchema({
   nonNullDefaults: {
     input: true,
     output: true,
   },
-  types: [user],
+  types: [DateTime, objects, user, job, company, checkout, tag, city],
   contextType: {
     module: path.join(process.cwd(), 'src/api/context.ts'),
     export: 'Context',
@@ -22,6 +34,9 @@ export const schema = makeSchema({
       },
     ],
   },
+  shouldExitAfterGenerateArtifacts: Boolean(
+    process.env.NEXUS_SHOULD_EXIT_AFTER_REFLECTION
+  ),
   outputs: {
     typegen: path.join(process.cwd(), 'src/api/types/nexus.ts'),
     schema: path.join(process.cwd(), 'src/api/schema.graphql'),
