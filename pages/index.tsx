@@ -1,3 +1,3 @@
-import { Homepage } from '~/pages/homepage/index'
+import { Workverse } from '~/pages/homepage'
 
-export default Homepage
+export default Workverse

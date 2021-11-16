@@ -1,0 +1,6 @@
+mutation RemoveLike($jobId: ID!) {
+  removeLike(id: $jobId) {
+    id
+    liked
+  }
+}

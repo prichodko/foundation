@@ -1,0 +1,5 @@
+mutation AddLike($jobId: ID!) {
+  addLike(id: $jobId) {
+    id
+  }
+}
