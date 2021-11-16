@@ -1,24 +1,23 @@
 overwrite: true
 schema: "src/api/schema.graphql"
 documents: "src/**/*.gql"
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+    - eslint --fix
 generates:
   src/types/graphql.ts:
     plugins:
       - "typescript"
+    config:
+      scalars:
+        DateTime: Date
   src/:
     preset: near-operation-file
     presetConfig:
       extension: .tsx
       baseTypesPath: types/graphql.ts
-    hooks:
-      afterAllFileWrite:
-        - "prettier --write"
-        - "eslint --fix"
     plugins:
-      - add:
-          content: '// @ts-nocheck'
-      - add:
-          content: '/* eslint-disable */'
       - "typescript-operations"
       - "typescript-urql"
     config:
@@ -26,3 +25,9 @@ generates:
       strictScalars: true
       useTypeImports: true
       gqlImport: urql#gql
+      scalars:
+        DateTime: Date
+
+
+
+
