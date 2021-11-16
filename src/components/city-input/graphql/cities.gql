@@ -1,0 +1,6 @@
+query Cities($input: GetCitiesInput!) {
+  cities(input: $input) {
+    value
+    label
+  }
+}

@@ -1,0 +1,42 @@
+fragment UserJob on Job {
+  id
+  createdAt
+  updatedAt
+  position
+  role
+  description
+  applyUrl
+  remote
+  tags {
+    id
+    name
+  }
+}
+
+query User {
+  user {
+    id
+    name
+    email
+    jobs {
+      ...UserJob
+    }
+    company {
+      id
+      name
+      slug
+      email
+      website
+      twitter
+    }
+    likes {
+      id
+      position
+      company {
+        id
+        name
+        slug
+      }
+    }
+  }
+}
