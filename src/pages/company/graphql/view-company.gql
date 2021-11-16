@@ -1,0 +1,6 @@
+mutation ViewCompany($id: ID!) {
+  viewCompany(id: $id) {
+    id
+    viewCount
+  }
+}
