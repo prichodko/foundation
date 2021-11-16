@@ -1,0 +1,16 @@
+query Jobs($input: GetJobsInput!) {
+  jobs(input: $input) {
+    id
+    position
+    tags {
+      id
+      name
+    }
+    liked
+    company {
+      id
+      name
+      slug
+    }
+  }
+}
