@@ -39,7 +39,7 @@ textarea {
 
 body {
   /* overscroll-behavior-y: none; */
-  background: var(--colors-bg);
+  background: var(--colors-background);
 }
 
 [type='text'],

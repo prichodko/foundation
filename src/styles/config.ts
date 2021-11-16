@@ -25,6 +25,7 @@ const { styled, css, getCssText, createTheme, globalCss, config, theme } =
     theme: {
       fonts: {
         sans: 'Inter, -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif',
+        mono: 'Orbitron, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
       },
 
       fontSizes: {
@@ -53,7 +54,7 @@ const { styled, css, getCssText, createTheme, globalCss, config, theme } =
         ...yellow,
 
         text: '$gray12',
-        background: '$gray1',
+        background: '#fff',
         backgroundOverlay: '$gray2',
         primary: '$gray12',
         secondary: '$gray11',
@@ -99,6 +100,7 @@ const darkTheme = createTheme('dark', {
     ...redDark,
     ...greenDark,
     ...yellowDark,
+    background: '#000',
   },
 })
 
