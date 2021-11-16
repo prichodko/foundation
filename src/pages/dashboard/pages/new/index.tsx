@@ -13,7 +13,7 @@ import { Form } from '~/system/form'
 import { TextInput } from '~/system/input'
 import { Slider } from '~/system/slider'
 import { Text } from '~/system/text'
-import type { CreateJobInput } from '~/types/graphql'
+import type { CreateJobInput, JobRole } from '~/types/graphql'
 
 import { useCreateCheckoutSessionMutation } from './graphql/create-checkout-session'
 import { useCreateJobMutation } from './graphql/create-job'
@@ -70,7 +70,7 @@ export const DashboardNew: Page = (props: Props) => {
       <Form<Values>
         defaultValues={{
           position: '',
-          role: '',
+          role: '' as JobRole,
           applyUrl: '',
           description: '',
           remote: false,

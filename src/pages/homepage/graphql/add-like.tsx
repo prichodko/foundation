@@ -1,7 +1,7 @@
-import type * as Types from '../../../types/graphql'
-
 import { gql } from 'urql'
 import * as Urql from 'urql'
+
+import type * as Types from '../../../types/graphql'
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 export type AddLikeMutationVariables = Types.Exact<{
   jobId: Types.Scalars['ID']

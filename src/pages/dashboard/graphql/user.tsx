@@ -1,7 +1,7 @@
-import type * as Types from '../../../types/graphql'
-
 import { gql } from 'urql'
 import * as Urql from 'urql'
+
+import type * as Types from '../../../types/graphql'
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 export type UserJobFragment = {
   __typename?: 'Job'
@@ -9,7 +9,7 @@ export type UserJobFragment = {
   createdAt: Date
   updatedAt: Date
   position: string
-  role: string
+  role: Types.JobRole
   description: string
   applyUrl: string
   remote: boolean
@@ -31,7 +31,7 @@ export type UserQuery = {
       createdAt: Date
       updatedAt: Date
       position: string
-      role: string
+      role: Types.JobRole
       description: string
       applyUrl: string
       remote: boolean
