@@ -14,6 +14,7 @@ const config = {
   theme: {
     fontFamily: {
       sans: 'var(--fonts-sans)',
+      mono: 'var(--fonts-mono)',
     },
     fontSize: {
       12: 'var(--fontSizes-12)',
@@ -32,6 +33,7 @@ const config = {
     },
     textColor: {
       DEFAULT: 'var(--colors-gray12)',
+      light: 'var(--colors-gray1)',
       low: 'var(--colors-gray11)',
       red: 'var(--colors-red11)',
       green: 'var(--colors-green11)',

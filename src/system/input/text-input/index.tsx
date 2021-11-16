@@ -20,6 +20,8 @@ const TextInput = (props: Props, ref: Ref<HTMLInputElement>) => {
 
   const { field, fieldState, formState } = useField(props)
 
+  const value = props.value ?? field?.value
+  const onChange = props.onChange ?? field?.onChange
   const invalid = props.invalid || Boolean(error) || fieldState?.invalid
   const disabled = props.disabled || formState?.isSubmitting
 
@@ -33,6 +35,8 @@ const TextInput = (props: Props, ref: Ref<HTMLInputElement>) => {
         {...field}
         id={inputId}
         ref={composeRefs(ref, field?.ref)}
+        value={value}
+        onChange={onChange}
         invalid={invalid}
         disabled={disabled}
       />

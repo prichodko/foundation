@@ -1,5 +1,5 @@
+import { DevTool } from '@hookform/devtools'
 import type {
-  UseFormProps,
   SubmitHandler,
   SubmitErrorHandler,
   UseFormReturn,
@@ -12,21 +12,21 @@ type FormSubmitHandler<Values> = (
   defaultValues: UnpackNestedValue<Values>,
   form: UseFormReturn<Values>,
   event?: React.BaseSyntheticEvent
-) => any | Promise<any>
+) => void | Promise<void>
 
-interface Props<Values> extends UseFormProps<Values> {
+interface Props<Values> {
   children: React.ReactNode
   onSubmit: FormSubmitHandler<Values>
   onError?: SubmitErrorHandler<Values>
   className?: string
-  defaultValues: DefaultValues<Values>
+  defaultValues: Required<DefaultValues<Values>>
 }
 
 const Form = <Values extends {}>(props: Props<Values>) => {
   const { children, onSubmit, onError, defaultValues, className } = props
 
   const form = useForm<Values>({
-    defaultValues,
+    defaultValues: defaultValues as DefaultValues<Values>,
   })
 
   const handleSubmit: SubmitHandler<Values> = (values, event) => {
@@ -35,6 +35,8 @@ const Form = <Values extends {}>(props: Props<Values>) => {
 
   return (
     <FormProvider {...form}>
+      <DevTool control={form.control} />
+
       <form
         onSubmit={form.handleSubmit(handleSubmit, onError)}
         className={className}

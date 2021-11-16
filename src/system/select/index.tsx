@@ -10,7 +10,7 @@ import { Field } from '../field'
 import type { FormFieldProps } from '../form'
 import { useField } from '../form'
 
-import { Trigger } from './style'
+import { Trigger, Wrapper } from './style'
 
 interface Props extends FieldProps, FormFieldProps {
   children: React.ReactElement[]
@@ -38,27 +38,29 @@ const Select = (props: Props, ref: Ref<HTMLSelectElement>) => {
 
   return (
     <Field htmlFor={triggerId} label={label} error={errorMessage}>
-      <Trigger
-        ref={composeRefs(ref, field?.ref)}
-        value={value ?? field?.value}
-        {...field}
-        id={triggerId}
-        aria-invalid={invalid}
-        data-empty={field?.value === '' || value === ''}
-        disabled={disabled}
-      >
-        {placeholder && (
-          <option value="" hidden disabled>
-            {placeholder}
-          </option>
-        )}
-        {children}
-      </Trigger>
-      <ChevronDownIcon
-        className="h-3.5 w-3.5 absolute top-[11px] right-3 pointer-events-none"
-        aria-hidden
-        focusable={false}
-      />
+      <Wrapper>
+        <Trigger
+          ref={composeRefs(ref, field?.ref)}
+          value={value ?? field?.value}
+          {...field}
+          id={triggerId}
+          aria-invalid={invalid}
+          data-empty={field?.value === '' || value === ''}
+          disabled={disabled}
+        >
+          {placeholder && (
+            <option value="" hidden disabled>
+              {placeholder}
+            </option>
+          )}
+          {children}
+        </Trigger>
+        <ChevronDownIcon
+          className="h-3.5 w-3.5 absolute top-[11px] right-3 pointer-events-none"
+          aria-hidden
+          focusable={false}
+        />
+      </Wrapper>
     </Field>
   )
 }
