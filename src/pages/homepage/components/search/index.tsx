@@ -36,7 +36,10 @@ const INTIAL_ITEMS = [
 ]
 
 export function Search<T extends object>(
-  b: ComboBoxProps<T> & { fff: any; onChange: (query: any) => void }
+  b: Omit<ComboBoxProps<T>, 'children'> & {
+    fff: any
+    onChange: (query: any) => void
+  }
 ) {
   const [query, setQuery] = useState('')
 

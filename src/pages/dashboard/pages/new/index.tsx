@@ -15,11 +15,8 @@ import { Slider } from '~/system/slider'
 import { Text } from '~/system/text'
 import type { CreateJobInput, JobRole } from '~/types/graphql'
 
-import { useCreateCheckoutSessionMutation } from './graphql/create-checkout-session'
-import { useCreateJobMutation } from './graphql/create-job'
-
 // import { useCreateCheckoutSessionMutation } from './graphql/create-checkout-session'
-// import { useCreateJobMutation } from './graphql/create-job'
+import { useCreateJobMutation } from './graphql/create-job'
 
 interface Props {}
 
@@ -40,29 +37,29 @@ export const DashboardNew: Page = (props: Props) => {
   const {} = props
 
   const [, createJob] = useCreateJobMutation()
-  const [, createCheckoutSession] = useCreateCheckoutSessionMutation()
+  // const [, createCheckoutSession] = useCreateCheckoutSessionMutation()
 
   const handleSubmit: FormSubmitHandler<Values> = async values => {
     console.log(createJob, values)
-    // await createJob({
-    //   input: {
-    //     position: values.position,
-    //     role: values.role,
-    //     tags: values.tags,
-    //     description: JSON.stringify(values.description),
-    //     applyUrl: values.applyUrl,
-    //     remote: false,
-    //   },
-    // })
-
-    const { data } = await createCheckoutSession({
+    await createJob({
       input: {
-        name: 'hello',
-        price: 100,
+        position: values.position,
+        role: values.role,
+        tags: values.tags,
+        description: JSON.stringify(values.description),
+        applyUrl: values.applyUrl,
+        remote: false,
       },
     })
 
-    window.open(data!.createCheckoutSession.sessionUrl, '_blank')
+    // const { data } = await createCheckoutSession({
+    //   input: {
+    //     name: 'hello',
+    //     price: 100,
+    //   },
+    // })
+
+    // window.open(data!.createCheckoutSession.sessionUrl, '_blank')
   }
 
   return (
