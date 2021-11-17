@@ -15,7 +15,7 @@ export const PostedJobs = (props: Props) => {
 
   return (
     <div className="">
-      <div className="divide-y">
+      <div className="mb-2 divide-y">
         {jobs.map(job => (
           <Link
             key={job.id}
@@ -35,6 +35,7 @@ export const PostedJobs = (props: Props) => {
                   </Text>
                 ))}
               </div>
+              <Text size={12}>{job.status}</Text>
               <Text size={12}>
                 <RelativeTime>{job.createdAt}</RelativeTime>
               </Text>

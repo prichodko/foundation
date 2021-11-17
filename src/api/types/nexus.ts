@@ -202,11 +202,14 @@ export interface NexusGenFieldTypes {
   Mutation: {
     // field return type
     addLike: NexusGenRootTypes['Job'] // Job!
+    archiveJob: NexusGenRootTypes['Job'] // Job!
     createBillingPortalSession: NexusGenRootTypes['CreateBillingPortalSessionResult'] // CreateBillingPortalSessionResult!
     createCheckoutSession: NexusGenRootTypes['CreateCheckoutSessionResult'] // CreateCheckoutSessionResult!
     createJob: NexusGenRootTypes['Job'] // Job!
     createTag: NexusGenRootTypes['Tag'] // Tag!
+    publishJob: NexusGenRootTypes['Job'] // Job!
     removeLike: NexusGenRootTypes['Job'] // Job!
+    unpublishJob: NexusGenRootTypes['Job'] // Job!
     updateCompany: NexusGenRootTypes['Company'] // Company!
     updateJob: NexusGenRootTypes['Job'] // Job!
     updateUser: NexusGenRootTypes['User'] // User!
@@ -298,11 +301,14 @@ export interface NexusGenFieldTypeNames {
   Mutation: {
     // field return type name
     addLike: 'Job'
+    archiveJob: 'Job'
     createBillingPortalSession: 'CreateBillingPortalSessionResult'
     createCheckoutSession: 'CreateCheckoutSessionResult'
     createJob: 'Job'
     createTag: 'Tag'
+    publishJob: 'Job'
     removeLike: 'Job'
+    unpublishJob: 'Job'
     updateCompany: 'Company'
     updateJob: 'Job'
     updateUser: 'User'
@@ -348,6 +354,10 @@ export interface NexusGenArgTypes {
       // args
       id: string // ID!
     }
+    archiveJob: {
+      // args
+      id: string // ID!
+    }
     createCheckoutSession: {
       // args
       input: NexusGenInputs['CreateCheckoutSessionInput'] // CreateCheckoutSessionInput!
@@ -360,7 +370,15 @@ export interface NexusGenArgTypes {
       // args
       input: NexusGenInputs['CreateTagInput'] // CreateTagInput!
     }
+    publishJob: {
+      // args
+      id: string // ID!
+    }
     removeLike: {
+      // args
+      id: string // ID!
+    }
+    unpublishJob: {
       // args
       id: string // ID!
     }

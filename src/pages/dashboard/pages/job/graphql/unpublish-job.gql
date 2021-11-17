@@ -1,0 +1,6 @@
+mutation UnpublishJob($id: ID!) {
+  unpublishJob(id: $id) {
+    id
+    status
+  }
+}

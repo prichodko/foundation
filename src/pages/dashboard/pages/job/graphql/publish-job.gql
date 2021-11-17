@@ -1,0 +1,6 @@
+mutation PublishJob($id: ID!) {
+  publishJob(id: $id) {
+    id
+    status
+  }
+}

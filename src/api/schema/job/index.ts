@@ -7,6 +7,9 @@ export * from './update-job'
 export * from './add-like'
 export * from './remove-like'
 export * from './view-job'
+export * from './publish-job'
+export * from './unpublish-job'
+export * from './archive-job'
 
 import { JobRole, JobStatus } from '.prisma/client'
 

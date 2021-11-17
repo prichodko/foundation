@@ -1,0 +1,6 @@
+mutation ArchiveJob($id: ID!) {
+  archiveJob(id: $id) {
+    id
+    status
+  }
+}

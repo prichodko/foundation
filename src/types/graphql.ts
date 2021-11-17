@@ -110,7 +110,7 @@ export type Job = {
   viewCount: Scalars['Int']
 }
 
-export const enum JobRole {
+export enum JobRole {
   AccountingAndFinance = 'AccountingAndFinance',
   Administration = 'Administration',
   BusinessDevelopment = 'BusinessDevelopment',
@@ -128,7 +128,7 @@ export const enum JobRole {
   Sales = 'Sales',
 }
 
-export const enum JobStatus {
+export enum JobStatus {
   Archived = 'Archived',
   Closed = 'Closed',
   Draft = 'Draft',
@@ -138,11 +138,14 @@ export const enum JobStatus {
 export type Mutation = {
   __typename?: 'Mutation'
   addLike: Job
+  archiveJob: Job
   createBillingPortalSession: CreateBillingPortalSessionResult
   createCheckoutSession: CreateCheckoutSessionResult
   createJob: Job
   createTag: Tag
+  publishJob: Job
   removeLike: Job
+  unpublishJob: Job
   updateCompany: Company
   updateJob: Job
   updateUser: User
@@ -151,6 +154,10 @@ export type Mutation = {
 }
 
 export type MutationAddLikeArgs = {
+  id: Scalars['ID']
+}
+
+export type MutationArchiveJobArgs = {
   id: Scalars['ID']
 }
 
@@ -166,7 +173,15 @@ export type MutationCreateTagArgs = {
   input: CreateTagInput
 }
 
+export type MutationPublishJobArgs = {
+  id: Scalars['ID']
+}
+
 export type MutationRemoveLikeArgs = {
+  id: Scalars['ID']
+}
+
+export type MutationUnpublishJobArgs = {
   id: Scalars['ID']
 }
 

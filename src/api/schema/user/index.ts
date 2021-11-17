@@ -39,7 +39,6 @@ export const User = objectType({
               },
             },
           },
-
           rejectOnNotFound: true,
         })
 

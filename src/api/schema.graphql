@@ -118,13 +118,16 @@ enum JobStatus {
 
 type Mutation {
   addLike(id: ID!): Job!
+  archiveJob(id: ID!): Job!
   createBillingPortalSession: CreateBillingPortalSessionResult!
   createCheckoutSession(
     input: CreateCheckoutSessionInput!
   ): CreateCheckoutSessionResult!
   createJob(input: CreateJobInput!): Job!
   createTag(input: CreateTagInput!): Tag!
+  publishJob(id: ID!): Job!
   removeLike(id: ID!): Job!
+  unpublishJob(id: ID!): Job!
   updateCompany(input: UpdateCompanyInput!): Company!
   updateJob(input: UpdateJobInput!): Job!
   updateUser(input: UpdateUserInput!): User!

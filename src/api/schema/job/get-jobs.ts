@@ -23,6 +23,7 @@ export const GetJobs = queryField('jobs', {
 
     return await ctx.db.job.findMany({
       where: {
+        status: 'Live',
         AND: [
           {
             remote: input.query.remote,
