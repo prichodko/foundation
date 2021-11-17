@@ -1,19 +1,19 @@
 import { devtoolsExchange } from '@urql/devtools'
+import { cacheExchange } from '@urql/exchange-graphcache'
 import {
   createClient,
   Provider,
   errorExchange,
   dedupExchange,
-  cacheExchange,
   fetchExchange,
 } from 'urql'
 
 const urqlClient = createClient({
-  url: 'http://localhost:3000/api/graphql',
+  url: '/api/graphql',
   exchanges: [
     devtoolsExchange,
     dedupExchange,
-    cacheExchange,
+    cacheExchange({}),
     errorExchange({
       onError(error) {
         const { graphQLErrors, networkError } = error
