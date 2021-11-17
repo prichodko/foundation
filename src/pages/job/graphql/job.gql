@@ -6,6 +6,7 @@ query Job($id: ID!) {
     description
     applyUrl
     viewCount
+    liked
     tags {
       id
       name
@@ -13,6 +14,7 @@ query Job($id: ID!) {
     company {
       id
       name
+      slug
       email
       website
       twitter
