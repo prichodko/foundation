@@ -20,7 +20,7 @@ export const Navbar = ({}: Props) => {
       </Link>
       <div className="grid grid-flow-col gap-2">
         <Button href="/login" variant="minimal">
-          Sign In
+          Login
         </Button>
         <Button href="/dashboard/new">New Post</Button>
       </div>
