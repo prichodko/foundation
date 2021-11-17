@@ -3,7 +3,7 @@
  */
 
 const config = {
-  swcMinify: true,
+  // swcMinify: true,
   reactStrictMode: true,
   poweredByHeader: false,
   eslint: {
