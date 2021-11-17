@@ -19,18 +19,18 @@ const JobPosting = ({ job }: { job: JobsQuery['jobs'][0] }) => {
 
   const { id, position, tags, liked, company } = job
 
-  const handleClick = async () => {
+  const handleLikeClick = async () => {
     await addLike({ jobId: id })
   }
 
-  const handleClick2 = async () => {
+  const handleUnlikeClick = async () => {
     await removeLike({ jobId: id })
   }
 
   return (
     <Link
       href={{
-        pathname: '/dashboard/[slug]/[id]',
+        pathname: '/[slug]/[id]',
         query: {
           slug: company.slug,
           id: job.id,
@@ -55,7 +55,7 @@ const JobPosting = ({ job }: { job: JobsQuery['jobs'][0] }) => {
 
         <div>
           {liked ? (
-            <BaseButton onClick={handleClick2}>
+            <BaseButton onClick={handleUnlikeClick}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5"
@@ -70,7 +70,7 @@ const JobPosting = ({ job }: { job: JobsQuery['jobs'][0] }) => {
               </svg>
             </BaseButton>
           ) : (
-            <BaseButton onClick={handleClick}>
+            <BaseButton onClick={handleLikeClick}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-6 h-6"
@@ -111,22 +111,7 @@ export const Workverse = () => {
   return (
     <>
       <div className="max-w-3xl mx-auto min-h-[30vh]">
-        <Search fff={query} onChange={setQuery}>
-          {/* <Section key="tags" title="Tags">
-            <Item>Hello</Item>
-            <Item>Meow</Item>
-          </Section>
-          <Section key="location" title="Location">
-            <Item>Remote</Item>
-            <Item>United States</Item>
-            <Item>Europe</Item>
-          </Section>
-          <Section key="role" title="Role">
-            <Item>Engineering</Item>
-            <Item>Design</Item>
-            <Item>Product</Item>
-          </Section> */}
-        </Search>
+        <Search fff={query} onChange={setQuery} />
       </div>
 
       {/* <div>

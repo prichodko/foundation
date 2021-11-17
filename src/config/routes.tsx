@@ -24,8 +24,8 @@ export type Routes =
   | '/jobs/nft'
   | '/companies'
   | DynamicRoute<'/[slug]'>
+  | DynamicRoute<'/[slug]/[id]'>
   | '/dashboard'
   | '/dashboard/new'
   | DynamicRoute<'/dashboard/[slug]'>
-  | DynamicRoute<'/dashboard/[slug]/[id]'>
   | DynamicRoute<'/dashboard/jobs/[id]'>

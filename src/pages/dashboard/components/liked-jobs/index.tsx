@@ -15,7 +15,7 @@ export const LikedJobs = (props: Props) => {
         <Link
           key={job.id}
           href={{
-            pathname: '/dashboard/[slug]/[id]',
+            pathname: '/[slug]/[id]',
             query: {
               slug: job.company.slug,
               id: job.id,
