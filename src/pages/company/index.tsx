@@ -3,6 +3,8 @@ import Error from 'next/error'
 
 import { Link } from '~/components/link'
 import { useUrlQuery } from '~/hooks/use-url-query'
+import { Button } from '~/system/button'
+import { Heading } from '~/system/heading'
 import { Text } from '~/system/text'
 
 import { useCompanyBySlugQuery } from './graphql/company-by-slug'
@@ -36,19 +38,24 @@ export const Company: Page = (props: Props) => {
   return (
     <>
       <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          <Text weight={500}>{company.name}</Text>
-          <Text>{company.description}</Text>
-          <Text>{company.website}</Text>
-          <Text>{company.twitter}</Text>
-          <Text>{company.viewCount} views</Text>
+        <div className="flex justify-between">
+          <div className="space-y-4">
+            <Heading size={24}>{company.name}</Heading>
+            <Text>{company.description}</Text>
+            <Text>{company.website}</Text>
+            <Text>{company.twitter}</Text>
+            <Text>{company.viewCount} views</Text>
+          </div>
+          <div className="ml-36">
+            <Button variant="outline">Subscribe</Button>
+          </div>
         </div>
 
         {company.jobs.map(job => (
           <Link
             key={job.id}
             href={{
-              pathname: '/dashboard/[slug]/[id]',
+              pathname: '/[slug]/[id]',
               query: {
                 slug: company.slug,
                 id: job.id,
