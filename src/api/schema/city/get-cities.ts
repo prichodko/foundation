@@ -20,6 +20,7 @@ export const GetCities = queryField('cities', {
       },
     }),
   },
+  authorize: (_parent, _args, ctx) => ctx.auth.user(ctx),
   async resolve(_root, { input }, _ctx) {
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input.query}&components=country:${input.country}&types=(cities)&key=${process.env.GOOGLE_PLACES_API_KEY}`

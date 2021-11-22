@@ -4,7 +4,7 @@ export const prisma: PrismaClient =
   (global as any).prisma ??
   new PrismaClient({
     // rejectOnNotFound: true,
-    log: ['query'],
+    // log: ['query'],
   })
 
 if (process.env.NODE_ENV !== 'production') {

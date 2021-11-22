@@ -21,7 +21,7 @@ export const GetJobs = queryField('jobs', {
   async resolve(_, { input }, ctx) {
     // console.log(input.query.tags)
 
-    return await ctx.db.job.findMany({
+    return await ctx.prisma.job.findMany({
       where: {
         status: 'Live',
         AND: [

@@ -15,8 +15,9 @@ export const CreateJob = mutationField('createJob', {
       },
     }),
   },
+  authorize: (_parent, _args, ctx) => ctx.auth.user(ctx),
   async resolve(_root, { input }, ctx) {
-    const job = await ctx.db.job.create({
+    const job = await ctx.prisma.job.create({
       data: {
         position: input.position,
         role: input.role,

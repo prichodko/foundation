@@ -10,8 +10,9 @@ export const UpdateUser = mutationField('updateUser', {
       },
     }),
   },
+  authorize: (_, __, ctx) => ctx.auth.user(ctx),
   async resolve(_root, { input }, ctx) {
-    const user = await ctx.db.user.update({
+    const user = await ctx.prisma.user.update({
       where: {
         id: ctx.user.id,
       },

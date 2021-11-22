@@ -1,7 +1,8 @@
 import path from 'path'
 
+import { ForbiddenError } from 'apollo-server-core'
 import { GraphQLDateTime } from 'graphql-scalars'
-import { decorateType, makeSchema } from 'nexus'
+import { decorateType, makeSchema, fieldAuthorizePlugin } from 'nexus'
 
 import * as checkout from './checkout'
 import * as city from './city'
@@ -26,6 +27,13 @@ export const schema = makeSchema({
     module: path.join(process.cwd(), 'src/api/context.ts'),
     export: 'Context',
   },
+  plugins: [
+    fieldAuthorizePlugin({
+      formatError: () => {
+        return new ForbiddenError('Not Authorized')
+      },
+    }),
+  ],
   sourceTypes: {
     modules: [
       {

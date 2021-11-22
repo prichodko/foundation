@@ -2,6 +2,7 @@ import { mutationField, inputObjectType } from 'nexus'
 
 export const UpdateJob = mutationField('updateJob', {
   type: 'Job',
+
   args: {
     input: inputObjectType({
       name: 'UpdateJobInput',
@@ -16,8 +17,11 @@ export const UpdateJob = mutationField('updateJob', {
       },
     }),
   },
+
+  authorize: (_parent, args, ctx) => ctx.auth.owner.job(args.input.id),
+
   async resolve(_root, { input }, ctx) {
-    const job = await ctx.db.job.update({
+    const job = await ctx.prisma.job.update({
       where: {
         id: input.id,
       },

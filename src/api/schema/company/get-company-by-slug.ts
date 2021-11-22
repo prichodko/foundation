@@ -7,7 +7,7 @@ export const GetCompanyBySlug = queryField('companyBySlug', {
     slug: stringArg(),
   },
   async resolve(_root, { slug }, ctx) {
-    const company = await ctx.db.company.findUnique({
+    const company = await ctx.prisma.company.findUnique({
       where: {
         slug,
       },

@@ -5,8 +5,9 @@ export const ArchiveJob = mutationField('archiveJob', {
   args: {
     id: idArg(),
   },
+  authorize: (_parent, args, ctx) => ctx.auth.owner.job(args.id),
   async resolve(_root, { id }, ctx) {
-    const job = await ctx.db.job.update({
+    const job = await ctx.prisma.job.update({
       where: {
         id,
       },

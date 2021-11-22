@@ -3,11 +3,13 @@ import { idArg, queryField } from 'nexus'
 
 export const GetCompany = queryField('company', {
   type: 'Company',
+
   args: {
     id: idArg(),
   },
+
   async resolve(_root, { id }, ctx) {
-    const company = await ctx.db.company.findUnique({
+    const company = await ctx.prisma.company.findUnique({
       where: {
         id,
       },

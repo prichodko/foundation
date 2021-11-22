@@ -14,8 +14,9 @@ export const UpdateCompany = mutationField('updateCompany', {
       },
     }),
   },
+  authorize: (_root, args, ctx) => ctx.auth.owner.company(args.input.id),
   async resolve(_root, { input }, ctx) {
-    const company = await ctx.db.company.update({
+    const company = await ctx.prisma.company.update({
       where: {
         id: input.id,
       },

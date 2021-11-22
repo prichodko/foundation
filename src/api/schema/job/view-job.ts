@@ -6,7 +6,7 @@ export const ViewJob = mutationField('viewJob', {
     id: idArg(),
   },
   async resolve(_root, { id }, ctx) {
-    const job = await ctx.db.job.update({
+    const job = await ctx.prisma.job.update({
       where: {
         id,
       },

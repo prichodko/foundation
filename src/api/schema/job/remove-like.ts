@@ -5,8 +5,9 @@ export const RemoveLike = mutationField('removeLike', {
   args: {
     id: idArg(),
   },
+  authorize: (_parent, args, ctx) => ctx.auth.owner.job(args.id),
   async resolve(_root, { id }, ctx) {
-    await ctx.db.user.update({
+    await ctx.prisma.user.update({
       where: {
         id: ctx.user.id,
       },
@@ -17,7 +18,7 @@ export const RemoveLike = mutationField('removeLike', {
       },
     })
 
-    const job = await ctx.db.job.findUnique({
+    const job = await ctx.prisma.job.findUnique({
       where: {
         id,
       },

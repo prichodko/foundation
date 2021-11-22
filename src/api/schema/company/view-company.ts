@@ -6,7 +6,7 @@ export const ViewCompany = mutationField('viewCompany', {
     id: idArg(),
   },
   async resolve(_root, { id }, ctx) {
-    const company = await ctx.db.company.update({
+    const company = await ctx.prisma.company.update({
       where: {
         id,
       },

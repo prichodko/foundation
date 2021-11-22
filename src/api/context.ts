@@ -1,8 +1,10 @@
 import type { User } from '@prisma/client'
 
+import type { Auth } from './lib/auth'
 import type { prisma } from './lib/prisma'
 
 export type Context = {
-  db: typeof prisma
+  prisma: typeof prisma
   user: User
+  auth: Auth
 }

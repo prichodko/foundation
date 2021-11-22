@@ -6,7 +6,7 @@ export const GetJob = queryField('job', {
     id: idArg(),
   },
   async resolve(_, { id }, ctx) {
-    const job = await ctx.db.job.findUnique({
+    const job = await ctx.prisma.job.findUnique({
       where: {
         id,
       },

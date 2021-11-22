@@ -15,7 +15,7 @@ export const Tag = objectType({
           return parent.count
         }
 
-        const count = await ctx.db.tag.findUnique({
+        const count = await ctx.prisma.tag.findUnique({
           where: {
             id: parent.id,
           },

@@ -22,7 +22,7 @@ export const Company = objectType({
     t.field('jobs', {
       type: list('Job'),
       resolve: async (parent, _args, ctx) => {
-        const jobs = await ctx.db.company
+        const jobs = await ctx.prisma.company
           .findUnique({
             where: { id: parent.id },
           })

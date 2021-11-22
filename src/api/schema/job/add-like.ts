@@ -5,8 +5,9 @@ export const AddLike = mutationField('addLike', {
   args: {
     id: idArg(),
   },
+  authorize: (_parent, _args, ctx) => ctx.auth.user(ctx),
   async resolve(_root, { id }, ctx) {
-    const created = await ctx.db.user.update({
+    const created = await ctx.prisma.user.update({
       where: {
         id: ctx.user.id,
       },

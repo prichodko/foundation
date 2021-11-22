@@ -6,13 +6,13 @@ import { stripe } from '../../lib/stripe'
 export const CreateBillingPortalSession = mutationField(
   'createBillingPortalSession',
   {
+    authorize: (_, __, ctx) => ctx.auth.user(ctx),
     type: objectType({
       name: 'CreateBillingPortalSessionResult',
       definition(t) {
         t.string('url')
       },
     }),
-
     resolve: async (_root, {}, ctx) => {
       if (!ctx.user.stripeCustomerId) {
         throw new UserInputError('User has no customer id')

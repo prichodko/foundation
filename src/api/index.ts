@@ -1,10 +1,9 @@
 import { ApolloServer } from 'apollo-server-micro'
-import { applyMiddleware } from 'graphql-middleware'
 import type { NextApiRequest } from 'next'
 
 import type { Context } from './context'
+import { createAuth } from './lib/auth'
 import { prisma } from './lib/prisma'
-import { permissions } from './permissions'
 import { schema } from './schema'
 
 interface Options {
@@ -16,13 +15,16 @@ const context = async ({}: Options): Promise<Context> => {
     where: {
       id: 'ckw2e39m2195108mfox34yhz1',
     },
+    rejectOnNotFound: true,
   })
 
-  return { db: prisma, user: user! }
+  const auth = createAuth(user!)
+
+  return { prisma, user, auth }
 }
 
 export const server = new ApolloServer({
-  schema: applyMiddleware(schema, permissions),
+  schema,
   context,
   introspection: true,
 })

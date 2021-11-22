@@ -2,6 +2,7 @@ import { queryField, list, inputObjectType } from 'nexus'
 
 export const GetTags = queryField('tags', {
   type: list('Tag'),
+
   args: {
     input: inputObjectType({
       name: 'GetTagsInput',
@@ -11,11 +12,13 @@ export const GetTags = queryField('tags', {
       },
     }),
   },
+
   async resolve(_root, { input }, ctx) {
-    const tags = await ctx.db.tag.findMany({
+    const tags = await ctx.prisma.tag.findMany({
       where: {
         name: {
           contains: input.query,
+          mode: 'insensitive',
         },
         id: {
           notIn: input.notIn,

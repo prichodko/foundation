@@ -39,7 +39,7 @@ export const Job = objectType({
     t.list.field('tags', {
       type: 'Tag',
       resolve: async (parent, _args, ctx) => {
-        const tags = await ctx.db.job
+        const tags = await ctx.prisma.job
           .findUnique({
             where: { id: parent.id },
           })
@@ -55,7 +55,7 @@ export const Job = objectType({
           return false
         }
 
-        const liked = await ctx.db.userLikes.findUnique({
+        const liked = await ctx.prisma.userLikes.findUnique({
           where: {
             userId_jobId: {
               jobId: parent.id,
@@ -71,7 +71,7 @@ export const Job = objectType({
     t.field('company', {
       type: 'Company',
       resolve: async (parent, _args, ctx) => {
-        const company = await ctx.db.job
+        const company = await ctx.prisma.job
           .findUnique({
             where: {
               id: parent.id,

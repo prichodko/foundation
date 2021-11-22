@@ -12,7 +12,7 @@ export const User = objectType({
     t.nullable.field('company', {
       type: 'Company',
       resolve: async (parent, _args, ctx) => {
-        const user = await ctx.db.user.findUnique({
+        const user = await ctx.prisma.user.findUnique({
           where: {
             id: parent.id,
           },
@@ -28,7 +28,7 @@ export const User = objectType({
     t.list.field('jobs', {
       type: 'Job',
       resolve: async (parent, _args, ctx) => {
-        const user = await ctx.db.user.findUnique({
+        const user = await ctx.prisma.user.findUnique({
           where: {
             id: parent.id,
           },
@@ -48,7 +48,7 @@ export const User = objectType({
     t.list.field('likes', {
       type: 'Job',
       resolve: async (parent, _args, ctx) => {
-        const user = await ctx.db.user.findUnique({
+        const user = await ctx.prisma.user.findUnique({
           where: {
             id: parent.id,
           },

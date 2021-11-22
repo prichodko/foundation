@@ -20,6 +20,8 @@ export const CreateCheckoutSession = mutationField('createCheckoutSession', {
     }),
   },
 
+  authorize: (_, __, ctx) => ctx.auth.user(ctx),
+
   async resolve(_root, { input: _input }, ctx) {
     if (!ctx.user.stripeCustomerId) {
       const customer = await stripe.customers.create({
@@ -27,7 +29,7 @@ export const CreateCheckoutSession = mutationField('createCheckoutSession', {
         metadata: {},
       })
 
-      ctx.user = await ctx.db.user.update({
+      ctx.user = await ctx.prisma.user.update({
         where: { id: ctx.user.id },
         data: {
           stripeCustomerId: customer.id,
