@@ -1,7 +1,0 @@
-query Tags($input: GetTagsInput!) {
-  tags(input: $input) {
-    id
-    name
-    count
-  }
-}

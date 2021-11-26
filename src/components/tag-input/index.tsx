@@ -1,17 +1,11 @@
-// @ts-nocheck
+import { useMemo, useState } from 'react'
 
-import { useEffect, useState } from 'react'
+import { CrossCircledIcon } from '@radix-ui/react-icons'
 
-import { Cross1Icon, Cross2Icon, CrossCircledIcon } from '@radix-ui/react-icons'
-import { useAsyncList, useListData } from '@react-stately/data'
-
+import { useSearchTagsQuery } from '~/pages/homepage/components/search/graphql/search'
 import { BaseButton } from '~/system/button'
 import { Combobox, Item } from '~/system/combobox'
 import { useField } from '~/system/form'
-import { Text } from '~/system/text'
-
-import { useCreateTagMutation } from './graphql/create-tag'
-import { useTagsQuery } from './graphql/tags'
 
 interface Props {
   name: string
@@ -20,59 +14,43 @@ interface Props {
 }
 
 export const TagInput = (props: Props) => {
-  const { field, fieldState, formState } = useField(props)
+  const { field } = useField(props)
 
   const value = props.value ?? (field?.value as Props['value'])
   const onChange = props.onChange ?? (field?.onChange as Props['onChange'])
 
-  // const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+  const [inputValue, setInputValue] = useState('')
 
-  const [filterText, setFilterText] = useState('')
-  const [result, reexecuteQuery] = useTagsQuery({
-    variables: { input: { query: filterText, notIn: value! } },
+  const [{ data, fetching }] = useSearchTagsQuery({
+    variables: {
+      name: inputValue,
+      not: value!,
+    },
   })
 
-  // const list = useListData({
-  //   initialItems: result.data?.tags ?? [],
-  // })
+  const items = useMemo(() => {
+    if (!data) {
+      return []
+    }
 
-  // useEffect(() => {
-  //   list.items = result.data?.tags ?? []
-  // }, [list, result])
+    if (data.searchTags.length === 0) {
+      return [
+        { id: 'CREATE_NEW', name: `Create new tag: ${inputValue}`, count: 0 },
+      ]
+    }
 
-  const [, createTag] = useCreateTagMutation()
-
-  // let list = useAsyncList<{ id: string; name: string }>({
-  //   async load({ signal, filterText }) {
-  //     // const result = client.query<TagsQuery, TagsQueryVariables>(TagsDocument, {
-  //     //   input: { query: filterText ?? '' },
-  //     // })
-
-  //     // await wait(2000)
-
-  //     console.log(filterText)
-
-  //     // let res = await fetch(
-  //     //   `https://swapi.dev/api/people/?search=${filterText}`,
-  //     //   { signal }
-  //     // )
-  //     // let json = await res.json()
-
-  //     return {
-  //       items: [
-  //         { id: '1', name: 'test' },
-  //         { id: 'CREATE_NEW', name: `Create new tag: ${filterText}` },
-  //       ],
-  //     }
-  //   },
-  // })
+    return data.searchTags.map(tag => ({
+      id: tag.id,
+      name: tag.name,
+      count: tag.count,
+    }))
+  }, [data, inputValue])
 
   const handleSelectionChange = (key: any) => {
     if (key) {
-      onChange?.([...value, key])
+      onChange?.([...value!, key])
     }
-    // list.setSelectedKeys(new Set([key]))
-    setFilterText('')
+    setInputValue('')
   }
 
   const handleRemove = (key: string) => {
@@ -86,7 +64,7 @@ export const TagInput = (props: Props) => {
           return (
             <div
               key={key}
-              className="flex items-center px-2 py-1 border rounded-md bg-gray-1 text-12 text-low"
+              className="flex items-center px-2 py-1 border rounded-md bg-gray-1 text-12 text"
             >
               {key}
               <BaseButton
@@ -102,11 +80,11 @@ export const TagInput = (props: Props) => {
 
       <Combobox
         label="Tags"
-        items={result.data?.tags ?? []}
-        inputValue={filterText}
-        onInputChange={setFilterText}
+        items={items}
+        inputValue={inputValue}
+        onInputChange={setInputValue}
         onSelectionChange={handleSelectionChange}
-        loading={result.fetching}
+        loading={fetching}
       >
         {item => (
           <Item key={item.id} textValue={item.name}>
