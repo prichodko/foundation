@@ -23,9 +23,11 @@ generates:
       - "typescript-operations"
       - "typescript-urql"
     config:
+      arrayInputCoercion: false
       pureMagicComment: true
       strictScalars: true
       useTypeImports: true
+      # immutableTypes: true
       gqlImport: urql#gql
       scalars:
         DateTime: Date
