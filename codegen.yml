@@ -13,6 +13,7 @@ generates:
       constEnums: true
       scalars:
         DateTime: Date
+        JSONObject: JsonObject
   src/:
     preset: near-operation-file
     presetConfig:
@@ -28,6 +29,8 @@ generates:
       gqlImport: urql#gql
       scalars:
         DateTime: Date
+        JSONObject: JsonObject
+
 
 
 

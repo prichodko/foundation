@@ -1,28 +1,24 @@
 import path from 'path'
 
 import { ForbiddenError } from 'apollo-server-core'
-import { GraphQLDateTime } from 'graphql-scalars'
-import { decorateType, makeSchema, fieldAuthorizePlugin } from 'nexus'
+import { makeSchema, fieldAuthorizePlugin } from 'nexus'
 
+import * as alert from './alert'
 import * as checkout from './checkout'
 import * as city from './city'
 import * as company from './company'
 import * as job from './job'
 import * as objects from './objects'
+import * as scalars from './scalars'
 import * as tag from './tag'
 import * as user from './user'
-
-const DateTime = decorateType(GraphQLDateTime, {
-  sourceType: 'Date',
-  asNexusMethod: 'date',
-})
 
 export const schema = makeSchema({
   nonNullDefaults: {
     input: true,
     output: true,
   },
-  types: [DateTime, objects, user, job, company, checkout, tag, city],
+  types: [scalars, objects, user, job, company, checkout, tag, city, alert],
   contextType: {
     module: path.join(process.cwd(), 'src/api/context.ts'),
     export: 'Context',
