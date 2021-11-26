@@ -4,7 +4,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["filterJson"]
 }
 
 model User {
@@ -12,13 +13,61 @@ model User {
   createdAt        DateTime    @default(now()) @map("created_at")
   updatedAt        DateTime    @updatedAt @map("updated_at")
   email            String      @unique
-  name             String
+  emailVerified    DateTime?   @map("email_verified")
+  name             String?
+  image            String?
+  accounts         Account[]
+  sessions         Session[]
   company          Company?
   jobs             Job[]
   likes            UserLikes[]
+  alerts           Alert[]
   stripeCustomerId String?     @map("stripe_customer_id")
 
   @@map(name: "users")
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  userId            String   @map("user_od")
+  user              User     @relation(fields: [userId], references: [id])
+  type              String   @map("provider_type")
+  provider          String   @map("provider")
+  providerAccountId String   @map("provider_account_id")
+
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+
+  @@unique([provider, providerAccountId])
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  expires      DateTime
+  userId       String   @map("user_id")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
 }
 
 model UserLikes {
@@ -76,13 +125,22 @@ enum JobRole {
   Other
 }
 
+enum JobType {
+  FullTime
+  PartTime
+  Contract
+  Internship
+}
+
 model Job {
   id          String      @id @default(cuid())
   createdAt   DateTime    @default(now()) @map("created_at")
   updatedAt   DateTime    @updatedAt @map("updated_at")
-  position    String
+  archivedAt  DateTime?   @map("archived_at")
+  type        JobType     @default(FullTime)
   role        JobRole
-  description String
+  position    String
+  description Json        @default("{}")
   applyUrl    String      @map("apply_url")
   remote      Boolean
   user        User        @relation(fields: [userId], references: [id])
@@ -91,15 +149,30 @@ model Job {
   tags        Tag[]
   viewCount   Int         @default(0) @map("view_count")
   status      JobStatus   @default(Draft)
+  salaryMin   Int         @default(0) @map("salary_min")
+  salaryMax   Int         @default(0) @map("salary_max")
+  paysCrypto  Boolean     @default(false) @map("pays_crypto")
 
   @@map(name: "jobs")
 }
 
 model Tag {
   id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
   name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
   jobs      Job[]
 
   @@map(name: "tags")
+}
+
+model Alert {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  filter    Json
+  read      Boolean  @default(false)
+
+  @@map(name: "alerts")
 }
