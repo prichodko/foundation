@@ -2,14 +2,19 @@ import { mutationField, idArg } from 'nexus'
 
 export const AddLike = mutationField('addLike', {
   type: 'Job',
+
   args: {
     id: idArg(),
   },
-  authorize: (_parent, _args, ctx) => ctx.auth.user(ctx),
+
+  authorize: (_parent, _args, ctx) => ctx.auth.user,
+
   async resolve(_root, { id }, ctx) {
+    const user = ctx.user!
+
     const created = await ctx.prisma.user.update({
       where: {
-        id: ctx.user.id,
+        id: user.id,
       },
       data: {
         likes: {

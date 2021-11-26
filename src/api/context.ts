@@ -5,6 +5,6 @@ import type { prisma } from './lib/prisma'
 
 export type Context = {
   prisma: typeof prisma
-  user: User
+  user: User | null
   auth: Auth
 }

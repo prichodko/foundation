@@ -2,9 +2,11 @@ import { queryField, idArg } from 'nexus'
 
 export const GetJob = queryField('job', {
   type: 'Job',
+
   args: {
     id: idArg(),
   },
+
   async resolve(_, { id }, ctx) {
     const job = await ctx.prisma.job.findUnique({
       where: {

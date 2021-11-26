@@ -19,10 +19,12 @@ export const CheckoutSession = queryField('checkoutSession', {
     id: idArg(),
   },
 
+  authorize: (_parent, _args, ctx) => ctx.auth.user,
+
   resolve: async (_root, { id }, ctx) => {
     const session = await stripe.checkout.sessions.retrieve(id)
 
-    if (session.customer !== ctx.user.stripeCustomerId) {
+    if (session.customer !== ctx.user!.stripeCustomerId) {
       throw new ForbiddenError('Not Authorized')
     }
 

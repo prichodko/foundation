@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server-micro'
 import type { NextApiRequest } from 'next'
+import { getToken } from 'next-auth/jwt'
 
 import type { Context } from './context'
 import { createAuth } from './lib/auth'
@@ -10,15 +11,26 @@ interface Options {
   req: NextApiRequest
 }
 
-const context = async ({}: Options): Promise<Context> => {
+const getUser = async (req: NextApiRequest): Promise<Context['user']> => {
+  const session = await getToken({ req, secret: process.env.SECRET! })
+
+  if (!session) {
+    return null
+  }
+
   const user = await prisma.user.findUnique({
     where: {
-      id: 'ckw2e39m2195108mfox34yhz1',
+      email: session.email!,
     },
-    rejectOnNotFound: true,
   })
 
-  const auth = createAuth(user!)
+  return user
+}
+
+const context = async ({ req }: Options): Promise<Context> => {
+  const user = await getUser(req)
+
+  const auth = createAuth(user)
 
   return { prisma, user, auth }
 }

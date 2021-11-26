@@ -3,7 +3,7 @@ import type { Context } from '../context'
 import { prisma } from './prisma'
 
 export type Auth = {
-  user: (ctx: Context) => Promise<boolean> | boolean
+  user: boolean
   owner: {
     job: (jobId: string) => Promise<boolean> | boolean
     company: (companyId: string) => Promise<boolean> | boolean
@@ -12,9 +12,7 @@ export type Auth = {
 
 export const createAuth = (user: Context['user']): Auth => {
   return {
-    user: (ctx: Context) => {
-      return !!ctx.user
-    },
+    user: !!user,
     owner: {
       job: async (jobId: string) => {
         if (!user) {

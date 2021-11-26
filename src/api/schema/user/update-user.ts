@@ -2,6 +2,7 @@ import { mutationField, inputObjectType } from 'nexus'
 
 export const UpdateUser = mutationField('updateUser', {
   type: 'User',
+
   args: {
     input: inputObjectType({
       name: 'UpdateUserInput',
@@ -10,11 +11,13 @@ export const UpdateUser = mutationField('updateUser', {
       },
     }),
   },
-  authorize: (_, __, ctx) => ctx.auth.user(ctx),
+
+  authorize: (_parent, _args, ctx) => ctx.auth.user,
+
   async resolve(_root, { input }, ctx) {
     const user = await ctx.prisma.user.update({
       where: {
-        id: ctx.user.id,
+        id: ctx.user!.id,
       },
       data: {
         name: input.name,

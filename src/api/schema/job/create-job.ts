@@ -2,12 +2,14 @@ import { mutationField, inputObjectType } from 'nexus'
 
 export const CreateJob = mutationField('createJob', {
   type: 'Job',
+
   args: {
     input: inputObjectType({
       name: 'CreateJobInput',
       definition(t) {
         t.string('position')
         t.field('role', { type: 'JobRole' })
+        t.field('type', { type: 'JobType' })
         t.string('description')
         t.string('applyUrl')
         t.boolean('remote')
@@ -15,8 +17,12 @@ export const CreateJob = mutationField('createJob', {
       },
     }),
   },
-  authorize: (_parent, _args, ctx) => ctx.auth.user(ctx),
+
+  authorize: (_parent, _args, ctx) => ctx.auth.user,
+
   async resolve(_root, { input }, ctx) {
+    const user = ctx.user!
+
     const job = await ctx.prisma.job.create({
       data: {
         position: input.position,
@@ -24,12 +30,13 @@ export const CreateJob = mutationField('createJob', {
         description: input.description,
         applyUrl: input.applyUrl,
         remote: input.remote,
+        type: input.type,
         tags: {
           connect: input.tags.map(tagId => ({ id: tagId })),
         },
         user: {
           connect: {
-            id: ctx.user.id,
+            id: user.id,
           },
         },
       },
