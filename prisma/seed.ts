@@ -1,12 +1,14 @@
-import { prisma } from '~/api/lib/prisma'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 async function main() {
   await prisma.user.upsert({
-    where: { email: 'pvl@workverse.xyz' },
+    where: { email: 'pavel@workverse.xyz' },
     update: {},
     create: {
-      email: 'pvl@workverse.xyz',
-      name: 'Alice',
+      email: 'pavel@workverse.xyz',
+      name: 'Pavel',
       company: {
         create: {
           email: 'gm@workverse.xyz',
@@ -18,6 +20,58 @@ async function main() {
             'Connecting people with next-generation organizations and DAOs.',
         },
       },
+      jobs: {
+        create: [
+          {
+            position: 'Frontend Engineer',
+            applyUrl: 'https://workverse.xyz/careers',
+            remote: false,
+            role: 'Engineering',
+            description: '{}',
+            paysCrypto: false,
+            status: 'Live',
+            type: 'FullTime',
+            tags: {
+              create: [{ name: 'Frontend' }, { name: 'NFT' }],
+            },
+          },
+          {
+            position: 'Backend Engineer',
+            applyUrl: 'https://workverse.xyz/careers',
+            remote: false,
+            role: 'Engineering',
+            description: '{}',
+            paysCrypto: true,
+            status: 'Live',
+            type: 'FullTime',
+            tags: {
+              create: [{ name: 'Backend' }, { name: 'DeFi' }],
+            },
+          },
+          {
+            position: 'Product Designer',
+            applyUrl: 'https://workverse.xyz/careers',
+            remote: false,
+            role: 'Design',
+            description: '{}',
+            paysCrypto: true,
+            status: 'Live',
+            type: 'Contract',
+            tags: {
+              create: [{ name: 'Design' }, { name: 'Gaming' }],
+            },
+          },
+        ],
+      },
+    },
+  })
+
+  await prisma.user.upsert({
+    where: { email: 'prichodko.p@gmail.com' },
+    update: {},
+    create: {
+      email: 'prichodko.p@gmail.com',
+      name: 'Pavel',
     },
   })
 }
