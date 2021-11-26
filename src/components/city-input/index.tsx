@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 
 import { Combobox, Item } from '~/system/combobox'
 
-import { useCitiesQuery } from './graphql/cities'
+import { useSearchCitiesQuery } from './graphql/cities'
 
 interface Props {
   country: string
@@ -12,15 +12,13 @@ interface Props {
 export const CityInput = (props: Props) => {
   const { country } = props
 
-  const [query, setQuery] = useState('')
-  const [{ data, fetching }] = useCitiesQuery({
+  const [name, setName] = useState('')
+  const [{ data, fetching }] = useSearchCitiesQuery({
     variables: {
-      input: {
-        query,
-        country,
-      },
+      country,
+      name,
     },
-    pause: !query,
+    pause: !name,
   })
 
   const onSelectionChange = (key: any) => {
@@ -34,9 +32,9 @@ export const CityInput = (props: Props) => {
       return []
     }
 
-    return data.cities.map(city => ({
-      id: city.value,
-      name: city.label,
+    return data.searchCities.map(city => ({
+      id: city.id,
+      name: city.name,
     }))
   }, [data])
 
@@ -44,8 +42,8 @@ export const CityInput = (props: Props) => {
     <>
       <Combobox
         items={items}
-        inputValue={query}
-        onInputChange={setQuery}
+        inputValue={name}
+        onInputChange={setName}
         onSelectionChange={onSelectionChange}
         loading={fetching}
       >

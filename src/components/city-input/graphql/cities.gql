@@ -1,6 +1,6 @@
-query Cities($input: GetCitiesInput!) {
-  cities(input: $input) {
-    value
-    label
+query SearchCities($country: String!, $name: String!) {
+  searchCities(country: $country, name: $name) {
+    id
+    name
   }
 }

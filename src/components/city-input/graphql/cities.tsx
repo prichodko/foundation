@@ -3,26 +3,30 @@ import * as Urql from 'urql'
 
 import type * as Types from '../../../types/graphql'
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-export type CitiesQueryVariables = Types.Exact<{
-  input: Types.GetCitiesInput
+export type SearchCitiesQueryVariables = Types.Exact<{
+  country: Types.Scalars['String']
+  name: Types.Scalars['String']
 }>
 
-export type CitiesQuery = {
+export type SearchCitiesQuery = {
   __typename?: 'Query'
-  cities: Array<{ __typename?: 'City'; value: string; label: string }>
+  searchCities: Array<{ __typename?: 'City'; id: string; name: string }>
 }
 
-export const CitiesDocument = /*#__PURE__*/ gql`
-  query Cities($input: GetCitiesInput!) {
-    cities(input: $input) {
-      value
-      label
+export const SearchCitiesDocument = /*#__PURE__*/ gql`
+  query SearchCities($country: String!, $name: String!) {
+    searchCities(country: $country, name: $name) {
+      id
+      name
     }
   }
 `
 
-export function useCitiesQuery(
-  options: Omit<Urql.UseQueryArgs<CitiesQueryVariables>, 'query'> = {}
+export function useSearchCitiesQuery(
+  options: Omit<Urql.UseQueryArgs<SearchCitiesQueryVariables>, 'query'> = {}
 ) {
-  return Urql.useQuery<CitiesQuery>({ query: CitiesDocument, ...options })
+  return Urql.useQuery<SearchCitiesQuery>({
+    query: SearchCitiesDocument,
+    ...options,
+  })
 }
