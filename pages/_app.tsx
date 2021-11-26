@@ -1,6 +1,7 @@
 import { IdProvider } from '@radix-ui/react-id'
 import { SSRProvider } from '@react-aria/ssr'
-// import { SessionProvider } from 'next-auth/react'
+import type { PageLayout } from 'next'
+import { SessionProvider } from 'next-auth/react'
 // import type { PageLayout } from 'next'
 import { ThemeProvider } from 'next-themes'
 import type { AppProps } from 'next/app'
@@ -37,6 +38,9 @@ import 'focus-visible'
 const App = ({ Component, pageProps }: AppProps) => {
   useKeyboardShortcuts()
 
+  // @ts-ignore
+  const layout: PageLayout = Component.getLayout ?? (page => page)
+
   return (
     <ThemeProvider
       attribute="class"
@@ -50,14 +54,14 @@ const App = ({ Component, pageProps }: AppProps) => {
       <SSRProvider>
         <UrqlProvider>
           <IdProvider>
-            <div>
-              <Navbar />
+            <SessionProvider session={pageProps.session}>
               <div>
+                <Navbar />
                 <div className="max-w-5xl min-h-screen px-12 py-24 mx-auto">
-                  <Component {...pageProps} />
+                  {layout(<Component {...pageProps} />)}
                 </div>
               </div>
-            </div>
+            </SessionProvider>
           </IdProvider>
         </UrqlProvider>
       </SSRProvider>
