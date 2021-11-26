@@ -1,6 +1,6 @@
 import type { Page } from 'next'
 
-import { SelectRole } from '~/components/select-role'
+import { SelectJobRole } from '~/components/select-job-role'
 import { TagInput } from '~/components/tag-input'
 import { useUrlQuery } from '~/hooks/use-url-query'
 import { useJobQuery } from '~/pages/job/graphql/job'
@@ -65,7 +65,7 @@ export const DashboardJob: Page = (props: Props) => {
         onSubmit={handleSubmit}
       >
         <TextInput label="Position" name="position" />
-        <SelectRole name="role" />
+        <SelectJobRole name="role" />
         <Editor label="Job Description" name="description" />
         <TextInput label="Apply URL / Email" name="applyUrl" />
         <TagInput name="tags" />

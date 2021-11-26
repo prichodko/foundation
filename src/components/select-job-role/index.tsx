@@ -23,11 +23,11 @@ const options: Record<JobRole, string> = {
   Other: 'Other',
 }
 
-export const SelectRole = (props: Props) => {
+export const SelectJobRole = (props: Props) => {
   const { name } = props
 
   return (
-    <Select label="Role" name={name}>
+    <Select label="Role" name={name} placeholder="Select a role">
       {Object.entries(options).map(([key, value]) => (
         <Select.Option key={key} value={key}>
           {value}
