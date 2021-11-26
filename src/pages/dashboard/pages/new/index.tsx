@@ -3,7 +3,8 @@ import type { Page } from 'next'
 
 import { SelectCity } from '~/components/select-city'
 import { SelectCountry } from '~/components/select-country'
-import { SelectRole } from '~/components/select-role'
+import { SelectJobRole } from '~/components/select-job-role'
+import { SelectJobType } from '~/components/select-job-type'
 import { TagInput } from '~/components/tag-input'
 import { Button } from '~/system/button'
 import { Checkbox } from '~/system/checkbox'
@@ -14,6 +15,7 @@ import { TextInput } from '~/system/input'
 import { Slider } from '~/system/slider'
 import { Text } from '~/system/text'
 import type { CreateJobInput, JobRole } from '~/types/graphql'
+import { JobType } from '~/types/graphql'
 
 // import { useCreateCheckoutSessionMutation } from './graphql/create-checkout-session'
 import { useCreateJobMutation } from './graphql/create-job'
@@ -49,6 +51,7 @@ export const DashboardNew: Page = (props: Props) => {
         description: JSON.stringify(values.description),
         applyUrl: values.applyUrl,
         remote: false,
+        type: values.type,
       },
     })
 
@@ -72,6 +75,7 @@ export const DashboardNew: Page = (props: Props) => {
           description: '',
           remote: false,
           tags: [],
+          type: JobType.FullTime,
         }}
         onSubmit={handleSubmit}
         className="grid gap-5"
@@ -92,7 +96,9 @@ export const DashboardNew: Page = (props: Props) => {
             }
           />
 
-          <SelectRole name="role" />
+          <SelectJobRole name="role" />
+
+          <SelectJobType name="type" />
 
           <TagInput name="tags" />
 
