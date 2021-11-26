@@ -7,8 +7,8 @@ export const User = objectType({
   name: 'User',
   definition(t) {
     t.id('id')
+    t.string('email')
     t.nullable.string('name')
-    t.nullable.string('email')
     t.nullable.field('company', {
       type: 'Company',
       resolve: async (parent, _args, ctx) => {
@@ -63,6 +63,22 @@ export const User = objectType({
         })
 
         return user.likes.map(({ job }) => job)
+      },
+    })
+    t.list.field('alerts', {
+      type: 'Alert',
+      resolve: async (parent, _args, ctx) => {
+        const user = await ctx.prisma.user.findUnique({
+          where: {
+            id: parent.id,
+          },
+          include: {
+            alerts: true,
+          },
+          rejectOnNotFound: true,
+        })
+
+        return user.alerts
       },
     })
   },
