@@ -128,8 +128,6 @@ export const Editor = (props: EditorProps) => {
 
   const { field, fieldState, formState } = useField(props)
 
-  console.log(field?.value)
-
   const value = field?.value ?? ''
   const onChange = field?.onChange ?? props.onChange
 

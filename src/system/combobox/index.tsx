@@ -49,7 +49,7 @@ const Combobox = <T extends object>(props: Props & ComboBoxProps<T>) => {
     state
   )
 
-  console.log(state.selectionManager.focusedKey)
+  // console.log(state.selectionManager.focusedKey)
 
   // useEffect(() => {
   //   if (!state.selectionManager.focusedKey) {
