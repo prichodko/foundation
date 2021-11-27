@@ -1,0 +1,14 @@
+query SearchCompanies($name: String!, $not: [String!]!) {
+  searchCompanies(name: $name, not: $not) {
+    id
+    name
+  }
+}
+
+query SearchTags($name: String!, $not: [String!]!) {
+  searchTags(name: $name, not: $not) {
+    id
+    name
+    count
+  }
+}

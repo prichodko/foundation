@@ -1,11 +1,13 @@
-query Jobs($input: GetJobsInput!) {
-  jobs(input: $input) {
+query Jobs($filter: JobsFilter!) {
+  jobs(filter: $filter) {
     id
+    createdAt
     position
     tags {
       id
       name
     }
+    role
     liked
     company {
       id

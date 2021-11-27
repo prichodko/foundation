@@ -5,6 +5,7 @@ export * from './get-company-by-slug'
 export * from './get-companies'
 export * from './update-company'
 export * from './view-company'
+export * from './search-companies'
 
 export const Company = objectType({
   name: 'Company',

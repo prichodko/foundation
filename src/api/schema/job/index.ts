@@ -11,7 +11,7 @@ export * from './publish-job'
 export * from './unpublish-job'
 export * from './archive-job'
 
-import { JobRole, JobStatus } from '.prisma/client'
+import { JobRole, JobStatus, JobType } from '.prisma/client'
 
 export const JobRoleEnum = enumType({
   name: 'JobRole',
@@ -23,15 +23,26 @@ export const JobStatusEnum = enumType({
   members: Object.keys(JobStatus),
 })
 
+export const JobTypeEnum = enumType({
+  name: 'JobType',
+  members: Object.keys(JobType),
+})
+
 export const Job = objectType({
   name: 'Job',
   definition(t) {
     t.id('id')
     t.date('createdAt')
     t.date('updatedAt')
+    t.nullable.date('archivedAt')
     t.string('position')
+    t.field('type', { type: 'JobType' })
     t.field('role', { type: 'JobRole' })
-    t.string('description')
+    t.json('description', {
+      resolve(parent) {
+        return parent.description as JsonObject
+      },
+    })
     t.string('applyUrl')
     t.boolean('remote')
     t.field('status', { type: 'JobStatus' })

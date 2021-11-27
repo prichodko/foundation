@@ -30,7 +30,7 @@ export function ListBox(props: ListBoxProps) {
     <ul
       {...listBoxProps}
       ref={listBoxRef}
-      className="px-8 pb-4 overflow-auto outline-none max-h-72"
+      className="pb-4 overflow-auto outline-none max-h-72"
     >
       {[...state.collection].map(item =>
         item.type === 'section' ? (
@@ -91,8 +91,8 @@ function Option({ item, state }: OptionProps) {
     <li
       {...optionProps}
       ref={ref}
-      className={`m-1 rounded-md py-2 px-2 text-sm outline-none cursor-default flex items-center justify-between ${text} ${
-        isFocused ? 'bg-gray-3' : ''
+      className={`py-2 px-6 text-sm outline-none cursor-default flex items-center justify-between ${text} ${
+        isFocused ? 'bg-gray-12 text-light' : ''
       } ${isSelected ? 'font-bold' : ''}`}
     >
       {item.rendered}
