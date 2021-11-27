@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:api": "ts-node-dev --respawn src/api",
-    "build": "next build",
-    "build:reflection": "NEXUS_SHOULD_EXIT_AFTER_REFLECTION=true ts-node src/api",
+    "typegen": "NEXUS_SHOULD_EXIT_AFTER_REFLECTION=true ts-node src/api",
+    "build": "yarn typegen && next build",
     "start": "next start",
     "type-check": "tsc",
     "lint": "next lint",
@@ -16,7 +16,7 @@
     "prepare": "husky install",
     "storybook": "start-storybook -s ./public -p 3001",
     "storybook:build": "build-storybook -s ./public",
-    "generate": "graphql-codegen --config codegen.yml",
+    "codegen": "graphql-codegen --config codegen.yml",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio"
@@ -124,7 +124,8 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "prettier --write"
+      "prettier --write",
+      "eslint --fix"
     ],
     "*.{css,json,md,html}": [
       "prettier --write"
