@@ -1,8 +1,6 @@
 import { UserInputError } from 'apollo-server-errors'
 import { mutationField, inputObjectType } from 'nexus'
 
-import type { JsonObject } from '~/api/lib/prisma'
-
 const validateFilter = (filter: JsonObject) => {
   const values = Object.values(filter)
 
