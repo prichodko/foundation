@@ -18,7 +18,7 @@ const urqlClient = createClient({
       onError(error) {
         const { graphQLErrors, networkError } = error
         for (let graphQLError of graphQLErrors) {
-          console.error(graphQLError)
+          console.warn(graphQLError)
           // switch (err.extensions.code) {
           //   // Apollo Server sets code to UNAUTHENTICATED
           //   // when an AuthenticationError is thrown in a resolver
@@ -39,7 +39,7 @@ const urqlClient = createClient({
         }
 
         if (networkError) {
-          console.error(`[Network Error]:`, networkError)
+          console.warn(`[Network Error]:`, networkError)
         }
       },
     }),

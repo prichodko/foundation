@@ -18,6 +18,14 @@ export type Scalars = {
   Float: number
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: Date
+  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSONObject: JsonObject
+}
+
+export type Alert = {
+  __typename?: 'Alert'
+  filter: Scalars['JSONObject']
+  id: Scalars['ID']
 }
 
 export type CheckoutSessionResult = {
@@ -28,8 +36,8 @@ export type CheckoutSessionResult = {
 
 export type City = {
   __typename?: 'City'
-  label: Scalars['ID']
-  value: Scalars['String']
+  id: Scalars['ID']
+  name: Scalars['String']
 }
 
 export type Company = {
@@ -45,6 +53,16 @@ export type Company = {
   updatedAt: Scalars['DateTime']
   viewCount: Scalars['Int']
   website: Scalars['String']
+}
+
+export type CompanySearch = {
+  __typename?: 'CompanySearch'
+  id: Scalars['ID']
+  name: Scalars['String']
+}
+
+export type CreateAlertInput = {
+  filter: Scalars['JSONObject']
 }
 
 export type CreateBillingPortalSessionResult = {
@@ -69,34 +87,17 @@ export type CreateJobInput = {
   remote: Scalars['Boolean']
   role: JobRole
   tags: Array<Scalars['ID']>
+  type: JobType
 }
 
 export type CreateTagInput = {
   name: Scalars['String']
 }
 
-export type GetCitiesInput = {
-  country: Scalars['String']
-  query: Scalars['String']
-}
-
-export type GetJobsInput = {
-  query: GetJobsInputQuery
-}
-
-export type GetJobsInputQuery = {
-  remote: Scalars['Boolean']
-  tags: Array<Scalars['ID']>
-}
-
-export type GetTagsInput = {
-  notIn: Array<Scalars['String']>
-  query: Scalars['String']
-}
-
 export type Job = {
   __typename?: 'Job'
   applyUrl: Scalars['String']
+  archivedAt: Scalars['DateTime']
   company: Company
   createdAt: Scalars['DateTime']
   description: Scalars['String']
@@ -107,6 +108,7 @@ export type Job = {
   role: JobRole
   status: JobStatus
   tags: Array<Tag>
+  type: JobType
   updatedAt: Scalars['DateTime']
   viewCount: Scalars['Int']
 }
@@ -136,10 +138,28 @@ export const enum JobStatus {
   Live = 'Live',
 }
 
+export const enum JobType {
+  Contract = 'Contract',
+  FullTime = 'FullTime',
+  Internship = 'Internship',
+  PartTime = 'PartTime',
+}
+
+export type JobsFilter = {
+  company?: InputMaybe<Array<Scalars['ID']>>
+  position?: InputMaybe<Scalars['String']>
+  remote?: InputMaybe<Scalars['Boolean']>
+  role?: InputMaybe<JobRole>
+  salaryMax?: InputMaybe<Scalars['Int']>
+  salaryMin?: InputMaybe<Scalars['Int']>
+  tags?: InputMaybe<Array<Scalars['ID']>>
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
   addLike: Job
   archiveJob: Job
+  createAlert: Alert
   createBillingPortalSession: CreateBillingPortalSessionResult
   createCheckoutSession: CreateCheckoutSessionResult
   createJob: Job
@@ -160,6 +180,10 @@ export type MutationAddLikeArgs = {
 
 export type MutationArchiveJobArgs = {
   id: Scalars['ID']
+}
+
+export type MutationCreateAlertArgs = {
+  input: CreateAlertInput
 }
 
 export type MutationCreateCheckoutSessionArgs = {
@@ -209,22 +233,19 @@ export type MutationViewJobArgs = {
 export type Query = {
   __typename?: 'Query'
   checkoutSession: CheckoutSessionResult
-  cities: Array<City>
   companies: Array<Company>
   company: Company
   companyBySlug: Company
   job: Job
   jobs: Array<Job>
-  tags: Array<Tag>
+  searchCities: Array<City>
+  searchCompanies: Array<CompanySearch>
+  searchTags: Array<TagSearch>
   user: User
 }
 
 export type QueryCheckoutSessionArgs = {
   id: Scalars['ID']
-}
-
-export type QueryCitiesArgs = {
-  input: GetCitiesInput
 }
 
 export type QueryCompanyArgs = {
@@ -240,11 +261,22 @@ export type QueryJobArgs = {
 }
 
 export type QueryJobsArgs = {
-  input: GetJobsInput
+  filter: JobsFilter
 }
 
-export type QueryTagsArgs = {
-  input: GetTagsInput
+export type QuerySearchCitiesArgs = {
+  country: Scalars['String']
+  name: Scalars['String']
+}
+
+export type QuerySearchCompaniesArgs = {
+  name: Scalars['String']
+  not: Array<Scalars['String']>
+}
+
+export type QuerySearchTagsArgs = {
+  name: Scalars['String']
+  not: Array<Scalars['String']>
 }
 
 export type SuccessResult = {
@@ -254,6 +286,12 @@ export type SuccessResult = {
 
 export type Tag = {
   __typename?: 'Tag'
+  id: Scalars['ID']
+  name: Scalars['String']
+}
+
+export type TagSearch = {
+  __typename?: 'TagSearch'
   count: Scalars['Int']
   id: Scalars['ID']
   name: Scalars['String']
@@ -283,8 +321,9 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User'
+  alerts: Array<Alert>
   company?: Maybe<Company>
-  email?: Maybe<Scalars['String']>
+  email: Scalars['String']
   id: Scalars['ID']
   jobs: Array<Job>
   likes: Array<Job>
