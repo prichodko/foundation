@@ -25,7 +25,7 @@ export type UserQuery = {
     __typename?: 'User'
     id: string
     name?: string | null | undefined
-    email?: string | null | undefined
+    email: string
     jobs: Array<{
       __typename?: 'Job'
       id: string
@@ -62,6 +62,7 @@ export type UserQuery = {
         slug: string
       }
     }>
+    alerts: Array<{ __typename?: 'Alert'; id: string; filter: JsonObject }>
   }
 }
 
@@ -107,6 +108,10 @@ export const UserDocument = /*#__PURE__*/ gql`
           name
           slug
         }
+      }
+      alerts {
+        id
+        filter
       }
     }
   }

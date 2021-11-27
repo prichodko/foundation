@@ -1,14 +1,15 @@
 import type { Page } from 'next'
 
-import { useUrlQuery } from '~/hooks/use-url-query'
+// import { useUrlQuery } from '~/hooks/use-url-query'
 import { Button } from '~/system/button'
 import { Heading } from '~/system/heading'
 import { Text } from '~/system/text'
 
 import { Company } from './components/company'
+import { JobAlerts } from './components/job-alerts'
 import { LikedJobs } from './components/liked-jobs'
 import { PostedJobs } from './components/posted-jobs'
-import { useCheckoutSessionQuery } from './graphql/checkout-session'
+// import { useCheckoutSessionQuery } from './graphql/checkout-session'
 import { useCreateBillingPortalSessionMutation } from './graphql/create-billing-portal-session'
 import { useUserQuery } from './graphql/user'
 
@@ -17,20 +18,18 @@ interface Props {}
 export const Dashboard: Page = (props: Props) => {
   const {} = props
 
-  const sessionId = useUrlQuery('session_id')
+  // const sessionId = useUrlQuery('session_id')
 
   const [{ data }] = useUserQuery({})
   const [result, createBillingPortalSession] =
     useCreateBillingPortalSessionMutation()
 
-  const [{ data: checkoutSession }] = useCheckoutSessionQuery({
-    variables: {
-      id: sessionId!,
-    },
-    pause: !sessionId,
-  })
-
-  console.log(checkoutSession)
+  // const [{ data: checkoutSession }] = useCheckoutSessionQuery({
+  //   variables: {
+  //     id: sessionId!,
+  //   },
+  //   pause: !sessionId,
+  // })
 
   if (!data) {
     return <div>loading...</div>
@@ -46,7 +45,7 @@ export const Dashboard: Page = (props: Props) => {
     window.location.assign(data!.createBillingPortalSession.url)
   }
 
-  const { company, jobs, likes, email, name } = data.user
+  const { company, jobs, likes, email, name, alerts } = data.user
 
   return (
     <>
@@ -86,6 +85,12 @@ export const Dashboard: Page = (props: Props) => {
             Your Likes
           </Heading>
           <LikedJobs likes={likes} />
+        </div>
+        <div>
+          <Heading size={24} className="mb-4">
+            Your Alerts
+          </Heading>
+          <JobAlerts alerts={alerts} />
         </div>
       </div>
     </>

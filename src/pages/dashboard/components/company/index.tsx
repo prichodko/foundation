@@ -36,7 +36,7 @@ export const Company = (props: Props) => {
   }
 
   return (
-    <div className="p-10 border rounded  bg-gray-2">
+    <div className="p-10 border rounded bg-gray-2">
       <Form<Values>
         className="grid gap-4"
         defaultValues={{
