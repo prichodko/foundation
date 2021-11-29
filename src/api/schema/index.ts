@@ -7,10 +7,11 @@ import * as alert from './alert'
 import * as checkout from './checkout'
 import * as city from './city'
 import * as company from './company'
+import * as feedback from './feedback'
 import * as job from './job'
-import * as objects from './objects'
 import * as scalars from './scalars'
 import * as tag from './tag'
+import * as types from './types'
 import * as user from './user'
 
 export const schema = makeSchema({
@@ -18,7 +19,18 @@ export const schema = makeSchema({
     input: true,
     output: true,
   },
-  types: [scalars, objects, user, job, company, checkout, tag, city, alert],
+  types: [
+    scalars,
+    types,
+    user,
+    job,
+    company,
+    checkout,
+    tag,
+    city,
+    alert,
+    feedback,
+  ],
   contextType: {
     module: path.join(process.cwd(), 'src/api/context.ts'),
     export: 'Context',
