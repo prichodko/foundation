@@ -32,11 +32,17 @@ query User {
     }
     likes {
       id
+      createdAt
       position
+      role
       company {
         id
         name
         slug
+      }
+      tags {
+        id
+        name
       }
     }
     alerts {

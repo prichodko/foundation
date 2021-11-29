@@ -10,7 +10,7 @@ export type UserJobFragment = {
   updatedAt: Date
   position: string
   role: Types.JobRole
-  description: string
+  description: JsonObject
   applyUrl: string
   remote: boolean
   status: Types.JobStatus
@@ -33,7 +33,7 @@ export type UserQuery = {
       updatedAt: Date
       position: string
       role: Types.JobRole
-      description: string
+      description: JsonObject
       applyUrl: string
       remote: boolean
       status: Types.JobStatus
@@ -54,13 +54,16 @@ export type UserQuery = {
     likes: Array<{
       __typename?: 'Job'
       id: string
+      createdAt: Date
       position: string
+      role: Types.JobRole
       company: {
         __typename?: 'Company'
         id: string
         name: string
         slug: string
       }
+      tags: Array<{ __typename?: 'Tag'; id: string; name: string }>
     }>
     alerts: Array<{ __typename?: 'Alert'; id: string; filter: JsonObject }>
   }
@@ -102,11 +105,17 @@ export const UserDocument = /*#__PURE__*/ gql`
       }
       likes {
         id
+        createdAt
         position
+        role
         company {
           id
           name
           slug
+        }
+        tags {
+          id
+          name
         }
       }
       alerts {
