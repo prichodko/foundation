@@ -1,10 +1,17 @@
-import { PlusCircledIcon } from '@radix-ui/react-icons'
+import { DotsVerticalIcon, PlusCircledIcon } from '@radix-ui/react-icons'
 
 import { Link } from '~/components/link'
 import { RelativeTime } from '~/components/relative-time'
+import { Button } from '~/system/button'
+import { Menu, MenuTrigger } from '~/system/menu'
 import { Text } from '~/system/text'
 
 import type { UserQuery } from '../../graphql/user'
+
+import { Status } from './components/status'
+import { useArchiveJobMutation } from './graphql/archive-job'
+import { usePublishJobMutation } from './graphql/publish-job'
+import { useUnpublishJobMutation } from './graphql/unpublish-job'
 
 interface Props {
   jobs: UserQuery['user']['jobs']
@@ -12,6 +19,22 @@ interface Props {
 
 export const PostedJobs = (props: Props) => {
   const { jobs } = props
+
+  const [, publishJob] = usePublishJobMutation()
+  const [, unpublishJob] = useUnpublishJobMutation()
+  const [, archiveJob] = useArchiveJobMutation()
+
+  const handlePublish = async (jobId: string) => {
+    await publishJob({ id: jobId })
+  }
+
+  const handleUnpublish = async (jobId: string) => {
+    await unpublishJob({ id: jobId })
+  }
+
+  const handleArchive = async (jobId: string) => {
+    await archiveJob({ id: jobId })
+  }
 
   return (
     <div className="">
@@ -35,10 +58,27 @@ export const PostedJobs = (props: Props) => {
                   </Text>
                 ))}
               </div>
-              <Text size={12}>{job.status}</Text>
               <Text size={12}>
                 <RelativeTime>{job.createdAt}</RelativeTime>
               </Text>
+              <Status status={job.status} />
+
+              <MenuTrigger>
+                <Button variant="minimal">
+                  <DotsVerticalIcon />
+                </Button>
+                <Menu>
+                  <Menu.Item onSelect={() => handlePublish(job.id)}>
+                    Publish
+                  </Menu.Item>
+                  <Menu.Item onSelect={() => handleUnpublish(job.id)}>
+                    Unpublish
+                  </Menu.Item>
+                  <Menu.Item onSelect={() => handleArchive(job.id)}>
+                    Archive
+                  </Menu.Item>
+                </Menu>
+              </MenuTrigger>
             </a>
           </Link>
         ))}
