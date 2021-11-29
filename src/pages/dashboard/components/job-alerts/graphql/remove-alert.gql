@@ -1,0 +1,5 @@
+mutation RemoveAlert($id: ID!) {
+  removeAlert(id: $id) {
+    success
+  }
+}
