@@ -97,10 +97,10 @@ export type CreateTagInput = {
 export type Job = {
   __typename?: 'Job'
   applyUrl: Scalars['String']
-  archivedAt: Scalars['DateTime']
+  archivedAt?: Maybe<Scalars['DateTime']>
   company: Company
   createdAt: Scalars['DateTime']
-  description: Scalars['String']
+  description: Scalars['JSONObject']
   id: Scalars['ID']
   liked: Scalars['Boolean']
   position: Scalars['String']
@@ -165,6 +165,7 @@ export type Mutation = {
   createJob: Job
   createTag: Tag
   publishJob: Job
+  removeAlert: SuccessResult
   removeLike: Job
   unpublishJob: Job
   updateCompany: Company
@@ -199,6 +200,10 @@ export type MutationCreateTagArgs = {
 }
 
 export type MutationPublishJobArgs = {
+  id: Scalars['ID']
+}
+
+export type MutationRemoveAlertArgs = {
   id: Scalars['ID']
 }
 
@@ -307,7 +312,7 @@ export type UpdateCompanyInput = {
 
 export type UpdateJobInput = {
   applyUrl: Scalars['String']
-  description: Scalars['String']
+  description: Scalars['JSONObject']
   id: Scalars['ID']
   position: Scalars['String']
   remote: Scalars['Boolean']

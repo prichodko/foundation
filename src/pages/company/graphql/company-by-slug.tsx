@@ -22,7 +22,7 @@ export type CompanyBySlugQuery = {
       __typename?: 'Job'
       id: string
       position: string
-      description: string
+      description: JsonObject
       tags: Array<{ __typename?: 'Tag'; id: string; name: string }>
     }>
   }
