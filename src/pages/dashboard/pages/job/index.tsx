@@ -22,13 +22,13 @@ export const DashboardJob: Page = (props: Props) => {
 
   const jobId = useUrlQuery('id')
 
+  const [, updateJob] = useUpdateJobMutation()
   const [{ data }] = useJobQuery({
     variables: {
       id: jobId!,
     },
     pause: !jobId,
   })
-  const [, updateJob] = useUpdateJobMutation()
 
   if (!data) {
     return <div>Loading...</div>
@@ -40,7 +40,7 @@ export const DashboardJob: Page = (props: Props) => {
         id: jobId!,
         position: values.position,
         role: values.role,
-        description: JSON.stringify(values.description),
+        description: values.description,
         applyUrl: values.applyUrl,
         tags: values.tags,
         remote: false,
@@ -56,7 +56,7 @@ export const DashboardJob: Page = (props: Props) => {
         className="grid gap-6"
         defaultValues={{
           position: job.position,
-          description: JSON.parse(job.description),
+          description: job.description,
           role: job.role,
           applyUrl: job.applyUrl,
           remote: false,

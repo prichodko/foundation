@@ -18,7 +18,7 @@ export type CreateJobMutation = {
     updatedAt: Date
     position: string
     role: Types.JobRole
-    description: string
+    description: JsonObject
     applyUrl: string
     remote: boolean
     status: Types.JobStatus
