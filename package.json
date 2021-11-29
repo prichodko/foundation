@@ -39,7 +39,7 @@
     "clsx": "^1.1.1",
     "focus-visible": "^5.2.0",
     "hoist-non-react-statics": "^3.3.2",
-    "next": "12.0.3",
+    "next": "12.0.4",
     "next-themes": "^0.0.15",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
-    "@next/bundle-analyzer": "^12.0.3",
+    "@next/bundle-analyzer": "^12.0.4",
     "@playwright/test": "^1.16.3",
     "@react-types/shared": "^3.9.0",
     "@storybook/addon-actions": "^6.3.12",
@@ -57,14 +57,14 @@
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/react": "^6.3.12",
     "@types/hoist-non-react-statics": "^3.3.1",
-    "@types/node": "^16.11.7",
-    "@types/react": "^17.0.34",
+    "@types/node": "^16.11.10",
+    "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "autoprefixer": "^10.4.0",
     "babel-loader": "^8.2.3",
     "eslint": "<8.0.0",
-    "eslint-config-next": "^12.0.3",
+    "eslint-config-next": "^12.0.4",
     "eslint-config-prettier": "^8.3.0",
     "husky": "^7.0.4",
     "lint-staged": ">=11.2.6",
@@ -74,7 +74,7 @@
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.4.1",
     "tailwindcss": "^2.2.19",
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.2"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
