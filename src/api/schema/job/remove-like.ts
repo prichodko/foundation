@@ -7,7 +7,7 @@ export const RemoveLike = mutationField('removeLike', {
     id: idArg(),
   },
 
-  authorize: (_parent, args, ctx) => ctx.auth.owner.job(args.id),
+  authorize: (_parent, _args, ctx) => ctx.auth.user,
 
   async resolve(_root, { id }, ctx) {
     const user = ctx.user!

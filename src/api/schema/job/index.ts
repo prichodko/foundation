@@ -45,7 +45,10 @@ export const Job = objectType({
     })
     t.string('applyUrl')
     t.boolean('remote')
-    t.field('status', { type: 'JobStatus' })
+    t.field('status', {
+      type: 'JobStatus',
+      authorize: (parent, _args, ctx) => ctx.auth.owner.job(parent.id),
+    })
     t.int('viewCount')
     t.list.field('tags', {
       type: 'Tag',
