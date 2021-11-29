@@ -22,6 +22,7 @@ model User {
   jobs             Job[]
   likes            UserLikes[]
   alerts           Alert[]
+  feedback         Feedback[]
   stripeCustomerId String?     @map("stripe_customer_id")
 
   @@map(name: "users")
@@ -175,4 +176,16 @@ model Alert {
   read      Boolean  @default(false)
 
   @@map(name: "alerts")
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  email     String?
+  userId    String?  @map("user_id")
+  user      User?    @relation(fields: [userId], references: [id])
+  message   String
+
+  @@map(name: "feedback")
 }
