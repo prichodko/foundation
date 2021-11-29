@@ -1,30 +1,18 @@
 import { useState } from 'react'
 
+import { JobLike } from '~/components/job-like'
 import { Link } from '~/components/link'
 import { RelativeTime } from '~/components/relative-time'
-import { BaseButton, Button } from '~/system/button'
+import { Button } from '~/system/button'
 import { Text } from '~/system/text'
 import type { JobsFilter } from '~/types/graphql'
 
 import { Search } from './components/search'
-import { useAddLikeMutation } from './graphql/add-like'
 import { useCreateAlertMutation } from './graphql/create-alert'
 import type { JobsQuery } from './graphql/jobs'
 import { useJobsQuery } from './graphql/jobs'
-import { useRemoveLikeMutation } from './graphql/remove-like'
 
 const JobPosting = ({ job }: { job: JobsQuery['jobs'][0] }) => {
-  const [, addLike] = useAddLikeMutation()
-  const [, removeLike] = useRemoveLikeMutation()
-
-  const handleLikeClick = async () => {
-    await addLike({ jobId: job.id })
-  }
-
-  const handleUnlikeClick = async () => {
-    await removeLike({ jobId: job.id })
-  }
-
   return (
     <Link
       key={job.id}
@@ -52,39 +40,7 @@ const JobPosting = ({ job }: { job: JobsQuery['jobs'][0] }) => {
         </Text>
 
         <div>
-          {job.liked ? (
-            <BaseButton onClick={handleUnlikeClick}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </BaseButton>
-          ) : (
-            <BaseButton onClick={handleLikeClick}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
-            </BaseButton>
-          )}
+          <JobLike id={job.id} liked={job.liked} />
         </div>
       </a>
     </Link>
@@ -94,13 +50,12 @@ const JobPosting = ({ job }: { job: JobsQuery['jobs'][0] }) => {
 export const Workverse = () => {
   const [filter, setFilter] = useState<JobsFilter>({})
 
+  const [, createAlert] = useCreateAlertMutation()
   const [{ data }] = useJobsQuery({
     variables: {
       filter,
     },
   })
-
-  const [, createAlert] = useCreateAlertMutation()
 
   const handleCreateAlert = async () => {
     await createAlert({

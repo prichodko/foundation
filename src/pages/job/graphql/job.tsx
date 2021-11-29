@@ -14,7 +14,7 @@ export type JobQuery = {
     id: string
     position: string
     role: Types.JobRole
-    description: string
+    description: JsonObject
     applyUrl: string
     viewCount: number
     liked: boolean
