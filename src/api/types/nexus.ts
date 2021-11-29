@@ -58,6 +58,11 @@ export interface NexusGenInputs {
     name: string // String!
     price: number // Int!
   }
+  CreateFeedbackInput: {
+    // input type
+    email?: string | null // String
+    message: string // String!
+  }
   CreateJobInput: {
     // input type
     applyUrl: string // String!
@@ -93,7 +98,7 @@ export interface NexusGenInputs {
   UpdateJobInput: {
     // input type
     applyUrl: string // String!
-    description: string // String!
+    description: NexusGenScalars['JSONObject'] // JSONObject!
     id: string // ID!
     position: string // String!
     remote: boolean // Boolean!
@@ -243,9 +248,11 @@ export interface NexusGenFieldTypes {
     createAlert: NexusGenRootTypes['Alert'] // Alert!
     createBillingPortalSession: NexusGenRootTypes['CreateBillingPortalSessionResult'] // CreateBillingPortalSessionResult!
     createCheckoutSession: NexusGenRootTypes['CreateCheckoutSessionResult'] // CreateCheckoutSessionResult!
+    createFeedback: NexusGenRootTypes['SuccessResult'] // SuccessResult!
     createJob: NexusGenRootTypes['Job'] // Job!
     createTag: NexusGenRootTypes['Tag'] // Tag!
     publishJob: NexusGenRootTypes['Job'] // Job!
+    removeAlert: NexusGenRootTypes['SuccessResult'] // SuccessResult!
     removeLike: NexusGenRootTypes['Job'] // Job!
     unpublishJob: NexusGenRootTypes['Job'] // Job!
     updateCompany: NexusGenRootTypes['Company'] // Company!
@@ -362,9 +369,11 @@ export interface NexusGenFieldTypeNames {
     createAlert: 'Alert'
     createBillingPortalSession: 'CreateBillingPortalSessionResult'
     createCheckoutSession: 'CreateCheckoutSessionResult'
+    createFeedback: 'SuccessResult'
     createJob: 'Job'
     createTag: 'Tag'
     publishJob: 'Job'
+    removeAlert: 'SuccessResult'
     removeLike: 'Job'
     unpublishJob: 'Job'
     updateCompany: 'Company'
@@ -431,6 +440,10 @@ export interface NexusGenArgTypes {
       // args
       input: NexusGenInputs['CreateCheckoutSessionInput'] // CreateCheckoutSessionInput!
     }
+    createFeedback: {
+      // args
+      input: NexusGenInputs['CreateFeedbackInput'] // CreateFeedbackInput!
+    }
     createJob: {
       // args
       input: NexusGenInputs['CreateJobInput'] // CreateJobInput!
@@ -440,6 +453,10 @@ export interface NexusGenArgTypes {
       input: NexusGenInputs['CreateTagInput'] // CreateTagInput!
     }
     publishJob: {
+      // args
+      id: string // ID!
+    }
+    removeAlert: {
       // args
       id: string // ID!
     }

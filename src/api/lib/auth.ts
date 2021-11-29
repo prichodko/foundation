@@ -7,6 +7,7 @@ export type Auth = {
   owner: {
     job: (jobId: string) => Promise<boolean> | boolean
     company: (companyId: string) => Promise<boolean> | boolean
+    alert: (alertId: string) => Promise<boolean> | boolean
   }
 }
 
@@ -22,9 +23,10 @@ export const createAuth = (user: Context['user']): Auth => {
         const job = await prisma.job.findFirst({
           where: {
             id: jobId,
-            user: { id: user.id },
+            userId: user.id,
           },
         })
+
         return !!job
       },
       company: async (companyId: string) => {
@@ -35,10 +37,25 @@ export const createAuth = (user: Context['user']): Auth => {
         const company = await prisma.company.findFirst({
           where: {
             id: companyId,
-            user: { id: user.id },
+            userId: user.id,
           },
         })
+
         return !!company
+      },
+      alert: async (alertId: string) => {
+        if (!user) {
+          return false
+        }
+
+        const alert = await prisma.alert.findFirst({
+          where: {
+            id: alertId,
+            userId: user.id,
+          },
+        })
+
+        return !!alert
       },
     },
   }
