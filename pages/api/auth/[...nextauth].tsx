@@ -4,6 +4,7 @@ import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
 import { prisma } from '~/api/lib/prisma'
+import { emails } from '~/api/services/email'
 
 const handler: NextApiHandler = (req, res) => {
   return NextAuth(req, res, {
@@ -14,18 +15,7 @@ const handler: NextApiHandler = (req, res) => {
         type: 'email',
         name: 'Email',
         sendVerificationRequest: async ({ identifier: email, url }) => {
-          // const { host } = new URL(url)
-
-          console.log(`Verification for ${email}`, url)
-
-          // await postmark.sendEmail({
-          //   From: 'pavel@workverse.xyz',
-          //   To: 'pavel@workverse.xyz',
-          //   Subject: `Sign in to ${host}`,
-          //   HtmlBody: html({ url, host, email }),
-          //   TextBody: text({ url, host }),
-          //   MessageStream: 'outbound',
-          // })
+          await emails.sendVerificationEmail(email, url)
         },
         server: {},
         options: {},
