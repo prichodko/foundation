@@ -7,7 +7,7 @@ module.exports = {
   reactOptions: {
     fastRefresh: true,
   },
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../src'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
