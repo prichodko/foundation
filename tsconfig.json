@@ -18,7 +18,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "downlevelIteration": true,
-    // "exactOptionalPropertyTypes": true,
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]

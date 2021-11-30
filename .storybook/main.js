@@ -7,7 +7,7 @@ module.exports = {
   reactOptions: {
     fastRefresh: true,
   },
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../src'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -25,6 +25,7 @@ module.exports = {
     ...config,
     resolve: {
       ...config.resolve,
+      modules: [path.resolve(__dirname, '..'), 'node_modules'],
       alias: {
         ...config.resolve.alias,
         ...convertTsConfigPathsToWebpackAliases(),
@@ -34,12 +35,15 @@ module.exports = {
 }
 
 function convertTsConfigPathsToWebpackAliases() {
-  const rootDir = path.resolve(__dirname, '../')
+  const rootDir = path.resolve(__dirname, '../').replace('/*', '')
   const tsconfig = require('../tsconfig.json')
   const tsconfigPaths = Object.entries(tsconfig.compilerOptions.paths)
 
   return tsconfigPaths.reduce((aliases, [realPath, mappedPath]) => {
-    aliases[realPath] = path.join(rootDir, mappedPath[0])
+    const trimmedRealPath = realPath.replace('/*', '')
+    const trimmedMappedPath = mappedPath[0].replace('/*', '')
+
+    aliases[trimmedRealPath] = path.join(rootDir, trimmedMappedPath)
     return aliases
   }, {})
 }
