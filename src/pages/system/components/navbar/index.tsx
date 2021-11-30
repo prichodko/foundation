@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { Link } from '~/components/link'
 import { Button } from '~/system/button'
 
+import { Feedback } from './components/feedback'
 import { ThemeSwitcher } from './components/theme-switcher'
 
 interface Props {}
@@ -33,6 +34,7 @@ export const Navbar = ({}: Props) => {
       </Link>
       <div className="flex-1 text-right">
         <div className="inline-grid grid-flow-col gap-2">
+          <Feedback />
           {status === 'unauthenticated' && (
             <Button href="/login" variant="minimal">
               Login

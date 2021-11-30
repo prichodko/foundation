@@ -80,6 +80,12 @@ export type CreateCheckoutSessionResult = {
   sessionUrl: Scalars['String']
 }
 
+export type CreateFeedbackInput = {
+  email?: InputMaybe<Scalars['String']>
+  message: Scalars['String']
+  reaction: FeedbackReaction
+}
+
 export type CreateJobInput = {
   applyUrl: Scalars['String']
   description: Scalars['String']
@@ -92,6 +98,12 @@ export type CreateJobInput = {
 
 export type CreateTagInput = {
   name: Scalars['String']
+}
+
+export const enum FeedbackReaction {
+  Happy = 'Happy',
+  Neutral = 'Neutral',
+  Sad = 'Sad',
 }
 
 export type Job = {
@@ -162,6 +174,7 @@ export type Mutation = {
   createAlert: Alert
   createBillingPortalSession: CreateBillingPortalSessionResult
   createCheckoutSession: CreateCheckoutSessionResult
+  createFeedback: SuccessResult
   createJob: Job
   createTag: Tag
   publishJob: Job
@@ -189,6 +202,10 @@ export type MutationCreateAlertArgs = {
 
 export type MutationCreateCheckoutSessionArgs = {
   input: CreateCheckoutSessionInput
+}
+
+export type MutationCreateFeedbackArgs = {
+  input: CreateFeedbackInput
 }
 
 export type MutationCreateJobArgs = {

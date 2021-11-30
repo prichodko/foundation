@@ -52,6 +52,12 @@ type CreateCheckoutSessionResult {
   sessionUrl: String!
 }
 
+input CreateFeedbackInput {
+  email: String
+  message: String!
+  reaction: FeedbackReaction!
+}
+
 input CreateJobInput {
   applyUrl: String!
   description: String!
@@ -70,6 +76,12 @@ input CreateTagInput {
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
+
+enum FeedbackReaction {
+  Happy
+  Neutral
+  Sad
+}
 
 """
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
@@ -147,9 +159,11 @@ type Mutation {
   createCheckoutSession(
     input: CreateCheckoutSessionInput!
   ): CreateCheckoutSessionResult!
+  createFeedback(input: CreateFeedbackInput!): SuccessResult!
   createJob(input: CreateJobInput!): Job!
   createTag(input: CreateTagInput!): Tag!
   publishJob(id: ID!): Job!
+  removeAlert(id: ID!): SuccessResult!
   removeLike(id: ID!): Job!
   unpublishJob(id: ID!): Job!
   updateCompany(input: UpdateCompanyInput!): Company!
@@ -197,7 +211,7 @@ input UpdateCompanyInput {
 
 input UpdateJobInput {
   applyUrl: String!
-  description: String!
+  description: JSONObject!
   id: ID!
   position: String!
   remote: Boolean!

@@ -62,6 +62,7 @@ export interface NexusGenInputs {
     // input type
     email?: string | null // String
     message: string // String!
+    reaction: NexusGenEnums['FeedbackReaction'] // FeedbackReaction!
   }
   CreateJobInput: {
     // input type
@@ -112,6 +113,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  FeedbackReaction: prisma.FeedbackReaction
   JobRole: prisma.JobRole
   JobStatus: prisma.JobStatus
   JobType: prisma.JobType

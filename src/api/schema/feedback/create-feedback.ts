@@ -1,6 +1,12 @@
-import { mutationField, inputObjectType } from 'nexus'
+import { FeedbackReaction } from '@prisma/client'
+import { mutationField, inputObjectType, enumType } from 'nexus'
 
 import { slack } from '../../services/slack'
+
+export const FeedbackReactionEnum = enumType({
+  name: 'FeedbackReaction',
+  members: Object.keys(FeedbackReaction),
+})
 
 export const CreateFeedback = mutationField('createFeedback', {
   type: 'SuccessResult',
@@ -10,6 +16,9 @@ export const CreateFeedback = mutationField('createFeedback', {
       name: 'CreateFeedbackInput',
       definition(t) {
         t.string('message')
+        t.field('reaction', {
+          type: 'FeedbackReaction',
+        })
         t.nullable.string('email')
       },
     }),
@@ -19,6 +28,7 @@ export const CreateFeedback = mutationField('createFeedback', {
     await ctx.prisma.feedback.create({
       data: {
         message: input.message,
+        reaction: input.reaction,
         email: ctx.user?.email ?? input.email,
         userId: ctx.user?.id,
       },

@@ -178,14 +178,21 @@ model Alert {
   @@map(name: "alerts")
 }
 
+enum FeedbackReaction {
+  Happy
+  Neutral
+  Sad
+}
+
 model Feedback {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id        String           @id @default(cuid())
+  createdAt DateTime         @default(now()) @map("created_at")
+  updatedAt DateTime         @updatedAt @map("updated_at")
   email     String?
-  userId    String?  @map("user_id")
-  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?          @map("user_id")
+  user      User?            @relation(fields: [userId], references: [id])
   message   String
+  reaction  FeedbackReaction
 
   @@map(name: "feedback")
 }
