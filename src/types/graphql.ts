@@ -1,3 +1,10 @@
+import type {
+  Resolver as GraphCacheResolver,
+  UpdateResolver as GraphCacheUpdateResolver,
+  OptimisticMutationResolver as GraphCacheOptimisticMutationResolver,
+  StorageAdapter as GraphCacheStorageAdapter,
+} from '@urql/exchange-graphcache'
+import type { IntrospectionData } from '@urql/exchange-graphcache/dist/types/ast'
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -350,4 +357,509 @@ export type User = {
   jobs: Array<Job>
   likes: Array<Job>
   name?: Maybe<Scalars['String']>
+}
+
+export type WithTypename<T extends { __typename?: any }> = {
+  [K in Exclude<keyof T, '__typename'>]?: T[K]
+} & { __typename: NonNullable<T['__typename']> }
+
+export type GraphCacheKeysConfig = {
+  Alert?: (data: WithTypename<Alert>) => null | string
+  CheckoutSessionResult?: (
+    data: WithTypename<CheckoutSessionResult>
+  ) => null | string
+  City?: (data: WithTypename<City>) => null | string
+  Company?: (data: WithTypename<Company>) => null | string
+  CompanySearch?: (data: WithTypename<CompanySearch>) => null | string
+  CreateBillingPortalSessionResult?: (
+    data: WithTypename<CreateBillingPortalSessionResult>
+  ) => null | string
+  CreateCheckoutSessionResult?: (
+    data: WithTypename<CreateCheckoutSessionResult>
+  ) => null | string
+  Job?: (data: WithTypename<Job>) => null | string
+  SuccessResult?: (data: WithTypename<SuccessResult>) => null | string
+  Tag?: (data: WithTypename<Tag>) => null | string
+  TagSearch?: (data: WithTypename<TagSearch>) => null | string
+  User?: (data: WithTypename<User>) => null | string
+}
+
+export type GraphCacheResolvers = {
+  Query?: {
+    checkoutSession?: GraphCacheResolver<
+      WithTypename<Query>,
+      QueryCheckoutSessionArgs,
+      WithTypename<CheckoutSessionResult> | string
+    >
+    companies?: GraphCacheResolver<
+      WithTypename<Query>,
+      Record<string, never>,
+      Array<WithTypename<Company> | string>
+    >
+    company?: GraphCacheResolver<
+      WithTypename<Query>,
+      QueryCompanyArgs,
+      WithTypename<Company> | string
+    >
+    companyBySlug?: GraphCacheResolver<
+      WithTypename<Query>,
+      QueryCompanyBySlugArgs,
+      WithTypename<Company> | string
+    >
+    job?: GraphCacheResolver<
+      WithTypename<Query>,
+      QueryJobArgs,
+      WithTypename<Job> | string
+    >
+    jobs?: GraphCacheResolver<
+      WithTypename<Query>,
+      QueryJobsArgs,
+      Array<WithTypename<Job> | string>
+    >
+    searchCities?: GraphCacheResolver<
+      WithTypename<Query>,
+      QuerySearchCitiesArgs,
+      Array<WithTypename<City> | string>
+    >
+    searchCompanies?: GraphCacheResolver<
+      WithTypename<Query>,
+      QuerySearchCompaniesArgs,
+      Array<WithTypename<CompanySearch> | string>
+    >
+    searchTags?: GraphCacheResolver<
+      WithTypename<Query>,
+      QuerySearchTagsArgs,
+      Array<WithTypename<TagSearch> | string>
+    >
+    user?: GraphCacheResolver<
+      WithTypename<Query>,
+      Record<string, never>,
+      WithTypename<User> | string
+    >
+  }
+  Alert?: {
+    filter?: GraphCacheResolver<
+      WithTypename<Alert>,
+      Record<string, never>,
+      Scalars['JSONObject'] | string
+    >
+    id?: GraphCacheResolver<
+      WithTypename<Alert>,
+      Record<string, never>,
+      Scalars['ID'] | string
+    >
+  }
+  CheckoutSessionResult?: {
+    amount?: GraphCacheResolver<
+      WithTypename<CheckoutSessionResult>,
+      Record<string, never>,
+      Scalars['Int'] | string
+    >
+    id?: GraphCacheResolver<
+      WithTypename<CheckoutSessionResult>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+  City?: {
+    id?: GraphCacheResolver<
+      WithTypename<City>,
+      Record<string, never>,
+      Scalars['ID'] | string
+    >
+    name?: GraphCacheResolver<
+      WithTypename<City>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+  Company?: {
+    createdAt?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['DateTime'] | string
+    >
+    description?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    email?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    id?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['ID'] | string
+    >
+    jobs?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Array<WithTypename<Job> | string>
+    >
+    name?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    slug?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    twitter?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    updatedAt?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['DateTime'] | string
+    >
+    viewCount?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['Int'] | string
+    >
+    website?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+  CompanySearch?: {
+    id?: GraphCacheResolver<
+      WithTypename<CompanySearch>,
+      Record<string, never>,
+      Scalars['ID'] | string
+    >
+    name?: GraphCacheResolver<
+      WithTypename<CompanySearch>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+  CreateBillingPortalSessionResult?: {
+    url?: GraphCacheResolver<
+      WithTypename<CreateBillingPortalSessionResult>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+  CreateCheckoutSessionResult?: {
+    sessionUrl?: GraphCacheResolver<
+      WithTypename<CreateCheckoutSessionResult>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+  Job?: {
+    applyUrl?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    archivedAt?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['DateTime'] | string
+    >
+    company?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      WithTypename<Company> | string
+    >
+    createdAt?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['DateTime'] | string
+    >
+    description?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['JSONObject'] | string
+    >
+    id?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['ID'] | string
+    >
+    liked?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['Boolean'] | string
+    >
+    position?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    remote?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['Boolean'] | string
+    >
+    role?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      JobRole | string
+    >
+    status?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      JobStatus | string
+    >
+    tags?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Array<WithTypename<Tag> | string>
+    >
+    type?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      JobType | string
+    >
+    updatedAt?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['DateTime'] | string
+    >
+    viewCount?: GraphCacheResolver<
+      WithTypename<Job>,
+      Record<string, never>,
+      Scalars['Int'] | string
+    >
+  }
+  SuccessResult?: {
+    success?: GraphCacheResolver<
+      WithTypename<SuccessResult>,
+      Record<string, never>,
+      Scalars['Boolean'] | string
+    >
+  }
+  Tag?: {
+    id?: GraphCacheResolver<
+      WithTypename<Tag>,
+      Record<string, never>,
+      Scalars['ID'] | string
+    >
+    name?: GraphCacheResolver<
+      WithTypename<Tag>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+  TagSearch?: {
+    count?: GraphCacheResolver<
+      WithTypename<TagSearch>,
+      Record<string, never>,
+      Scalars['Int'] | string
+    >
+    id?: GraphCacheResolver<
+      WithTypename<TagSearch>,
+      Record<string, never>,
+      Scalars['ID'] | string
+    >
+    name?: GraphCacheResolver<
+      WithTypename<TagSearch>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+  User?: {
+    alerts?: GraphCacheResolver<
+      WithTypename<User>,
+      Record<string, never>,
+      Array<WithTypename<Alert> | string>
+    >
+    company?: GraphCacheResolver<
+      WithTypename<User>,
+      Record<string, never>,
+      WithTypename<Company> | string
+    >
+    email?: GraphCacheResolver<
+      WithTypename<User>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    id?: GraphCacheResolver<
+      WithTypename<User>,
+      Record<string, never>,
+      Scalars['ID'] | string
+    >
+    jobs?: GraphCacheResolver<
+      WithTypename<User>,
+      Record<string, never>,
+      Array<WithTypename<Job> | string>
+    >
+    likes?: GraphCacheResolver<
+      WithTypename<User>,
+      Record<string, never>,
+      Array<WithTypename<Job> | string>
+    >
+    name?: GraphCacheResolver<
+      WithTypename<User>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+}
+
+export type GraphCacheOptimisticUpdaters = {
+  addLike?: GraphCacheOptimisticMutationResolver<
+    MutationAddLikeArgs,
+    WithTypename<Job>
+  >
+  archiveJob?: GraphCacheOptimisticMutationResolver<
+    MutationArchiveJobArgs,
+    WithTypename<Job>
+  >
+  createAlert?: GraphCacheOptimisticMutationResolver<
+    MutationCreateAlertArgs,
+    WithTypename<Alert>
+  >
+  createBillingPortalSession?: GraphCacheOptimisticMutationResolver<
+    Record<string, never>,
+    WithTypename<CreateBillingPortalSessionResult>
+  >
+  createCheckoutSession?: GraphCacheOptimisticMutationResolver<
+    MutationCreateCheckoutSessionArgs,
+    WithTypename<CreateCheckoutSessionResult>
+  >
+  createFeedback?: GraphCacheOptimisticMutationResolver<
+    MutationCreateFeedbackArgs,
+    WithTypename<SuccessResult>
+  >
+  createJob?: GraphCacheOptimisticMutationResolver<
+    MutationCreateJobArgs,
+    WithTypename<Job>
+  >
+  createTag?: GraphCacheOptimisticMutationResolver<
+    MutationCreateTagArgs,
+    WithTypename<Tag>
+  >
+  publishJob?: GraphCacheOptimisticMutationResolver<
+    MutationPublishJobArgs,
+    WithTypename<Job>
+  >
+  removeAlert?: GraphCacheOptimisticMutationResolver<
+    MutationRemoveAlertArgs,
+    WithTypename<SuccessResult>
+  >
+  removeLike?: GraphCacheOptimisticMutationResolver<
+    MutationRemoveLikeArgs,
+    WithTypename<Job>
+  >
+  unpublishJob?: GraphCacheOptimisticMutationResolver<
+    MutationUnpublishJobArgs,
+    WithTypename<Job>
+  >
+  updateCompany?: GraphCacheOptimisticMutationResolver<
+    MutationUpdateCompanyArgs,
+    WithTypename<Company>
+  >
+  updateJob?: GraphCacheOptimisticMutationResolver<
+    MutationUpdateJobArgs,
+    WithTypename<Job>
+  >
+  updateUser?: GraphCacheOptimisticMutationResolver<
+    MutationUpdateUserArgs,
+    WithTypename<User>
+  >
+  viewCompany?: GraphCacheOptimisticMutationResolver<
+    MutationViewCompanyArgs,
+    WithTypename<Company>
+  >
+  viewJob?: GraphCacheOptimisticMutationResolver<
+    MutationViewJobArgs,
+    WithTypename<Job>
+  >
+}
+
+export type GraphCacheUpdaters = {
+  Mutation?: {
+    addLike?: GraphCacheUpdateResolver<
+      { addLike: WithTypename<Job> },
+      MutationAddLikeArgs
+    >
+    archiveJob?: GraphCacheUpdateResolver<
+      { archiveJob: WithTypename<Job> },
+      MutationArchiveJobArgs
+    >
+    createAlert?: GraphCacheUpdateResolver<
+      { createAlert: WithTypename<Alert> },
+      MutationCreateAlertArgs
+    >
+    createBillingPortalSession?: GraphCacheUpdateResolver<
+      {
+        createBillingPortalSession: WithTypename<CreateBillingPortalSessionResult>
+      },
+      Record<string, never>
+    >
+    createCheckoutSession?: GraphCacheUpdateResolver<
+      { createCheckoutSession: WithTypename<CreateCheckoutSessionResult> },
+      MutationCreateCheckoutSessionArgs
+    >
+    createFeedback?: GraphCacheUpdateResolver<
+      { createFeedback: WithTypename<SuccessResult> },
+      MutationCreateFeedbackArgs
+    >
+    createJob?: GraphCacheUpdateResolver<
+      { createJob: WithTypename<Job> },
+      MutationCreateJobArgs
+    >
+    createTag?: GraphCacheUpdateResolver<
+      { createTag: WithTypename<Tag> },
+      MutationCreateTagArgs
+    >
+    publishJob?: GraphCacheUpdateResolver<
+      { publishJob: WithTypename<Job> },
+      MutationPublishJobArgs
+    >
+    removeAlert?: GraphCacheUpdateResolver<
+      { removeAlert: WithTypename<SuccessResult> },
+      MutationRemoveAlertArgs
+    >
+    removeLike?: GraphCacheUpdateResolver<
+      { removeLike: WithTypename<Job> },
+      MutationRemoveLikeArgs
+    >
+    unpublishJob?: GraphCacheUpdateResolver<
+      { unpublishJob: WithTypename<Job> },
+      MutationUnpublishJobArgs
+    >
+    updateCompany?: GraphCacheUpdateResolver<
+      { updateCompany: WithTypename<Company> },
+      MutationUpdateCompanyArgs
+    >
+    updateJob?: GraphCacheUpdateResolver<
+      { updateJob: WithTypename<Job> },
+      MutationUpdateJobArgs
+    >
+    updateUser?: GraphCacheUpdateResolver<
+      { updateUser: WithTypename<User> },
+      MutationUpdateUserArgs
+    >
+    viewCompany?: GraphCacheUpdateResolver<
+      { viewCompany: WithTypename<Company> },
+      MutationViewCompanyArgs
+    >
+    viewJob?: GraphCacheUpdateResolver<
+      { viewJob: WithTypename<Job> },
+      MutationViewJobArgs
+    >
+  }
+  Subscription?: {}
+}
+
+export type GraphCacheConfig = {
+  schema?: IntrospectionData
+  updates?: GraphCacheUpdaters
+  keys?: GraphCacheKeysConfig
+  optimistic?: GraphCacheOptimisticUpdaters
+  resolvers?: GraphCacheResolvers
+  storage?: GraphCacheStorageAdapter
 }

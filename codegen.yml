@@ -3,12 +3,13 @@ schema: "src/api/schema.graphql"
 documents: "src/**/*.gql"
 hooks:
   afterAllFileWrite:
-    - prettier --write
     - eslint --fix
+    - prettier --write
 generates:
   src/types/graphql.ts:
     plugins:
       - "typescript"
+      - 'typescript-urql-graphcache'
     config:
       constEnums: true
       scalars:

@@ -8,17 +8,19 @@ import {
   fetchExchange,
 } from 'urql'
 
-const urqlClient = createClient({
+import type { GraphCacheConfig } from '~/types/graphql'
+
+export const urqlClient = createClient({
   url: '/api/graphql',
   exchanges: [
     devtoolsExchange,
     dedupExchange,
-    cacheExchange({}),
+    cacheExchange<GraphCacheConfig>({}),
     errorExchange({
       onError(error) {
         const { graphQLErrors, networkError } = error
         for (let graphQLError of graphQLErrors) {
-          console.warn(graphQLError)
+          console.error(graphQLError)
           // switch (err.extensions.code) {
           //   // Apollo Server sets code to UNAUTHENTICATED
           //   // when an AuthenticationError is thrown in a resolver
@@ -39,7 +41,7 @@ const urqlClient = createClient({
         }
 
         if (networkError) {
-          console.warn(`[Network Error]:`, networkError)
+          console.error(`[Network Error]:`, networkError)
         }
       },
     }),
