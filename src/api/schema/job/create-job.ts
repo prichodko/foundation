@@ -10,10 +10,11 @@ export const CreateJob = mutationField('createJob', {
         t.string('position')
         t.field('role', { type: 'JobRole' })
         t.field('type', { type: 'JobType' })
-        t.string('description')
+        t.json('description')
         t.string('applyUrl')
         t.boolean('remote')
         t.list.id('tags')
+        t.string('feedback')
       },
     }),
   },

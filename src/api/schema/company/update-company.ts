@@ -10,6 +10,7 @@ export const UpdateCompany = mutationField('updateCompany', {
         t.id('id')
         t.string('name')
         t.string('email')
+        t.string('description')
         t.string('website')
         t.string('twitter')
       },
@@ -28,6 +29,7 @@ export const UpdateCompany = mutationField('updateCompany', {
         email: input.email,
         twitter: input.twitter,
         website: input.website,
+        description: input.description,
       },
     })
 

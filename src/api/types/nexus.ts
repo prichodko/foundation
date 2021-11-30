@@ -67,7 +67,8 @@ export interface NexusGenInputs {
   CreateJobInput: {
     // input type
     applyUrl: string // String!
-    description: string // String!
+    description: NexusGenScalars['JSONObject'] // JSONObject!
+    feedback: string // String!
     position: string // String!
     remote: boolean // Boolean!
     role: NexusGenEnums['JobRole'] // JobRole!
@@ -90,6 +91,7 @@ export interface NexusGenInputs {
   }
   UpdateCompanyInput: {
     // input type
+    description: string // String!
     email: string // String!
     id: string // ID!
     name: string // String!

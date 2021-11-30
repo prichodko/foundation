@@ -60,7 +60,8 @@ input CreateFeedbackInput {
 
 input CreateJobInput {
   applyUrl: String!
-  description: String!
+  description: JSONObject!
+  feedback: String!
   position: String!
   remote: Boolean!
   role: JobRole!
@@ -202,6 +203,7 @@ type TagSearch {
 }
 
 input UpdateCompanyInput {
+  description: String!
   email: String!
   id: ID!
   name: String!
