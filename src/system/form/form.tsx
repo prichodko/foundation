@@ -35,7 +35,9 @@ const Form = <Values extends {}>(props: Props<Values>) => {
 
   return (
     <FormProvider {...form}>
-      <DevTool control={form.control} />
+      {process.env.NODE_ENV === 'development' && (
+        <DevTool control={form.control} />
+      )}
 
       <form
         onSubmit={form.handleSubmit(handleSubmit, onError)}
