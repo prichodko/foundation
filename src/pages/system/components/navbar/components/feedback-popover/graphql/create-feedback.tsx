@@ -1,4 +1,3 @@
-
 import { gql } from 'urql'
 import * as Urql from 'urql'
 
@@ -9,8 +8,11 @@ export type CreateFeedbackMutationVariables = Types.Exact<{
 }>
 
 export type CreateFeedbackMutation = {
-  __typename?: 'Mutation'
-  createFeedback: { __typename?: 'SuccessResult'; success: boolean }
+  readonly __typename?: 'Mutation'
+  readonly createFeedback: {
+    readonly __typename?: 'SuccessResult'
+    readonly success: boolean
+  }
 }
 
 export const CreateFeedbackDocument = /*#__PURE__*/ gql`
