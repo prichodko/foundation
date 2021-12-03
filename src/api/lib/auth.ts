@@ -1,3 +1,5 @@
+import { AuthenticationError } from 'apollo-server-errors'
+
 import type { Context } from '../context'
 
 import { prisma } from './prisma'
@@ -5,9 +7,9 @@ import { prisma } from './prisma'
 export type Auth = {
   user: boolean
   owner: {
-    job: (jobId: string) => Promise<boolean> | boolean
-    company: (companyId: string) => Promise<boolean> | boolean
-    alert: (alertId: string) => Promise<boolean> | boolean
+    job: (jobId: string) => Promise<boolean | Error> | boolean
+    company: (companyId: string) => Promise<boolean | Error> | boolean
+    alert: (alertId: string) => Promise<boolean | Error> | boolean
   }
 }
 
@@ -17,7 +19,7 @@ export const createAuth = (user: Context['user']): Auth => {
     owner: {
       job: async (jobId: string) => {
         if (!user) {
-          return false
+          return new AuthenticationError('Unauthenticated')
         }
 
         const job = await prisma.job.findFirst({
@@ -31,7 +33,7 @@ export const createAuth = (user: Context['user']): Auth => {
       },
       company: async (companyId: string) => {
         if (!user) {
-          return false
+          return new AuthenticationError('Unauthenticated')
         }
 
         const company = await prisma.company.findFirst({
@@ -45,7 +47,7 @@ export const createAuth = (user: Context['user']): Auth => {
       },
       alert: async (alertId: string) => {
         if (!user) {
-          return false
+          return new AuthenticationError('Unauthenticated')
         }
 
         const alert = await prisma.alert.findFirst({
