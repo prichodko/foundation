@@ -5,38 +5,45 @@
     </mj-attributes>
   </mj-head>
   <mj-body>
-    <mj-wrapper background-color="#000" border-radius="8px" padding="1px">
-      <mj-wrapper background-color="white" border-radius="8px" padding="0px">
-        <mj-section padding="20px 30px">
+    <mj-wrapper background-color="#fff" border-radius="8px" padding="40px 30px 45px">
+        <mj-section>
           <mj-column>
-            <mj-text padding-bottom="16px" line-height="2">Hello [user],</mj-text>
-            <mj-text line-height="1.5">We have received a login attempt from Prague, Czechia with the following code:</mj-text>
+            <mj-image width="100px" src="/public/logo.png" />
+            <mj-divider border-width="1px" border-color="lightgrey" padding="30px 0" />
           </mj-column>
         </mj-section>
-        <mj-section text-align="center">
+        <mj-section>
+          <mj-column>
+            <mj-text line-height="1.6" font-size="14px">Please verify your email, so we know it’s really you.</mj-text>
+          </mj-column>
+        </mj-section>
+        <mj-section text-align="center" padding="30px 0">
           <mj-column >
-            <mj-button font-family="Helvetica" background-color="#000" color="white" border-radius="6px" width="200px" line-height="20px" font-size="14px" href="https://google.com">
+            <mj-button font-family="Helvetica" background-color="#000" color="white" border-radius="6px" width="200px" line-height="20px" font-size="14px" href="[url]">
               Verify
             </mj-button>
           </mj-column>
         </mj-section>
-        <mj-section padding="20px 30px">
+        <mj-section>
           <mj-column>
-
-            <mj-text>
-              Or copy and paste this URL into a new tab of your browser:
+            <mj-text line-height="1.6" font-size="14px">
+              Or paste this link into your browser:
             </mj-text>
-            <mj-text>
-              https://vercel.com/confirm?email=prichodko.p%40gmail.com&token=YMhkyUpVIee32HlD0PABIOyy&mode=login
+            <mj-text line-height="1.6" font-size="14px">
+              <a href="[url]">[url]</a>
             </mj-text>
             <mj-divider border-width="1px" border-color="lightgrey" padding="30px 0" />
-
+          </mj-column>
+        </mj-section>
+        <mj-section>
+          <mj-column >
             <mj-text line-height="1.6" font-size="12px">
-              If you didn't attempt to log in but received this email, or if the location doesn't match, please ignore this email. If you are concerned about your account's safety, please reply to this email to get in touch with us.
+              If you have any questions just reply to this email.
             </mj-text>
           </mj-column>
         </mj-section>
-      </mj-wrapper>
     </mj-wrapper>
   </mj-body>
 </mjml>
+
+
