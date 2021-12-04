@@ -3,6 +3,7 @@ import type { NextApiHandler } from 'next'
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
+import { env } from '~/api/config/env'
 import { prisma } from '~/api/lib/prisma'
 import { emails } from '~/api/services/email'
 
@@ -70,7 +71,7 @@ const handler: NextApiHandler = (req, res) => {
       // message if not defined explicitly.
       // secret: process.env.SECRET,
     },
-    secret: process.env.SECRET,
+    secret: env.auth.secret,
     // debug: true,
   })
 }

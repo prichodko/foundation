@@ -1,6 +1,8 @@
 import type { PlacesAutocompleteResponse } from 'nexus'
 import { stringArg, queryField, list } from 'nexus'
 
+import { env } from '~/api/config/env'
+
 declare module 'nexus' {
   export type PlacesAutocompleteResponse = {
     predictions: google.maps.places.AutocompletePrediction[]
@@ -18,7 +20,7 @@ export const SearchCities = queryField('searchCities', {
   authorize: (_parent, _args, ctx) => ctx.auth.user,
   async resolve(_root, { country, name }, _ctx) {
     const response = await fetch(
-      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${name}&components=country:${country}&types=(cities)&key=${process.env.GOOGLE_PLACES_API_KEY}`
+      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${name}&components=country:${country}&types=(cities)&key=${env.google.placesApiKey}`
     )
 
     const json = (await response.json()) as PlacesAutocompleteResponse

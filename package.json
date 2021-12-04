@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@hookform/devtools": "^4.0.1",
+    "@humanwhocodes/env": "^2.2.0",
     "@next-auth/prisma-adapter": "^0.5.2-next.19",
     "@prisma/client": "^3.5.0",
     "@radix-ui/colors": "^0.1.7",

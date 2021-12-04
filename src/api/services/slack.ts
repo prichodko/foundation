@@ -1,5 +1,7 @@
+import { env } from '../config/env'
+
 const sales = async (message: string) => {
-  await fetch(process.env.SLACK_SALES_WEBHOOK_URL!, {
+  await fetch(env.slack.salesWebhookUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -11,7 +13,7 @@ const sales = async (message: string) => {
 }
 
 const feedback = async (message: string) => {
-  await fetch(process.env.SLACK_FEEDBACK_WEBHOOK_URL!, {
+  await fetch(env.slack.feedbackWebhookUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

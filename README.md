@@ -90,3 +90,7 @@ Start the server
 ```bash
 yarn start
 ```
+
+## Environment Variables
+
+Environment variables specified for the Development environment are made available and can be downloaded into a local development setup using a `vercel env pull` command, which automatically creates a .env file.
