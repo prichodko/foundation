@@ -32,7 +32,7 @@ export const DashboardJob: Page = (props: Props) => {
   })
 
   if (!data) {
-    return <div>Loading...</div>
+    return null
   }
 
   const handleSubmit: FormSubmitHandler<Values> = async values => {

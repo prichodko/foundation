@@ -50,7 +50,7 @@ export const Dashboard: Page = (props: Props) => {
   }, [checkoutSession])
 
   if (!data) {
-    return <div>loading...</div>
+    return null
   }
 
   const handleBilling = async () => {

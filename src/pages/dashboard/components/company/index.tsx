@@ -21,7 +21,7 @@ export const Company = (props: Props) => {
   const [, updateCompany] = useUpdateCompanyMutation()
 
   if (!company) {
-    return <div>loading...</div>
+    return null
   }
 
   const handleSubmit: FormSubmitHandler<Values> = async values => {

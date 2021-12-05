@@ -22,7 +22,7 @@ export const Account = (props: Props) => {
   const [, updateUser] = useUpdateUserMutation()
 
   if (!user) {
-    return <div>loading...</div>
+    return null
   }
 
   const handleSubmit: FormSubmitHandler<Values> = async values => {
