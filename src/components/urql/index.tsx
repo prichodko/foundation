@@ -15,7 +15,31 @@ export const urqlClient = createClient({
   exchanges: [
     devtoolsExchange,
     dedupExchange,
-    cacheExchange<GraphCacheConfig>({}),
+    cacheExchange<GraphCacheConfig>({
+      updates: {
+        Mutation: {
+          removeAlert: (_result, args, cache) => {
+            cache.invalidate({ __typename: 'Alert', id: args.id })
+          },
+        },
+      },
+      optimistic: {
+        addLike: (args, _cache) => ({
+          __typename: 'Job',
+          id: args.id,
+          liked: true,
+        }),
+        removeLike: (args, _cache) => ({
+          __typename: 'Job',
+          id: args.id,
+          liked: false,
+        }),
+        removeAlert: _args => ({
+          __typename: 'SuccessResult',
+          success: true,
+        }),
+      },
+    }),
     errorExchange({
       onError(error) {
         const { graphQLErrors, networkError } = error
