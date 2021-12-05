@@ -1,6 +1,8 @@
 import { Env } from '@humanwhocodes/env'
 
-const e = new Env()
+const e = process.env.NEXUS_REFLECTION
+  ? { require: () => '', get: () => '' }
+  : new Env()
 
 export const env = {
   databaseUrl: e.require('DATABASE_URL'), // prisma://aws-us-east-1.prisma-data.com/?api_key=mdge2mZh0cKUj4kDrgqgJ3fdMGn23z4qdrn_5J-MH6IWrr23jENewayyNfANKAzk
