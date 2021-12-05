@@ -32,6 +32,7 @@ export const Dashboard: Page = (props: Props) => {
 
   const [{ data }] = useUserQuery({
     variables: {},
+    requestPolicy: 'cache-and-network',
   })
   const [result, createBillingPortalSession] =
     useCreateBillingPortalSessionMutation()
