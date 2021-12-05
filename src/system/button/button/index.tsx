@@ -1,6 +1,8 @@
 import type { Ref } from 'react'
 import { forwardRef } from 'react'
 
+import { useFormContext } from 'react-hook-form'
+
 import { Link } from '~/components/link'
 import type { LinkProps as BaseLinkProps } from '~/components/link'
 import type { VariantProps } from '~/styles/config'
@@ -38,7 +40,12 @@ const Button = (props: Props, ref: Ref<HTMLButtonElement>) => {
     )
   }
 
-  const { disabled, loading, children, ...buttonProps } = props
+  const { disabled, children, ...buttonProps } = props
+
+  const submitting =
+    props.type === 'submit' && useFormContext().formState.isSubmitting // eslint-disable-line react-hooks/rules-of-hooks
+
+  const loading = props.loading || submitting
 
   return (
     <Root
