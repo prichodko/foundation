@@ -6,7 +6,10 @@ import { Root, Trigger } from '@radix-ui/react-popover'
 import { Content } from './style'
 
 interface TriggerProps {
-  children: [React.ReactElement, React.ReactElement]
+  children: [
+    React.ReactElement,
+    React.ReactElement | ((close: VoidFunction) => React.ReactElement)
+  ]
 }
 
 const PopoverTrigger = (props: TriggerProps) => {
@@ -19,7 +22,7 @@ const PopoverTrigger = (props: TriggerProps) => {
   return (
     <Root open={open} onOpenChange={setOpen}>
       <Trigger asChild>{trigger}</Trigger>
-      {content}
+      {typeof content === 'function' ? content(() => setOpen(false)) : content}
     </Root>
   )
 }
