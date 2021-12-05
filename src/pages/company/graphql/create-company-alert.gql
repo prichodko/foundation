@@ -1,0 +1,5 @@
+mutation CreateCompanyAlert($companyId: String!) {
+  createCompanyAlert(companyId: $companyId) {
+    id
+  }
+}

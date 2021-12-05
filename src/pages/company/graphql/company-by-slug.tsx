@@ -18,6 +18,7 @@ export type CompanyBySlugQuery = {
     description: string
     website: string
     viewCount: number
+    subscribed: boolean
     jobs: Array<{
       __typename?: 'Job'
       id: string
@@ -38,6 +39,7 @@ export const CompanyBySlugDocument = /*#__PURE__*/ gql`
       description
       website
       viewCount
+      subscribed
       jobs {
         id
         position

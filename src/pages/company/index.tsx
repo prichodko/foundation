@@ -8,6 +8,7 @@ import { Heading } from '~/system/heading'
 import { Text } from '~/system/text'
 
 import { useCompanyBySlugQuery } from './graphql/company-by-slug'
+import { useCreateCompanyAlertMutation } from './graphql/create-company-alert'
 import { useViewCompany } from './hooks/use-view-company'
 
 interface Props {}
@@ -23,6 +24,8 @@ export const Company: Page = (props: Props) => {
     },
     pause: !slug,
   })
+
+  const [{ fetching }, createCompanyAlert] = useCreateCompanyAlertMutation()
   useViewCompany(data?.companyBySlug.id)
 
   if (error) {
@@ -34,6 +37,12 @@ export const Company: Page = (props: Props) => {
   }
 
   const company = data.companyBySlug
+
+  const handleSubscribe = async () => {
+    await createCompanyAlert({
+      companyId: company.id,
+    })
+  }
 
   return (
     <>
@@ -47,7 +56,13 @@ export const Company: Page = (props: Props) => {
             <Text>{company.viewCount} views</Text>
           </div>
           <div className="ml-36">
-            <Button variant="outline">Subscribe</Button>
+            <Button
+              variant="outline"
+              onPress={handleSubscribe}
+              loading={fetching}
+            >
+              {company.subscribed ? 'Unsubscribe' : 'Subscribe'}
+            </Button>
           </div>
         </div>
 
