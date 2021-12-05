@@ -45,6 +45,7 @@ export const CreateAlert = mutationField('createAlert', {
 
     const exists = await ctx.prisma.alert.findFirst({
       where: {
+        userId: ctx.user!.id,
         filter: {
           equals: filter,
         },
