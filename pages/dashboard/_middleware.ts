@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server'
 export async function middleware(req: NextApiRequest) {
   const session = await getToken({
     req,
-    secret: process.env.SECRET!,
+    secret: process.env.AUTH_SECRET!,
   })
 
   if (!session) {
