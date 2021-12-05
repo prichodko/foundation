@@ -1,28 +1,29 @@
 {
-  "name": "foundation",
+  "name": "workverse",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:api": "ts-node-dev --respawn src/api",
-    "typegen": "NEXUS_SHOULD_EXIT_AFTER_REFLECTION=true ts-node src/api",
-    "build": "yarn typegen && next build",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "dev:api": "NEXUS_REFLECTION=true ts-node-dev --clear --respawn -r tsconfig-paths/register src/api ",
+    "reflect": "NEXUS_REFLECTION=true ts-node src/api",
+    "build": "yarn reflect && next build",
     "start": "next start",
     "type-check": "tsc",
     "lint": "next lint",
+    "analyze": "ANALYZE=true yarn build",
     "format": "prettier --write '{pages,src}/**/*.{ts,tsx,css}'",
     "test:e2e": "playwright test",
-    "analyze": "ANALYZE=true yarn build",
     "prepare": "husky install",
     "storybook": "start-storybook -s ./public -p 3001",
     "storybook:build": "build-storybook -s ./public",
-    "codegen": "graphql-codegen --config codegen.yml",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@hookform/devtools": "^4.0.1",
+    "@hookform/resolvers": "2.8.3",
     "@humanwhocodes/env": "^2.2.0",
     "@next-auth/prisma-adapter": "^0.5.2-next.19",
     "@prisma/client": "^3.5.0",
@@ -67,6 +68,9 @@
     "graphql-middleware": "6.0.9",
     "graphql-scalars": "^1.13.6",
     "hoist-non-react-statics": "^3.3.2",
+    "is-email": "^1.0.2",
+    "is-email-like": "^2.0.0",
+    "is-url-superb": "^6.1.0",
     "micro": "^9.3.4",
     "mjml": "^4.11.0",
     "next": "^12.0.4",
@@ -77,9 +81,10 @@
     "react": "17.0.2",
     "react-aria": "^3.10.0",
     "react-dom": "17.0.2",
-    "react-hook-form": "^7.19.5",
+    "react-hook-form": "7.20.4",
     "react-stately": "^3.9.0",
     "stripe": "^8.189.0",
+    "superstruct": "^0.15.3",
     "tinykeys": "^1.2.0",
     "urql": "^2.0.5"
   },
@@ -103,6 +108,7 @@
     "@storybook/react": "^6.3.12",
     "@types/googlemaps": "^3.43.3",
     "@types/hoist-non-react-statics": "^3.3.1",
+    "@types/mjml": "^4.7.0",
     "@types/node": "^16.11.10",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
@@ -123,6 +129,7 @@
     "tailwindcss": "^2.2.19",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
+    "tsconfig-paths": "^3.12.0",
     "typescript": "^4.5.2"
   },
   "lint-staged": {
@@ -135,7 +142,7 @@
     ]
   },
   "graphql": {
-    "schema": "src/api/schema.graphql",
+    "schema": "http://localhost:3000/api/graphql",
     "documents": "src/**/*.{gql,ts,tsx}"
   },
   "prisma": {

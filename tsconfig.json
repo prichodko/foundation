@@ -14,6 +14,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -26,11 +27,12 @@
     "incremental": true
   },
   "include": ["next-env.d.ts", "next.config.js", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "nrg.ts"],
   "ts-node": {
+    "require": ["tsconfig-paths/register"],
     "transpileOnly": true,
     "compilerOptions": {
-      "module": "CommonJS"
+      "module": "commonjs"
     },
     "pretty": true
   }

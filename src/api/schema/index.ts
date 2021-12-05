@@ -50,9 +50,7 @@ export const schema = makeSchema({
       },
     ],
   },
-  shouldExitAfterGenerateArtifacts: Boolean(
-    process.env.NEXUS_SHOULD_EXIT_AFTER_REFLECTION
-  ),
+  shouldExitAfterGenerateArtifacts: Boolean(process.env.NEXUS_REFLECTION),
   outputs: {
     typegen: path.join(process.cwd(), 'src/api/types/nexus.ts'),
     schema: path.join(process.cwd(), 'src/api/schema.graphql'),

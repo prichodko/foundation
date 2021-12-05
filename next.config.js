@@ -1,7 +1,6 @@
 /**
  * @type {import('next/dist/server/config-shared').NextConfig}
  */
-
 const config = {
   swcMinify: true,
   reactStrictMode: true,
@@ -9,8 +8,10 @@ const config = {
   eslint: {
     dirs: ['pages', 'src'],
   },
-  // future: {},
-  // experimental: {},
+  future: {
+    strictPostcssConfiguration: true,
+  },
+  experimental: {},
 }
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
