@@ -3,6 +3,7 @@ import type { FormSubmitHandler } from '~/system/form'
 import { Form } from '~/system/form'
 import { TextInput } from '~/system/input'
 import type { UpdateCompanyInput } from '~/types/graphql'
+import { companySchema } from '~/validation/company'
 
 import type { UserQuery } from '../../graphql/user'
 
@@ -12,7 +13,7 @@ interface Props {
   company: UserQuery['user']['company']
 }
 
-type Values = Omit<UpdateCompanyInput, 'id'>
+type Values = Required<UpdateCompanyInput>
 
 export const Company = (props: Props) => {
   const { company } = props
@@ -29,6 +30,7 @@ export const Company = (props: Props) => {
         id: company.id,
         email: values.email,
         name: values.name,
+        description: values.description,
         website: values.website,
         twitter: values.twitter,
       },
@@ -40,16 +42,19 @@ export const Company = (props: Props) => {
       <Form<Values>
         className="grid gap-4"
         defaultValues={{
+          id: company.id,
           email: company.email ?? '',
           name: company.name ?? '',
+          description: company.description ?? '',
           twitter: company.twitter ?? '',
           website: company.website ?? '',
         }}
         onSubmit={handleSubmit}
+        schema={companySchema.update}
       >
         <TextInput label="Company" name="name" />
         <TextInput label="Email" name="email" />
-        <TextInput label="About" name="about" />
+        <TextInput label="Description" name="description" />
         <TextInput label="Website" name="website" />
         <TextInput label="Twitter" name="twitter" placeholder="@jack" />
         <Button type="submit">Save</Button>

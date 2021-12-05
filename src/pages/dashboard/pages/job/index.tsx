@@ -10,12 +10,13 @@ import type { FormSubmitHandler } from '~/system/form'
 import { Form } from '~/system/form'
 import { TextInput } from '~/system/input'
 import type { UpdateJobInput } from '~/types/graphql'
+import { jobSchema } from '~/validation/job'
 
 import { useUpdateJobMutation } from './graphql/update-job'
 
 interface Props {}
 
-type Values = Omit<UpdateJobInput, 'id'>
+type Values = UpdateJobInput
 
 export const DashboardJob: Page = (props: Props) => {
   const {} = props
@@ -44,6 +45,7 @@ export const DashboardJob: Page = (props: Props) => {
         applyUrl: values.applyUrl,
         tags: values.tags,
         remote: false,
+        type: values.type,
       },
     })
   }
@@ -52,17 +54,34 @@ export const DashboardJob: Page = (props: Props) => {
 
   return (
     <>
+      <div className="flex justify-end mb-12">
+        <Button
+          href={{
+            pathname: '/[slug]/[id]',
+            query: {
+              slug: job.company.slug,
+              id: job.id,
+            },
+          }}
+          external
+        >
+          View
+        </Button>
+      </div>
       <Form<Values>
         className="grid gap-6"
         defaultValues={{
+          id: job.id,
           position: job.position,
           description: job.description,
           role: job.role,
           applyUrl: job.applyUrl,
           remote: false,
           tags: job.tags.map(tag => tag.id),
+          type: job.type,
         }}
         onSubmit={handleSubmit}
+        schema={jobSchema.update}
       >
         <TextInput label="Position" name="position" />
         <SelectJobRole name="role" />

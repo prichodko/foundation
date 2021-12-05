@@ -56,6 +56,7 @@ export type Company = {
   jobs: Array<Job>
   name: Scalars['String']
   slug: Scalars['String']
+  subscribed: Scalars['Boolean']
   twitter?: Maybe<Scalars['String']>
   updatedAt: Scalars['DateTime']
   viewCount: Scalars['Int']
@@ -69,7 +70,7 @@ export type CompanySearch = {
 }
 
 export type CreateAlertInput = {
-  filter: Scalars['JSONObject']
+  filter: JobsFilter
 }
 
 export type CreateBillingPortalSessionResult = {
@@ -90,17 +91,18 @@ export type CreateCheckoutSessionResult = {
 export type CreateFeedbackInput = {
   email?: InputMaybe<Scalars['String']>
   message: Scalars['String']
-  reaction: FeedbackReaction
+  reaction: FeedbackReaction | `${FeedbackReaction}`
 }
 
 export type CreateJobInput = {
   applyUrl: Scalars['String']
-  description: Scalars['String']
+  description: Scalars['JSONObject']
+  feedback?: InputMaybe<Scalars['String']>
   position: Scalars['String']
   remote: Scalars['Boolean']
-  role: JobRole
+  role: JobRole | `${JobRole}`
   tags: Array<Scalars['ID']>
-  type: JobType
+  type: JobType | `${JobType}`
 }
 
 export type CreateTagInput = {
@@ -124,10 +126,10 @@ export type Job = {
   liked: Scalars['Boolean']
   position: Scalars['String']
   remote: Scalars['Boolean']
-  role: JobRole
-  status: JobStatus
+  role: JobRole | `${JobRole}`
+  status: JobStatus | `${JobStatus}`
   tags: Array<Tag>
-  type: JobType
+  type: JobType | `${JobType}`
   updatedAt: Scalars['DateTime']
   viewCount: Scalars['Int']
 }
@@ -168,7 +170,7 @@ export type JobsFilter = {
   company?: InputMaybe<Array<Scalars['ID']>>
   position?: InputMaybe<Scalars['String']>
   remote?: InputMaybe<Scalars['Boolean']>
-  role?: InputMaybe<JobRole>
+  role?: InputMaybe<JobRole | `${JobRole}`>
   salaryMax?: InputMaybe<Scalars['Int']>
   salaryMin?: InputMaybe<Scalars['Int']>
   tags?: InputMaybe<Array<Scalars['ID']>>
@@ -181,6 +183,7 @@ export type Mutation = {
   createAlert: Alert
   createBillingPortalSession: CreateBillingPortalSessionResult
   createCheckoutSession: CreateCheckoutSessionResult
+  createCompanyAlert: Alert
   createFeedback: SuccessResult
   createJob: Job
   createTag: Tag
@@ -209,6 +212,10 @@ export type MutationCreateAlertArgs = {
 
 export type MutationCreateCheckoutSessionArgs = {
   input: CreateCheckoutSessionInput
+}
+
+export type MutationCreateCompanyAlertArgs = {
+  companyId: Scalars['String']
 }
 
 export type MutationCreateFeedbackArgs = {
@@ -327,10 +334,11 @@ export type TagSearch = {
 }
 
 export type UpdateCompanyInput = {
+  description: Scalars['String']
   email: Scalars['String']
   id: Scalars['ID']
   name: Scalars['String']
-  twitter: Scalars['String']
+  twitter?: InputMaybe<Scalars['String']>
   website: Scalars['String']
 }
 
@@ -340,8 +348,9 @@ export type UpdateJobInput = {
   id: Scalars['ID']
   position: Scalars['String']
   remote: Scalars['Boolean']
-  role: JobRole
+  role: JobRole | `${JobRole}`
   tags: Array<Scalars['ID']>
+  type: JobType | `${JobType}`
 }
 
 export type UpdateUserInput = {
@@ -508,6 +517,11 @@ export type GraphCacheResolvers = {
       WithTypename<Company>,
       Record<string, never>,
       Scalars['String'] | string
+    >
+    subscribed?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['Boolean'] | string
     >
     twitter?: GraphCacheResolver<
       WithTypename<Company>,
@@ -729,6 +743,10 @@ export type GraphCacheOptimisticUpdaters = {
     MutationCreateCheckoutSessionArgs,
     WithTypename<CreateCheckoutSessionResult>
   >
+  createCompanyAlert?: GraphCacheOptimisticMutationResolver<
+    MutationCreateCompanyAlertArgs,
+    WithTypename<Alert>
+  >
   createFeedback?: GraphCacheOptimisticMutationResolver<
     MutationCreateFeedbackArgs,
     WithTypename<SuccessResult>
@@ -802,6 +820,10 @@ export type GraphCacheUpdaters = {
     createCheckoutSession?: GraphCacheUpdateResolver<
       { createCheckoutSession: WithTypename<CreateCheckoutSessionResult> },
       MutationCreateCheckoutSessionArgs
+    >
+    createCompanyAlert?: GraphCacheUpdateResolver<
+      { createCompanyAlert: WithTypename<Alert> },
+      MutationCreateCompanyAlertArgs
     >
     createFeedback?: GraphCacheUpdateResolver<
       { createFeedback: WithTypename<SuccessResult> },

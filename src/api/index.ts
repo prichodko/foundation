@@ -1,7 +1,9 @@
-import { ApolloServer } from 'apollo-server-micro'
+import { ApolloServer, UserInputError } from 'apollo-server-micro'
 import type { NextApiRequest } from 'next'
 import { getToken } from 'next-auth/jwt'
+import { StructError } from 'superstruct'
 
+import { env } from './config/env'
 import type { Context } from './context'
 import { createAuth } from './lib/auth'
 import { prisma } from './lib/prisma'
@@ -12,7 +14,7 @@ interface Options {
 }
 
 const getUser = async (req: NextApiRequest): Promise<Context['user']> => {
-  const session = await getToken({ req, secret: process.env.SECRET! })
+  const session = await getToken({ req, secret: env.auth.secret })
 
   if (!session) {
     return null
@@ -39,4 +41,13 @@ export const server = new ApolloServer({
   schema,
   context,
   introspection: true,
+  formatError: error => {
+    if (error instanceof StructError) {
+      return new UserInputError(error.message, {
+        // path: error.path.join('.'),
+        // message: error.failures()[0].message,
+      })
+    }
+    return error
+  },
 })

@@ -11,7 +11,13 @@ generates:
       - "typescript"
       - 'typescript-urql-graphcache'
     config:
+      strictScalars: true
       constEnums: true
+      allowEnumStringTypes: true
+      # immutableTypes: true
+      # avoidOptionals:
+      #   inputValue: true
+      # inputMaybeValue: T | null | undefined
       scalars:
         DateTime: Date
         JSONObject: JsonObject
@@ -33,8 +39,3 @@ generates:
       scalars:
         DateTime: Date
         JSONObject: JsonObject
-
-
-
-
-

@@ -16,13 +16,14 @@ import { Slider } from '~/system/slider'
 import { Text } from '~/system/text'
 import type { CreateJobInput, JobRole } from '~/types/graphql'
 import { JobType } from '~/types/graphql'
+import { jobSchema } from '~/validation/job'
 
 // import { useCreateCheckoutSessionMutation } from './graphql/create-checkout-session'
 import { useCreateJobMutation } from './graphql/create-job'
 
 interface Props {}
 
-type Values = CreateJobInput
+type Values = Required<CreateJobInput>
 
 const Section = ({ heading, children }: any) => {
   return (
@@ -42,16 +43,16 @@ export const DashboardNew: Page = (props: Props) => {
   // const [, createCheckoutSession] = useCreateCheckoutSessionMutation()
 
   const handleSubmit: FormSubmitHandler<Values> = async values => {
-    console.log(createJob, values)
     await createJob({
       input: {
         position: values.position,
         role: values.role,
         tags: values.tags,
-        description: JSON.stringify(values.description),
+        description: values.description,
         applyUrl: values.applyUrl,
         remote: false,
         type: values.type,
+        feedback: values.feedback,
       },
     })
 
@@ -72,29 +73,18 @@ export const DashboardNew: Page = (props: Props) => {
           position: '',
           role: '' as JobRole,
           applyUrl: '',
-          description: '',
+          description: {},
           remote: false,
           tags: [],
           type: JobType.FullTime,
+          feedback: '',
         }}
         onSubmit={handleSubmit}
         className="grid gap-5"
+        schema={jobSchema.create}
       >
         <Section heading="Job">
-          <TextInput
-            label="Position"
-            name="position"
-            rules={
-              {
-                // required: true,
-                // validate: {
-                //   trim: value => {
-                //     return !!value.trim()
-                //   },
-                // },
-              }
-            }
-          />
+          <TextInput label="Position" name="position" />
 
           <SelectJobRole name="role" />
 
@@ -117,8 +107,7 @@ export const DashboardNew: Page = (props: Props) => {
 
           <TextInput label="Apply URL / Email" name="applyUrl" />
         </Section>
-        {/*
-        <Section heading="Company">
+        {/* <Section heading="Company">
           <div className="grid gap-5">
             <TextInput label="Company" name="company" />
             <TextInput label="Email" name="email" />

@@ -1,47 +1,23 @@
-import type { Describe} from 'superstruct';
-import { type , enums, object, optional, string, nullable } from 'superstruct'
-
-
 import { Button } from '~/system/button'
-import type { FormSubmitHandler } from '~/system/form'
 import { Form } from '~/system/form'
 import { Textarea } from '~/system/input'
 import { PopoverTrigger, Popover } from '~/system/popover'
 import { FeedbackReaction } from '~/types/graphql'
 import type { CreateFeedbackInput } from '~/types/graphql'
+import { createFeedbackSchema } from '~/validation/feedback'
 
 import { useCreateFeedbackMutation } from './graphql/create-feedback'
 
 interface Props {}
 
-type FormValues = CreateFeedbackInput
-
-const schema: Describe<CreateFeedbackInput> = object({
-  message: string(),
-  reaction: enums([
-    FeedbackReaction.Happy,
-    FeedbackReaction.Sad,
-    FeedbackReaction.Neutral,
-  ]),
-  email: optional(nullable(string())),
-})
-
-const sssssss: Describe<CreateFeedbackInput> = type({
-  message: string(),
-  // reaction: enums([
-  //   FeedbackReaction.Happy,
-  //   FeedbackReaction.Sad,
-  //   FeedbackReaction.Neutral,
-  // ]),
-  email: optional(nullable(string())),
-})
+type Values = Required<CreateFeedbackInput>
 
 export const FeedbackPopover = (props: Props) => {
   const {} = props
 
   const [, createFeedback] = useCreateFeedbackMutation()
 
-  const handleSubmit = (close: VoidFunction) => async (values: FormValues) => {
+  const handleSubmit = (close: VoidFunction) => async (values: Values) => {
     await createFeedback({
       input: {
         message: values.message,
@@ -56,14 +32,14 @@ export const FeedbackPopover = (props: Props) => {
       <Button variant="minimal">Feedback</Button>
       {close => (
         <Popover className="p-4 w-[300px]">
-          <Form<FormValues>
+          <Form<Values>
             defaultValues={{
               email: '',
               message: '',
               reaction: FeedbackReaction.Happy,
             }}
             onSubmit={handleSubmit(close)}
-            schema={schema}
+            schema={createFeedbackSchema}
           >
             <Textarea
               label="Feedback"

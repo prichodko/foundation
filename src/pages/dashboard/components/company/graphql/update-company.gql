@@ -3,6 +3,7 @@ mutation UpdateCompany($input: UpdateCompanyInput!) {
     id
     name
     email
+    description
     website
     twitter
   }

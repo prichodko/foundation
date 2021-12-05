@@ -24,6 +24,7 @@ type Company {
   jobs: [Job!]!
   name: String!
   slug: String!
+  subscribed: Boolean!
   twitter: String
   updatedAt: DateTime!
   viewCount: Int!
@@ -36,7 +37,7 @@ type CompanySearch {
 }
 
 input CreateAlertInput {
-  filter: JSONObject!
+  filter: JobsFilter!
 }
 
 type CreateBillingPortalSessionResult {
@@ -61,7 +62,7 @@ input CreateFeedbackInput {
 input CreateJobInput {
   applyUrl: String!
   description: JSONObject!
-  feedback: String!
+  feedback: String
   position: String!
   remote: Boolean!
   role: JobRole!
@@ -160,6 +161,7 @@ type Mutation {
   createCheckoutSession(
     input: CreateCheckoutSessionInput!
   ): CreateCheckoutSessionResult!
+  createCompanyAlert(companyId: String!): Alert!
   createFeedback(input: CreateFeedbackInput!): SuccessResult!
   createJob(input: CreateJobInput!): Job!
   createTag(input: CreateTagInput!): Tag!
@@ -207,7 +209,7 @@ input UpdateCompanyInput {
   email: String!
   id: ID!
   name: String!
-  twitter: String!
+  twitter: String
   website: String!
 }
 
@@ -219,6 +221,7 @@ input UpdateJobInput {
   remote: Boolean!
   role: JobRole!
   tags: [ID!]!
+  type: JobType!
 }
 
 input UpdateUserInput {

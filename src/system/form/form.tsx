@@ -1,18 +1,17 @@
 import { DevTool } from '@hookform/devtools'
+import { useForm, FormProvider } from 'react-hook-form'
 import type {
   SubmitHandler,
   SubmitErrorHandler,
   UseFormReturn,
   UnpackNestedValue,
   DefaultValues,
+  useFormContext,
+  Mode,
 } from 'react-hook-form'
-import { useForm, FormProvider, useFormContext } from 'react-hook-form'
+import type { Struct } from 'superstruct'
 
-type FormSubmitHandler<Values> = (
-  defaultValues: UnpackNestedValue<Values>,
-  form: UseFormReturn<Values>,
-  event?: React.BaseSyntheticEvent
-) => void | Promise<void>
+import { resolver } from './resolver'
 
 interface Props<Values> {
   children: React.ReactNode
@@ -20,13 +19,25 @@ interface Props<Values> {
   onError?: SubmitErrorHandler<Values>
   className?: string
   defaultValues: Required<DefaultValues<Values>>
+  schema: Struct<Values>
+  mode?: Mode
 }
 
 const Form = <Values extends {}>(props: Props<Values>) => {
-  const { children, onSubmit, onError, defaultValues, className } = props
+  const {
+    children,
+    onSubmit,
+    onError,
+    defaultValues,
+    className,
+    schema,
+    mode = 'onTouched',
+  } = props
 
   const form = useForm<Values>({
     defaultValues: defaultValues as DefaultValues<Values>,
+    resolver: resolver(schema),
+    mode,
   })
 
   const handleSubmit: SubmitHandler<Values> = (values, event) => {
@@ -48,6 +59,12 @@ const Form = <Values extends {}>(props: Props<Values>) => {
     </FormProvider>
   )
 }
+
+type FormSubmitHandler<Values> = (
+  defaultValues: UnpackNestedValue<Values>,
+  form: UseFormReturn<Values>,
+  event?: React.BaseSyntheticEvent
+) => void | Promise<void>
 
 export { Form, useFormContext }
 export type { Props as FormProps, FormSubmitHandler }

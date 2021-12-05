@@ -14,6 +14,7 @@ export type UserJobFragment = {
   applyUrl: string
   remote: boolean
   status: Types.JobStatus
+  type: Types.JobType
   tags: Array<{ __typename?: 'Tag'; id: string; name: string }>
 }
 
@@ -37,6 +38,7 @@ export type UserQuery = {
       applyUrl: string
       remote: boolean
       status: Types.JobStatus
+      type: Types.JobType
       tags: Array<{ __typename?: 'Tag'; id: string; name: string }>
     }>
     company?:
@@ -44,6 +46,7 @@ export type UserQuery = {
           __typename?: 'Company'
           id: string
           name: string
+          description: string
           slug: string
           email: string
           website: string
@@ -80,6 +83,7 @@ export const UserJobFragmentDoc = /*#__PURE__*/ gql`
     applyUrl
     remote
     status
+    type
     tags {
       id
       name
@@ -98,6 +102,7 @@ export const UserDocument = /*#__PURE__*/ gql`
       company {
         id
         name
+        description
         slug
         email
         website

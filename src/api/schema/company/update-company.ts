@@ -1,5 +1,7 @@
 import { inputObjectType, mutationField } from 'nexus'
 
+import { companySchema } from '~/validation/company'
+
 export const UpdateCompany = mutationField('updateCompany', {
   type: 'Company',
 
@@ -12,7 +14,7 @@ export const UpdateCompany = mutationField('updateCompany', {
         t.string('email')
         t.string('description')
         t.string('website')
-        t.string('twitter')
+        t.nullable.string('twitter')
       },
     }),
   },
@@ -20,16 +22,18 @@ export const UpdateCompany = mutationField('updateCompany', {
   authorize: (_root, args, ctx) => ctx.auth.owner.company(args.input.id),
 
   async resolve(_root, { input }, ctx) {
+    const data = companySchema.update.create(input)
+
     const company = await ctx.prisma.company.update({
       where: {
         id: input.id,
       },
       data: {
-        name: input.name,
-        email: input.email,
-        twitter: input.twitter,
-        website: input.website,
-        description: input.description,
+        name: data.name,
+        email: data.email,
+        twitter: data.twitter,
+        website: data.website,
+        description: data.description,
       },
     })
 

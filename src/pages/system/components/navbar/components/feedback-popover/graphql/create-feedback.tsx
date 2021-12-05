@@ -8,11 +8,8 @@ export type CreateFeedbackMutationVariables = Types.Exact<{
 }>
 
 export type CreateFeedbackMutation = {
-  readonly __typename?: 'Mutation'
-  readonly createFeedback: {
-    readonly __typename?: 'SuccessResult'
-    readonly success: boolean
-  }
+  __typename?: 'Mutation'
+  createFeedback: { __typename?: 'SuccessResult'; success: boolean }
 }
 
 export const CreateFeedbackDocument = /*#__PURE__*/ gql`

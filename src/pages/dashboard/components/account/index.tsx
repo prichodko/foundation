@@ -4,6 +4,7 @@ import { Form } from '~/system/form'
 import { TextInput } from '~/system/input'
 import { Text } from '~/system/text'
 import type { UpdateUserInput } from '~/types/graphql'
+import { userSchema } from '~/validation/user'
 
 import type { UserQuery } from '../../graphql/user'
 
@@ -40,6 +41,7 @@ export const Account = (props: Props) => {
           name: user.name ?? '',
         }}
         onSubmit={handleSubmit}
+        schema={userSchema.update}
       >
         <TextInput label="Email" value={user.email} disabled />
         <div>

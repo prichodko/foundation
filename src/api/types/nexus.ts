@@ -51,7 +51,7 @@ declare global {
 export interface NexusGenInputs {
   CreateAlertInput: {
     // input type
-    filter: NexusGenScalars['JSONObject'] // JSONObject!
+    filter: NexusGenInputs['JobsFilter'] // JobsFilter!
   }
   CreateCheckoutSessionInput: {
     // input type
@@ -68,7 +68,7 @@ export interface NexusGenInputs {
     // input type
     applyUrl: string // String!
     description: NexusGenScalars['JSONObject'] // JSONObject!
-    feedback: string // String!
+    feedback?: string | null // String
     position: string // String!
     remote: boolean // Boolean!
     role: NexusGenEnums['JobRole'] // JobRole!
@@ -95,7 +95,7 @@ export interface NexusGenInputs {
     email: string // String!
     id: string // ID!
     name: string // String!
-    twitter: string // String!
+    twitter?: string | null // String
     website: string // String!
   }
   UpdateJobInput: {
@@ -107,6 +107,7 @@ export interface NexusGenInputs {
     remote: boolean // Boolean!
     role: NexusGenEnums['JobRole'] // JobRole!
     tags: string[] // [ID!]!
+    type: NexusGenEnums['JobType'] // JobType!
   }
   UpdateUserInput: {
     // input type
@@ -209,6 +210,7 @@ export interface NexusGenFieldTypes {
     jobs: NexusGenRootTypes['Job'][] // [Job!]!
     name: string // String!
     slug: string // String!
+    subscribed: boolean // Boolean!
     twitter: string | null // String
     updatedAt: NexusGenScalars['DateTime'] // DateTime!
     viewCount: number // Int!
@@ -252,6 +254,7 @@ export interface NexusGenFieldTypes {
     createAlert: NexusGenRootTypes['Alert'] // Alert!
     createBillingPortalSession: NexusGenRootTypes['CreateBillingPortalSessionResult'] // CreateBillingPortalSessionResult!
     createCheckoutSession: NexusGenRootTypes['CreateCheckoutSessionResult'] // CreateCheckoutSessionResult!
+    createCompanyAlert: NexusGenRootTypes['Alert'] // Alert!
     createFeedback: NexusGenRootTypes['SuccessResult'] // SuccessResult!
     createJob: NexusGenRootTypes['Job'] // Job!
     createTag: NexusGenRootTypes['Tag'] // Tag!
@@ -330,6 +333,7 @@ export interface NexusGenFieldTypeNames {
     jobs: 'Job'
     name: 'String'
     slug: 'String'
+    subscribed: 'Boolean'
     twitter: 'String'
     updatedAt: 'DateTime'
     viewCount: 'Int'
@@ -373,6 +377,7 @@ export interface NexusGenFieldTypeNames {
     createAlert: 'Alert'
     createBillingPortalSession: 'CreateBillingPortalSessionResult'
     createCheckoutSession: 'CreateCheckoutSessionResult'
+    createCompanyAlert: 'Alert'
     createFeedback: 'SuccessResult'
     createJob: 'Job'
     createTag: 'Tag'
@@ -443,6 +448,10 @@ export interface NexusGenArgTypes {
     createCheckoutSession: {
       // args
       input: NexusGenInputs['CreateCheckoutSessionInput'] // CreateCheckoutSessionInput!
+    }
+    createCompanyAlert: {
+      // args
+      companyId: string // String!
     }
     createFeedback: {
       // args

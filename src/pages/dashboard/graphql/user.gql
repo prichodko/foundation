@@ -8,6 +8,7 @@ fragment UserJob on Job {
   applyUrl
   remote
   status
+  type
   tags {
     id
     name
@@ -25,6 +26,7 @@ query User {
     company {
       id
       name
+      description
       slug
       email
       website

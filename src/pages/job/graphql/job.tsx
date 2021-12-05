@@ -18,6 +18,7 @@ export type JobQuery = {
     applyUrl: string
     viewCount: number
     liked: boolean
+    type: Types.JobType
     tags: Array<{ __typename?: 'Tag'; id: string; name: string }>
     company: {
       __typename?: 'Company'
@@ -41,6 +42,7 @@ export const JobDocument = /*#__PURE__*/ gql`
       applyUrl
       viewCount
       liked
+      type
       tags {
         id
         name

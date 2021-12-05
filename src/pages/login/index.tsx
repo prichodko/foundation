@@ -1,6 +1,8 @@
 import type { Page } from 'next'
 import type { SignInResponse } from 'next-auth/react'
 import { signIn } from 'next-auth/react'
+import type { Describe } from 'superstruct'
+import { object } from 'superstruct'
 
 import { Link } from '~/components/link'
 import { useUrlQuery } from '~/hooks/use-url-query'
@@ -10,10 +12,15 @@ import { Form } from '~/system/form/form'
 import { Heading } from '~/system/heading'
 import { TextInput } from '~/system/input/text-input'
 import { Text } from '~/system/text'
+import { email, required } from '~/validation/structs'
 
 interface FormValues {
   email: string
 }
+
+const schema: Describe<FormValues> = object({
+  email: required(email()),
+})
 
 export const LoginPage: Page = () => {
   useUrlQuery('error')
@@ -62,7 +69,12 @@ export const LoginPage: Page = () => {
           </Link>
         </Text>
 
-        <Form<FormValues> defaultValues={{ email: '' }} onSubmit={handleSubmit}>
+        <Form<FormValues>
+          defaultValues={{ email: '' }}
+          onSubmit={handleSubmit}
+          schema={schema}
+          mode="onSubmit"
+        >
           <div className="grid gap-4">
             <Button width="full" onPress={handleGoogleSignIn}>
               Continue with Google
@@ -74,7 +86,6 @@ export const LoginPage: Page = () => {
               name="email"
               placeholder="Email"
               autoComplete="username"
-              rules={{ required: true, validate: value => !!value.trim() }}
             />
             <Button type="submit" width="full">
               Continue

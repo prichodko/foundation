@@ -14,6 +14,7 @@ export type UpdateCompanyMutation = {
     id: string
     name: string
     email: string
+    description: string
     website: string
     twitter?: string | null | undefined
   }
@@ -25,6 +26,7 @@ export const UpdateCompanyDocument = /*#__PURE__*/ gql`
       id
       name
       email
+      description
       website
       twitter
     }

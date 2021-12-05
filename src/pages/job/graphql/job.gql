@@ -7,6 +7,7 @@ query Job($id: ID!) {
     applyUrl
     viewCount
     liked
+    type
     tags {
       id
       name

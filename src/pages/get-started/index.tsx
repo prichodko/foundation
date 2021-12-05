@@ -1,6 +1,8 @@
 import type { Page } from 'next'
 import type { SignInResponse } from 'next-auth/react'
 import { signIn } from 'next-auth/react'
+import type { Describe } from 'superstruct'
+import { object } from 'superstruct'
 
 import { Link } from '~/components/link'
 import { Button } from '~/system/button'
@@ -9,10 +11,15 @@ import { Form } from '~/system/form'
 import { Heading } from '~/system/heading'
 import { TextInput } from '~/system/input/text-input'
 import { Text } from '~/system/text'
+import { email, required } from '~/validation/structs'
 
-interface FormValues {
+interface Values {
   email: string
 }
+
+const schema: Describe<Values> = object({
+  email: required(email()),
+})
 
 export const GetStartedPage: Page = () => {
   const handleGoogleSignIn = () => {
@@ -22,7 +29,7 @@ export const GetStartedPage: Page = () => {
     })
   }
 
-  const handleSubmit: FormSubmitHandler<FormValues> = async (
+  const handleSubmit: FormSubmitHandler<Values> = async (
     values,
     { setError }
   ) => {
@@ -55,10 +62,12 @@ export const GetStartedPage: Page = () => {
           </Link>
         </Text>
 
-        <Form<FormValues>
-          onSubmit={handleSubmit}
-          defaultValues={{ email: '' }}
+        <Form<Values>
           className="grid gap-4"
+          defaultValues={{ email: '' }}
+          onSubmit={handleSubmit}
+          schema={schema}
+          mode="onSubmit"
         >
           <Button width="full" onPress={handleGoogleSignIn}>
             Continue with Google
@@ -66,12 +75,7 @@ export const GetStartedPage: Page = () => {
           <div className="flex items-center justify-center">
             <Text size={12}>or</Text>
           </div>
-          <TextInput
-            name="email"
-            placeholder="Email"
-            autoComplete="username"
-            rules={{ required: true }}
-          />
+          <TextInput name="email" placeholder="Email" autoComplete="username" />
           <Button type="submit" width="full">
             Continue
           </Button>

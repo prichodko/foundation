@@ -22,6 +22,7 @@ export type UpdateJobMutation = {
     applyUrl: string
     remote: boolean
     status: Types.JobStatus
+    type: Types.JobType
     tags: Array<{ __typename?: 'Tag'; id: string; name: string }>
   }
 }

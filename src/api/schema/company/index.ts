@@ -1,5 +1,7 @@
 import { list, objectType } from 'nexus'
 
+import type { JobsFilter } from '~/types/graphql'
+
 export * from './get-company'
 export * from './get-company-by-slug'
 export * from './get-companies'
@@ -20,6 +22,28 @@ export const Company = objectType({
     t.string('website')
     t.int('viewCount')
     t.nullable.string('twitter')
+    t.boolean('subscribed', {
+      resolve: async (parent, _args, ctx) => {
+        if (!ctx.user) {
+          return false
+        }
+
+        const filter: JobsFilter = {
+          company: [parent.id],
+        }
+
+        const exists = await ctx.prisma.alert.findFirst({
+          where: {
+            userId: ctx.user.id,
+            filter: {
+              equals: filter,
+            },
+          },
+        })
+
+        return !!exists
+      },
+    })
     t.field('jobs', {
       type: list('Job'),
       resolve: async (parent, _args, ctx) => {

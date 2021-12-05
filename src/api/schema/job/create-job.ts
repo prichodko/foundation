@@ -1,5 +1,7 @@
 import { mutationField, inputObjectType } from 'nexus'
 
+import { jobSchema } from '~/validation/job'
+
 export const CreateJob = mutationField('createJob', {
   type: 'Job',
 
@@ -14,7 +16,7 @@ export const CreateJob = mutationField('createJob', {
         t.string('applyUrl')
         t.boolean('remote')
         t.list.id('tags')
-        t.string('feedback')
+        t.nullable.string('feedback')
       },
     }),
   },
@@ -22,18 +24,20 @@ export const CreateJob = mutationField('createJob', {
   authorize: (_parent, _args, ctx) => ctx.auth.user,
 
   async resolve(_root, { input }, ctx) {
+    const data = jobSchema.create.create(input)
+
     const user = ctx.user!
 
     const job = await ctx.prisma.job.create({
       data: {
-        position: input.position,
-        role: input.role,
-        description: input.description,
-        applyUrl: input.applyUrl,
-        remote: input.remote,
-        type: input.type,
+        position: data.position,
+        role: data.role,
+        description: data.description,
+        applyUrl: data.applyUrl,
+        remote: data.remote,
+        type: data.type,
         tags: {
-          connect: input.tags.map(tagId => ({ id: tagId })),
+          connect: data.tags.map(tagId => ({ id: tagId })),
         },
         user: {
           connect: {

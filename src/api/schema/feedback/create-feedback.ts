@@ -1,7 +1,8 @@
 import { FeedbackReaction } from '@prisma/client'
 import { mutationField, inputObjectType, enumType } from 'nexus'
 
-import { slack } from '../../services/slack'
+import { slack } from '~/api/services/slack'
+import { createFeedbackSchema } from '~/validation/feedback'
 
 export const FeedbackReactionEnum = enumType({
   name: 'FeedbackReaction',
@@ -25,16 +26,18 @@ export const CreateFeedback = mutationField('createFeedback', {
   },
 
   async resolve(_root, { input }, ctx) {
+    const data = createFeedbackSchema.create(input)
+
     await ctx.prisma.feedback.create({
       data: {
-        message: input.message,
-        reaction: input.reaction,
-        email: ctx.user?.email ?? input.email,
+        message: data.message,
+        reaction: data.reaction,
+        email: ctx.user?.email ?? data.email,
         userId: ctx.user?.id,
       },
     })
 
-    await slack.feedback(input.message)
+    await slack.feedback(data.message)
 
     return {
       success: true,
