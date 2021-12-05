@@ -1,5 +1,3 @@
-import isEmail from 'is-email'
-import isUrl from 'is-url-superb'
 import type { Describe, Struct } from 'superstruct'
 import {
   optional,
@@ -37,14 +35,17 @@ export function json(): Struct<JsonObject, null> {
 export function url() {
   return refine(string(), 'url', value => {
     if (value.length === 0) return true
-    return isUrl(value) || `Expected a url, but received ${value}`
+    const regexp =
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+    return regexp.test(value) || `Expected a url, but received ${value}`
   })
 }
 
 export function email() {
   return refine(string(), 'email', value => {
     if (value.length === 0) return true
-    return isEmail(value) || `Expected an email, but received ${value}`
+    const regexp = /^\S+@\S+\.\S+$/
+    return regexp.test(value) || `Expected an email, but received ${value}`
   })
 }
 
