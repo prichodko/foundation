@@ -2,7 +2,7 @@
  * @type {import('next/dist/server/config-shared').NextConfig}
  */
 const config = {
-  swcMinify: true,
+  // swcMinify: true,
   reactStrictMode: true,
   poweredByHeader: false,
   eslint: {
