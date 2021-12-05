@@ -5,6 +5,7 @@ import type { Describe } from 'superstruct'
 import { object } from 'superstruct'
 
 import { Link } from '~/components/link'
+import { useCallbackUrl } from '~/hooks/use-callback-url'
 import { Button } from '~/system/button'
 import type { FormSubmitHandler } from '~/system/form'
 import { Form } from '~/system/form'
@@ -22,10 +23,12 @@ const schema: Describe<Values> = object({
 })
 
 export const GetStartedPage: Page = () => {
+  const callbackUrl = useCallbackUrl('/dashboard')
+
   const handleGoogleSignIn = () => {
     signIn('google', {
       redirect: false,
-      callbackUrl: 'http://localhost:3000/dashboard',
+      callbackUrl,
     })
   }
 
@@ -38,7 +41,7 @@ export const GetStartedPage: Page = () => {
       {
         redirect: false,
         email: values.email,
-        callbackUrl: 'http://localhost:3000/dashboard',
+        callbackUrl,
       },
       { type: 'signup' }
     ))!

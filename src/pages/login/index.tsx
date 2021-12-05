@@ -5,6 +5,7 @@ import type { Describe } from 'superstruct'
 import { object } from 'superstruct'
 
 import { Link } from '~/components/link'
+import { useCallbackUrl } from '~/hooks/use-callback-url'
 import { useUrlQuery } from '~/hooks/use-url-query'
 import { Button } from '~/system/button'
 import type { FormSubmitHandler } from '~/system/form'
@@ -24,8 +25,8 @@ const schema: Describe<FormValues> = object({
 
 export const LoginPage: Page = () => {
   useUrlQuery('error')
-  const callbackUrl =
-    useUrlQuery('callbackUrl') ?? 'http://localhost:3000/dashboard'
+
+  const callbackUrl = useCallbackUrl('/dashboard')
 
   const handleGoogleSignIn = async () => {
     signIn('google', {
