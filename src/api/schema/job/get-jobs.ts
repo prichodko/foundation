@@ -100,6 +100,9 @@ export const GetJobs = queryField('jobs', {
         status: 'Live',
         AND: where,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
   },
 })
