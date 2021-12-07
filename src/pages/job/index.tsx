@@ -1,53 +1,58 @@
-import { generateHTML } from '@tiptap/core'
-import StarterKit from '@tiptap/starter-kit'
+// import { generateHTML } from '@tiptap/core'
+// import StarterKit from '@tiptap/starter-kit'
 import type { Page } from 'next'
 
 import { JobLike } from '~/components/job-like'
 import { Link } from '~/components/link'
 import { Tag } from '~/components/tag'
-import { useUrlQuery } from '~/hooks/use-url-query'
-import { styled, theme } from '~/styles/config'
+// import { useUrlQuery } from '~/hooks/use-url-query'
+// import { styled, theme } from '~/styles/config'
 import { Button } from '~/system/button'
 import { Heading } from '~/system/heading'
 import { Text } from '~/system/text'
 
 import { ShareButtons } from './components/share-buttons'
-import { useJobQuery } from './graphql/job'
+import type { JobQuery } from './graphql/job'
+// import { useJobQuery } from './graphql/job'
 import { useViewJob } from './hooks/use-view-job'
 
-interface Props {}
+export interface Props {
+  job: JobQuery['job']
+}
 
-const Content = styled('div', {
-  h1: {
-    fontSize: '1.8rem',
-    fontWeight: theme.fontWeights[600],
-    marginBottom: 8,
-  },
+// const Content = styled('div', {
+//   h1: {
+//     fontSize: '1.8rem',
+//     fontWeight: theme.fontWeights[600],
+//     marginBottom: 8,
+//   },
 
-  p: {
-    fontSize: '1rem',
-    lineHeight: '1.6',
-    minHeight: '1.6rem',
-  },
-})
+//   p: {
+//     fontSize: '1rem',
+//     lineHeight: '1.6',
+//     minHeight: '1.6rem',
+//   },
+// })
 
-export const Job: Page = (props: Props) => {
-  const {} = props
+export const Job: Page<Props> = props => {
+  const { job } = props
 
-  const jobId = useUrlQuery('id')
+  // console.log(props)
 
-  const [{ data }] = useJobQuery({
-    variables: {
-      id: jobId!,
-    },
-    pause: !jobId,
-  })
+  // const jobId = useUrlQuery('id')
 
-  useViewJob(jobId)
+  // const [{ data }] = useJobQuery({
+  //   variables: {
+  //     id: jobId!,
+  //   },
+  //   pause: !jobId,
+  // })
 
-  if (!data) {
-    return null
-  }
+  useViewJob(job.id)
+
+  // if (!data) {
+  //   return null
+  // }
 
   const {
     id,
@@ -59,7 +64,9 @@ export const Job: Page = (props: Props) => {
     company,
     viewCount,
     liked,
-  } = data.job
+  } = job
+
+  console.log(description)
 
   return (
     <>
@@ -120,11 +127,15 @@ export const Job: Page = (props: Props) => {
         </div>
 
         <div className="py-10">
-          <Content
+          {/* <Content
             dangerouslySetInnerHTML={{
-              __html: generateHTML(description, [StarterKit]),
+              __html: generateHTML(JSON.parse(description), []),
             }}
-          />
+          /> */}
+
+          <pre>
+            <code>{JSON.stringify(description, null, 2)}</code>
+          </pre>
 
           <Button>Apply</Button>
         </div>

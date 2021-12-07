@@ -1,42 +1,40 @@
 import type { Page } from 'next'
-import Error from 'next/error'
 
 import { Link } from '~/components/link'
-import { useUrlQuery } from '~/hooks/use-url-query'
+// import { useUrlQuery } from '~/hooks/use-url-query'
 import { Button } from '~/system/button'
 import { Heading } from '~/system/heading'
 import { Text } from '~/system/text'
 
-import { useCompanyBySlugQuery } from './graphql/company-by-slug'
+import type { CompanyBySlugQuery } from './graphql/company-by-slug'
+// import { useCompanyBySlugQuery } from './graphql/company-by-slug'
 import { useCreateCompanyAlertMutation } from './graphql/create-company-alert'
 import { useViewCompany } from './hooks/use-view-company'
 
-interface Props {}
+export interface Props {
+  company: CompanyBySlugQuery['companyBySlug']
+}
 
-export const Company: Page = (props: Props) => {
-  const {} = props
+export const Company: Page<Props> = props => {
+  const { company } = props
 
-  const slug = useUrlQuery('slug')
+  // const slug = useUrlQuery('slug')
 
-  const [{ data, error }] = useCompanyBySlugQuery({
-    variables: {
-      slug: slug!,
-    },
-    pause: !slug,
-  })
+  // const [{ data, error }] = useCompanyBySlugQuery({
+  //   variables: {
+  //     slug: slug!,
+  //   },
+  //   pause: !slug,
+  // })
 
   const [{ fetching }, createCompanyAlert] = useCreateCompanyAlertMutation()
-  useViewCompany(data?.companyBySlug.id)
+  useViewCompany(company.id)
 
-  if (error) {
-    return <Error statusCode={404} />
-  }
+  // if (!data) {
+  //   return null
+  // }
 
-  if (!data) {
-    return null
-  }
-
-  const company = data.companyBySlug
+  // const company = data.companyBySlug
 
   const handleSubscribe = async () => {
     await createCompanyAlert({
