@@ -39,6 +39,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const job = await prisma.job.findFirst({
     where: {
+      status: 'Live',
       id: params!.id as string,
     },
     include: {

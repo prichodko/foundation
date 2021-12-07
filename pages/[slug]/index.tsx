@@ -31,6 +31,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             include: {
               tags: true,
             },
+            orderBy: {
+              createdAt: 'desc',
+            },
           },
         },
       },
