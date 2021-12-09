@@ -4,6 +4,8 @@ import { JobLike } from '~/components/job-like'
 import { Link } from '~/components/link'
 import { RelativeTime } from '~/components/relative-time'
 import { Button } from '~/system/button'
+import { Heading } from '~/system/heading'
+import { TextInput } from '~/system/input'
 import { Text } from '~/system/text'
 import type { JobsFilter } from '~/types/graphql'
 
@@ -12,7 +14,11 @@ import { useCreateAlertMutation } from './graphql/create-alert'
 import type { JobsQuery } from './graphql/jobs'
 import { useJobsQuery } from './graphql/jobs'
 
-const JobPosting = ({ job }: { job: JobsQuery['jobs'][0] }) => {
+const JobPosting = ({
+  job,
+}: {
+  job: JobsQuery['jobs']['edges'][number]['node']
+}) => {
   return (
     <Link
       key={job.id}
@@ -49,11 +55,14 @@ const JobPosting = ({ job }: { job: JobsQuery['jobs'][0] }) => {
 
 export const Workverse = () => {
   const [filter, setFilter] = useState<JobsFilter>({})
+  const [after, setAfter] = useState<string>()
 
   const [, createAlert] = useCreateAlertMutation()
-  const [{ data }] = useJobsQuery({
+  const [{ data, fetching }] = useJobsQuery({
     variables: {
       filter,
+      first: 2,
+      after,
     },
   })
 
@@ -79,17 +88,26 @@ export const Workverse = () => {
       </div>
 
       <div className="grid gap-4">
-        {data?.jobs.map(job => (
-          <JobPosting key={job.id} job={job} />
+        {data?.jobs.edges.map(edge => (
+          <JobPosting key={edge.node.id} job={edge.node} />
         ))}
         {/* <Link href="/dashboard/new">
           <a className="border border-dashed h-[118px] rounded-lg flex items-center justify-center">
             <Text weight={500}>YOUR POST HERE</Text>
           </a>
         </Link> */}
+
+        {data?.jobs.pageInfo.hasNextPage && (
+          <Button
+            onPress={() => setAfter(data.jobs.pageInfo.endCursor!)}
+            loading={fetching}
+          >
+            Load More
+          </Button>
+        )}
       </div>
 
-      {/* <div className="h-36"></div>
+      <div className="h-36"></div>
       <div className="p-12 rounded-lg bg-gray-12">
         <Heading level={2} size={24} className="mb-4 text-light">
           Subscribe
@@ -104,7 +122,7 @@ export const Workverse = () => {
           <TextInput />
           <Button variant="outline">Subsrcibe</Button>
         </div>
-      </div> */}
+      </div>
     </>
   )
 }

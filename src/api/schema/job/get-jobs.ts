@@ -1,5 +1,5 @@
 import type { Prisma } from '@prisma/client'
-import { queryField, list, inputObjectType } from 'nexus'
+import { queryField, inputObjectType } from 'nexus'
 
 // - (in the) Last day
 // - Last 7 days
@@ -11,100 +11,143 @@ import { queryField, list, inputObjectType } from 'nexus'
 //   members: ['Last'],
 // })
 
-export const GetJobs = queryField('jobs', {
-  type: list('Job'),
+export const GetJobs = queryField(t => {
+  t.connectionField('jobs', {
+    type: 'Job',
+    additionalArgs: {
+      filter: inputObjectType({
+        name: 'JobsFilter',
+        definition(t) {
+          t.nullable.boolean('remote')
+          t.nullable.list.id('tags')
+          t.nullable.list.id('company')
+          t.nullable.field('role', { type: 'JobRole' })
+          t.nullable.string('position')
+          t.nullable.int('salaryMin')
+          t.nullable.int('salaryMax')
+        },
+      }),
+    },
+    disableBackwardPagination: true,
+    resolve: async (_root, args, ctx) => {
+      // Fetch one additional record to determine if there is a next page
+      const take = args.first + 1
 
-  args: {
-    filter: inputObjectType({
-      name: 'JobsFilter',
-      definition(t) {
-        t.nullable.boolean('remote')
-        t.nullable.list.id('tags')
-        t.nullable.list.id('company')
-        t.nullable.field('role', { type: 'JobRole' })
-        t.nullable.string('position')
-        t.nullable.int('salaryMin')
-        t.nullable.int('salaryMax')
-      },
-    }),
-  },
+      // Convert `after` into prisma `cursor` & `skip`
+      const cursor = args.after ? { id: args.after } : undefined
+      const skip = cursor ? 1 : undefined
 
-  async resolve(_, { filter }, ctx) {
-    const where: Prisma.JobWhereInput[] = []
+      const { filter } = args
 
-    if (filter.tags) {
-      where.push({
-        tags: {
-          some: {
-            id: {
-              in: filter.tags,
+      const where: Prisma.JobWhereInput[] = []
+
+      if (filter.tags) {
+        where.push({
+          tags: {
+            some: {
+              id: {
+                in: filter.tags,
+              },
             },
           },
-        },
-      })
-    }
+        })
+      }
 
-    if (filter.remote) {
-      where.push({
-        remote: true,
-      })
-    }
+      if (filter.remote) {
+        where.push({
+          remote: true,
+        })
+      }
 
-    if (filter.company) {
-      where.push({
-        user: {
-          company: {
-            id: {
-              in: filter.company,
+      if (filter.company) {
+        where.push({
+          user: {
+            company: {
+              id: {
+                in: filter.company,
+              },
             },
           },
+        })
+      }
+
+      if (filter.role) {
+        where.push({
+          role: {
+            in: [filter.role],
+          },
+        })
+      }
+
+      if (filter.position) {
+        where.push({
+          position: {
+            contains: filter.position,
+            mode: 'insensitive',
+          },
+        })
+      }
+
+      if (filter.salaryMin) {
+        where.push({
+          salaryMin: {
+            gte: filter.salaryMin,
+          },
+        })
+      }
+
+      if (filter.salaryMax) {
+        where.push({
+          salaryMax: {
+            gte: filter.salaryMax,
+          },
+        })
+      }
+
+      // Execute the underlying query operations
+      const nodes = await ctx.prisma.job.findMany({
+        take,
+        cursor,
+        skip,
+        where: {
+          status: 'Live',
+          AND: where,
+        },
+        orderBy: {
+          createdAt: 'desc',
         },
       })
-    }
+      // totalCount = await aggregate()
 
-    if (filter.role) {
-      where.push({
-        role: {
-          in: [filter.role],
+      // See if we are "after" another record, indicating a previous page
+      const hasPreviousPage = !!args.after
+
+      // See if we have an additional record, indicating a next page
+      const hasNextPage = nodes.length > args.first
+
+      // Remove the extra record (last element) from the results
+      if (hasNextPage) {
+        nodes.pop()
+      }
+
+      // The cursors are always the first & last elements of the result set
+      const startCursor = nodes[0]?.id // jobs.length > 0 ? jobs[0].id : undefined
+      const endCursor = nodes[nodes.length - 1]?.id //jobs.length > 0 ? jobs[jobs.length - 1].id : undefined
+
+      return {
+        edges: nodes.map(job => ({
+          cursor: job.id,
+          node: job,
+        })),
+        pageInfo: {
+          hasNextPage,
+          hasPreviousPage,
+          startCursor,
+          endCursor,
         },
-      })
-    }
-
-    if (filter.position) {
-      where.push({
-        position: {
-          contains: filter.position,
-          mode: 'insensitive',
-        },
-      })
-    }
-
-    if (filter.salaryMin) {
-      where.push({
-        salaryMin: {
-          gte: filter.salaryMin,
-        },
-      })
-    }
-
-    if (filter.salaryMax) {
-      where.push({
-        salaryMax: {
-          gte: filter.salaryMax,
-        },
-      })
-    }
-
-    return await ctx.prisma.job.findMany({
-      where: {
-        status: 'Live',
-        AND: where,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    })
-  },
+      }
+    },
+  })
 })
 
 // AND: [

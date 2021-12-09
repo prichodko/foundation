@@ -1,7 +1,7 @@
 import path from 'path'
 
 import { ForbiddenError } from 'apollo-server-core'
-import { makeSchema, fieldAuthorizePlugin } from 'nexus'
+import { makeSchema, fieldAuthorizePlugin, connectionPlugin } from 'nexus'
 
 import * as alert from './alert'
 import * as checkout from './checkout'
@@ -43,6 +43,7 @@ export const schema = makeSchema({
         return new ForbiddenError('Not Authorized')
       },
     }),
+    connectionPlugin({}),
   ],
   sourceTypes: {
     modules: [

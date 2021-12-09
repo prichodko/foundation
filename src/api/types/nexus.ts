@@ -6,7 +6,7 @@
 import type * as prisma from '.prisma/client'
 import type { Context } from './../context'
 import type { FieldAuthorizeResolver } from 'nexus/dist/plugins/fieldAuthorizePlugin'
-import type { core } from 'nexus'
+import type { core, connectionPluginCore } from 'nexus'
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
@@ -41,6 +41,15 @@ declare global {
       fieldName: FieldName,
       ...opts: core.ScalarOutSpread<TypeName, FieldName>
     ): void // "JSONObject";
+    /**
+     * Adds a Relay-style connection to the type, with numerous options for configuration
+     *
+     * @see https://nexusjs.org/docs/plugins/connection
+     */
+    connectionField<FieldName extends string>(
+      fieldName: FieldName,
+      config: connectionPluginCore.ConnectionFieldConfig<TypeName, FieldName>
+    ): void
   }
 }
 
@@ -57,6 +66,15 @@ export interface NexusGenInputs {
     // input type
     name: string // String!
     price: number // Int!
+  }
+  CreateCompanyInput: {
+    // input type
+    description: string // String!
+    email: string // String!
+    name: string // String!
+    slug: string // String!
+    twitter?: string | null // String
+    website: string // String!
   }
   CreateFeedbackInput: {
     // input type
@@ -97,6 +115,11 @@ export interface NexusGenInputs {
     name: string // String!
     twitter?: string | null // String
     website: string // String!
+  }
+  UpdateCompanyLogoInput: {
+    // input type
+    id: string // ID!
+    imageId: string // String!
   }
   UpdateJobInput: {
     // input type
@@ -158,8 +181,29 @@ export interface NexusGenObjects {
     // root type
     sessionUrl: string // String!
   }
+  CreateUploadUrlResult: {
+    // root type
+    uploadUrl: string // String!
+  }
   Job: prisma.Job
+  JobConnection: {
+    // root type
+    edges: NexusGenRootTypes['JobEdge'][] // [JobEdge!]!
+    pageInfo: NexusGenRootTypes['PageInfo'] // PageInfo!
+  }
+  JobEdge: {
+    // root type
+    cursor: string // String!
+    node: NexusGenRootTypes['Job'] // Job!
+  }
   Mutation: {}
+  PageInfo: {
+    // root type
+    endCursor?: string | null // String
+    hasNextPage: boolean // Boolean!
+    hasPreviousPage: boolean // Boolean!
+    startCursor?: string | null // String
+  }
   Query: {}
   SuccessResult: {
     // root type
@@ -208,6 +252,7 @@ export interface NexusGenFieldTypes {
     email: string // String!
     id: string // ID!
     jobs: NexusGenRootTypes['Job'][] // [Job!]!
+    logoUrl: string | null // String
     name: string // String!
     slug: string // String!
     subscribed: boolean // Boolean!
@@ -229,6 +274,10 @@ export interface NexusGenFieldTypes {
     // field return type
     sessionUrl: string // String!
   }
+  CreateUploadUrlResult: {
+    // field return type
+    uploadUrl: string // String!
+  }
   Job: {
     // field return type
     applyUrl: string // String!
@@ -247,6 +296,16 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime'] // DateTime!
     viewCount: number // Int!
   }
+  JobConnection: {
+    // field return type
+    edges: NexusGenRootTypes['JobEdge'][] // [JobEdge!]!
+    pageInfo: NexusGenRootTypes['PageInfo'] // PageInfo!
+  }
+  JobEdge: {
+    // field return type
+    cursor: string // String!
+    node: NexusGenRootTypes['Job'] // Job!
+  }
   Mutation: {
     // field return type
     addLike: NexusGenRootTypes['Job'] // Job!
@@ -254,19 +313,30 @@ export interface NexusGenFieldTypes {
     createAlert: NexusGenRootTypes['Alert'] // Alert!
     createBillingPortalSession: NexusGenRootTypes['CreateBillingPortalSessionResult'] // CreateBillingPortalSessionResult!
     createCheckoutSession: NexusGenRootTypes['CreateCheckoutSessionResult'] // CreateCheckoutSessionResult!
+    createCompany: NexusGenRootTypes['Company'] // Company!
     createCompanyAlert: NexusGenRootTypes['Alert'] // Alert!
     createFeedback: NexusGenRootTypes['SuccessResult'] // SuccessResult!
     createJob: NexusGenRootTypes['Job'] // Job!
     createTag: NexusGenRootTypes['Tag'] // Tag!
+    createUploadUrl: NexusGenRootTypes['CreateUploadUrlResult'] // CreateUploadUrlResult!
     publishJob: NexusGenRootTypes['Job'] // Job!
     removeAlert: NexusGenRootTypes['SuccessResult'] // SuccessResult!
+    removeCompanyAlert: NexusGenRootTypes['SuccessResult'] // SuccessResult!
     removeLike: NexusGenRootTypes['Job'] // Job!
     unpublishJob: NexusGenRootTypes['Job'] // Job!
     updateCompany: NexusGenRootTypes['Company'] // Company!
+    updateCompanyLogo: NexusGenRootTypes['Company'] // Company!
     updateJob: NexusGenRootTypes['Job'] // Job!
     updateUser: NexusGenRootTypes['User'] // User!
     viewCompany: NexusGenRootTypes['Company'] // Company!
     viewJob: NexusGenRootTypes['Job'] // Job!
+  }
+  PageInfo: {
+    // field return type
+    endCursor: string | null // String
+    hasNextPage: boolean // Boolean!
+    hasPreviousPage: boolean // Boolean!
+    startCursor: string | null // String
   }
   Query: {
     // field return type
@@ -275,7 +345,7 @@ export interface NexusGenFieldTypes {
     company: NexusGenRootTypes['Company'] // Company!
     companyBySlug: NexusGenRootTypes['Company'] // Company!
     job: NexusGenRootTypes['Job'] // Job!
-    jobs: NexusGenRootTypes['Job'][] // [Job!]!
+    jobs: NexusGenRootTypes['JobConnection'] // JobConnection!
     searchCities: NexusGenRootTypes['City'][] // [City!]!
     searchCompanies: NexusGenRootTypes['CompanySearch'][] // [CompanySearch!]!
     searchTags: NexusGenRootTypes['TagSearch'][] // [TagSearch!]!
@@ -331,6 +401,7 @@ export interface NexusGenFieldTypeNames {
     email: 'String'
     id: 'ID'
     jobs: 'Job'
+    logoUrl: 'String'
     name: 'String'
     slug: 'String'
     subscribed: 'Boolean'
@@ -352,6 +423,10 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     sessionUrl: 'String'
   }
+  CreateUploadUrlResult: {
+    // field return type name
+    uploadUrl: 'String'
+  }
   Job: {
     // field return type name
     applyUrl: 'String'
@@ -370,6 +445,16 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
     viewCount: 'Int'
   }
+  JobConnection: {
+    // field return type name
+    edges: 'JobEdge'
+    pageInfo: 'PageInfo'
+  }
+  JobEdge: {
+    // field return type name
+    cursor: 'String'
+    node: 'Job'
+  }
   Mutation: {
     // field return type name
     addLike: 'Job'
@@ -377,19 +462,30 @@ export interface NexusGenFieldTypeNames {
     createAlert: 'Alert'
     createBillingPortalSession: 'CreateBillingPortalSessionResult'
     createCheckoutSession: 'CreateCheckoutSessionResult'
+    createCompany: 'Company'
     createCompanyAlert: 'Alert'
     createFeedback: 'SuccessResult'
     createJob: 'Job'
     createTag: 'Tag'
+    createUploadUrl: 'CreateUploadUrlResult'
     publishJob: 'Job'
     removeAlert: 'SuccessResult'
+    removeCompanyAlert: 'SuccessResult'
     removeLike: 'Job'
     unpublishJob: 'Job'
     updateCompany: 'Company'
+    updateCompanyLogo: 'Company'
     updateJob: 'Job'
     updateUser: 'User'
     viewCompany: 'Company'
     viewJob: 'Job'
+  }
+  PageInfo: {
+    // field return type name
+    endCursor: 'String'
+    hasNextPage: 'Boolean'
+    hasPreviousPage: 'Boolean'
+    startCursor: 'String'
   }
   Query: {
     // field return type name
@@ -398,7 +494,7 @@ export interface NexusGenFieldTypeNames {
     company: 'Company'
     companyBySlug: 'Company'
     job: 'Job'
-    jobs: 'Job'
+    jobs: 'JobConnection'
     searchCities: 'City'
     searchCompanies: 'CompanySearch'
     searchTags: 'TagSearch'
@@ -449,6 +545,10 @@ export interface NexusGenArgTypes {
       // args
       input: NexusGenInputs['CreateCheckoutSessionInput'] // CreateCheckoutSessionInput!
     }
+    createCompany: {
+      // args
+      input: NexusGenInputs['CreateCompanyInput'] // CreateCompanyInput!
+    }
     createCompanyAlert: {
       // args
       companyId: string // String!
@@ -473,6 +573,10 @@ export interface NexusGenArgTypes {
       // args
       id: string // ID!
     }
+    removeCompanyAlert: {
+      // args
+      id: string // ID!
+    }
     removeLike: {
       // args
       id: string // ID!
@@ -484,6 +588,10 @@ export interface NexusGenArgTypes {
     updateCompany: {
       // args
       input: NexusGenInputs['UpdateCompanyInput'] // UpdateCompanyInput!
+    }
+    updateCompanyLogo: {
+      // args
+      input: NexusGenInputs['UpdateCompanyLogoInput'] // UpdateCompanyLogoInput!
     }
     updateJob: {
       // args
@@ -521,7 +629,9 @@ export interface NexusGenArgTypes {
     }
     jobs: {
       // args
+      after?: string | null // String
       filter: NexusGenInputs['JobsFilter'] // JobsFilter!
+      first: number // Int!
     }
     searchCities: {
       // args

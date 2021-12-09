@@ -54,6 +54,7 @@ export type Company = {
   email: Scalars['String']
   id: Scalars['ID']
   jobs: Array<Job>
+  logoUrl?: Maybe<Scalars['String']>
   name: Scalars['String']
   slug: Scalars['String']
   subscribed: Scalars['Boolean']
@@ -88,6 +89,15 @@ export type CreateCheckoutSessionResult = {
   sessionUrl: Scalars['String']
 }
 
+export type CreateCompanyInput = {
+  description: Scalars['String']
+  email: Scalars['String']
+  name: Scalars['String']
+  slug: Scalars['String']
+  twitter?: InputMaybe<Scalars['String']>
+  website: Scalars['String']
+}
+
 export type CreateFeedbackInput = {
   email?: InputMaybe<Scalars['String']>
   message: Scalars['String']
@@ -107,6 +117,11 @@ export type CreateJobInput = {
 
 export type CreateTagInput = {
   name: Scalars['String']
+}
+
+export type CreateUploadUrlResult = {
+  __typename?: 'CreateUploadUrlResult'
+  uploadUrl: Scalars['String']
 }
 
 export const enum FeedbackReaction {
@@ -132,6 +147,22 @@ export type Job = {
   type: JobType | `${JobType}`
   updatedAt: Scalars['DateTime']
   viewCount: Scalars['Int']
+}
+
+export type JobConnection = {
+  __typename?: 'JobConnection'
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types */
+  edges: Array<JobEdge>
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo */
+  pageInfo: PageInfo
+}
+
+export type JobEdge = {
+  __typename?: 'JobEdge'
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor */
+  cursor: Scalars['String']
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Node */
+  node: Job
 }
 
 export const enum JobRole {
@@ -183,15 +214,19 @@ export type Mutation = {
   createAlert: Alert
   createBillingPortalSession: CreateBillingPortalSessionResult
   createCheckoutSession: CreateCheckoutSessionResult
+  createCompany: Company
   createCompanyAlert: Alert
   createFeedback: SuccessResult
   createJob: Job
   createTag: Tag
+  createUploadUrl: CreateUploadUrlResult
   publishJob: Job
   removeAlert: SuccessResult
+  removeCompanyAlert: SuccessResult
   removeLike: Job
   unpublishJob: Job
   updateCompany: Company
+  updateCompanyLogo: Company
   updateJob: Job
   updateUser: User
   viewCompany: Company
@@ -212,6 +247,10 @@ export type MutationCreateAlertArgs = {
 
 export type MutationCreateCheckoutSessionArgs = {
   input: CreateCheckoutSessionInput
+}
+
+export type MutationCreateCompanyArgs = {
+  input: CreateCompanyInput
 }
 
 export type MutationCreateCompanyAlertArgs = {
@@ -238,6 +277,10 @@ export type MutationRemoveAlertArgs = {
   id: Scalars['ID']
 }
 
+export type MutationRemoveCompanyAlertArgs = {
+  id: Scalars['ID']
+}
+
 export type MutationRemoveLikeArgs = {
   id: Scalars['ID']
 }
@@ -248,6 +291,10 @@ export type MutationUnpublishJobArgs = {
 
 export type MutationUpdateCompanyArgs = {
   input: UpdateCompanyInput
+}
+
+export type MutationUpdateCompanyLogoArgs = {
+  input: UpdateCompanyLogoInput
 }
 
 export type MutationUpdateJobArgs = {
@@ -266,6 +313,19 @@ export type MutationViewJobArgs = {
   id: Scalars['ID']
 }
 
+/** PageInfo cursor, as defined in https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo */
+export type PageInfo = {
+  __typename?: 'PageInfo'
+  /** The cursor corresponding to the last nodes in edges. Null if the connection is empty. */
+  endCursor?: Maybe<Scalars['String']>
+  /** Used to indicate whether more edges exist following the set defined by the clients arguments. */
+  hasNextPage: Scalars['Boolean']
+  /** Used to indicate whether more edges exist prior to the set defined by the clients arguments. */
+  hasPreviousPage: Scalars['Boolean']
+  /** The cursor corresponding to the first nodes in edges. Null if the connection is empty. */
+  startCursor?: Maybe<Scalars['String']>
+}
+
 export type Query = {
   __typename?: 'Query'
   checkoutSession: CheckoutSessionResult
@@ -273,7 +333,7 @@ export type Query = {
   company: Company
   companyBySlug: Company
   job: Job
-  jobs: Array<Job>
+  jobs: JobConnection
   searchCities: Array<City>
   searchCompanies: Array<CompanySearch>
   searchTags: Array<TagSearch>
@@ -297,7 +357,9 @@ export type QueryJobArgs = {
 }
 
 export type QueryJobsArgs = {
+  after?: InputMaybe<Scalars['String']>
   filter: JobsFilter
+  first: Scalars['Int']
 }
 
 export type QuerySearchCitiesArgs = {
@@ -340,6 +402,11 @@ export type UpdateCompanyInput = {
   name: Scalars['String']
   twitter?: InputMaybe<Scalars['String']>
   website: Scalars['String']
+}
+
+export type UpdateCompanyLogoInput = {
+  id: Scalars['ID']
+  imageId: Scalars['String']
 }
 
 export type UpdateJobInput = {
@@ -386,7 +453,13 @@ export type GraphCacheKeysConfig = {
   CreateCheckoutSessionResult?: (
     data: WithTypename<CreateCheckoutSessionResult>
   ) => null | string
+  CreateUploadUrlResult?: (
+    data: WithTypename<CreateUploadUrlResult>
+  ) => null | string
   Job?: (data: WithTypename<Job>) => null | string
+  JobConnection?: (data: WithTypename<JobConnection>) => null | string
+  JobEdge?: (data: WithTypename<JobEdge>) => null | string
+  PageInfo?: (data: WithTypename<PageInfo>) => null | string
   SuccessResult?: (data: WithTypename<SuccessResult>) => null | string
   Tag?: (data: WithTypename<Tag>) => null | string
   TagSearch?: (data: WithTypename<TagSearch>) => null | string
@@ -423,7 +496,7 @@ export type GraphCacheResolvers = {
     jobs?: GraphCacheResolver<
       WithTypename<Query>,
       QueryJobsArgs,
-      Array<WithTypename<Job> | string>
+      WithTypename<JobConnection> | string
     >
     searchCities?: GraphCacheResolver<
       WithTypename<Query>,
@@ -508,6 +581,11 @@ export type GraphCacheResolvers = {
       Record<string, never>,
       Array<WithTypename<Job> | string>
     >
+    logoUrl?: GraphCacheResolver<
+      WithTypename<Company>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
     name?: GraphCacheResolver<
       WithTypename<Company>,
       Record<string, never>,
@@ -566,6 +644,13 @@ export type GraphCacheResolvers = {
   CreateCheckoutSessionResult?: {
     sessionUrl?: GraphCacheResolver<
       WithTypename<CreateCheckoutSessionResult>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+  }
+  CreateUploadUrlResult?: {
+    uploadUrl?: GraphCacheResolver<
+      WithTypename<CreateUploadUrlResult>,
       Record<string, never>,
       Scalars['String'] | string
     >
@@ -645,6 +730,52 @@ export type GraphCacheResolvers = {
       WithTypename<Job>,
       Record<string, never>,
       Scalars['Int'] | string
+    >
+  }
+  JobConnection?: {
+    edges?: GraphCacheResolver<
+      WithTypename<JobConnection>,
+      Record<string, never>,
+      Array<WithTypename<JobEdge> | string>
+    >
+    pageInfo?: GraphCacheResolver<
+      WithTypename<JobConnection>,
+      Record<string, never>,
+      WithTypename<PageInfo> | string
+    >
+  }
+  JobEdge?: {
+    cursor?: GraphCacheResolver<
+      WithTypename<JobEdge>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    node?: GraphCacheResolver<
+      WithTypename<JobEdge>,
+      Record<string, never>,
+      WithTypename<Job> | string
+    >
+  }
+  PageInfo?: {
+    endCursor?: GraphCacheResolver<
+      WithTypename<PageInfo>,
+      Record<string, never>,
+      Scalars['String'] | string
+    >
+    hasNextPage?: GraphCacheResolver<
+      WithTypename<PageInfo>,
+      Record<string, never>,
+      Scalars['Boolean'] | string
+    >
+    hasPreviousPage?: GraphCacheResolver<
+      WithTypename<PageInfo>,
+      Record<string, never>,
+      Scalars['Boolean'] | string
+    >
+    startCursor?: GraphCacheResolver<
+      WithTypename<PageInfo>,
+      Record<string, never>,
+      Scalars['String'] | string
     >
   }
   SuccessResult?: {
@@ -743,6 +874,10 @@ export type GraphCacheOptimisticUpdaters = {
     MutationCreateCheckoutSessionArgs,
     WithTypename<CreateCheckoutSessionResult>
   >
+  createCompany?: GraphCacheOptimisticMutationResolver<
+    MutationCreateCompanyArgs,
+    WithTypename<Company>
+  >
   createCompanyAlert?: GraphCacheOptimisticMutationResolver<
     MutationCreateCompanyAlertArgs,
     WithTypename<Alert>
@@ -759,12 +894,20 @@ export type GraphCacheOptimisticUpdaters = {
     MutationCreateTagArgs,
     WithTypename<Tag>
   >
+  createUploadUrl?: GraphCacheOptimisticMutationResolver<
+    Record<string, never>,
+    WithTypename<CreateUploadUrlResult>
+  >
   publishJob?: GraphCacheOptimisticMutationResolver<
     MutationPublishJobArgs,
     WithTypename<Job>
   >
   removeAlert?: GraphCacheOptimisticMutationResolver<
     MutationRemoveAlertArgs,
+    WithTypename<SuccessResult>
+  >
+  removeCompanyAlert?: GraphCacheOptimisticMutationResolver<
+    MutationRemoveCompanyAlertArgs,
     WithTypename<SuccessResult>
   >
   removeLike?: GraphCacheOptimisticMutationResolver<
@@ -777,6 +920,10 @@ export type GraphCacheOptimisticUpdaters = {
   >
   updateCompany?: GraphCacheOptimisticMutationResolver<
     MutationUpdateCompanyArgs,
+    WithTypename<Company>
+  >
+  updateCompanyLogo?: GraphCacheOptimisticMutationResolver<
+    MutationUpdateCompanyLogoArgs,
     WithTypename<Company>
   >
   updateJob?: GraphCacheOptimisticMutationResolver<
@@ -821,6 +968,10 @@ export type GraphCacheUpdaters = {
       { createCheckoutSession: WithTypename<CreateCheckoutSessionResult> },
       MutationCreateCheckoutSessionArgs
     >
+    createCompany?: GraphCacheUpdateResolver<
+      { createCompany: WithTypename<Company> },
+      MutationCreateCompanyArgs
+    >
     createCompanyAlert?: GraphCacheUpdateResolver<
       { createCompanyAlert: WithTypename<Alert> },
       MutationCreateCompanyAlertArgs
@@ -837,6 +988,10 @@ export type GraphCacheUpdaters = {
       { createTag: WithTypename<Tag> },
       MutationCreateTagArgs
     >
+    createUploadUrl?: GraphCacheUpdateResolver<
+      { createUploadUrl: WithTypename<CreateUploadUrlResult> },
+      Record<string, never>
+    >
     publishJob?: GraphCacheUpdateResolver<
       { publishJob: WithTypename<Job> },
       MutationPublishJobArgs
@@ -844,6 +999,10 @@ export type GraphCacheUpdaters = {
     removeAlert?: GraphCacheUpdateResolver<
       { removeAlert: WithTypename<SuccessResult> },
       MutationRemoveAlertArgs
+    >
+    removeCompanyAlert?: GraphCacheUpdateResolver<
+      { removeCompanyAlert: WithTypename<SuccessResult> },
+      MutationRemoveCompanyAlertArgs
     >
     removeLike?: GraphCacheUpdateResolver<
       { removeLike: WithTypename<Job> },
@@ -856,6 +1015,10 @@ export type GraphCacheUpdaters = {
     updateCompany?: GraphCacheUpdateResolver<
       { updateCompany: WithTypename<Company> },
       MutationUpdateCompanyArgs
+    >
+    updateCompanyLogo?: GraphCacheUpdateResolver<
+      { updateCompanyLogo: WithTypename<Company> },
+      MutationUpdateCompanyLogoArgs
     >
     updateJob?: GraphCacheUpdateResolver<
       { updateJob: WithTypename<Job> },

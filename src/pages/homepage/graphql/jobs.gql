@@ -1,18 +1,29 @@
-query Jobs($filter: JobsFilter!) {
-  jobs(filter: $filter) {
-    id
-    createdAt
-    position
-    tags {
-      id
-      name
+query Jobs($filter: JobsFilter!, $first: Int!, $after: String) {
+  jobs(filter: $filter, first: $first, after: $after) {
+    edges {
+      cursor
+      node {
+        id
+        createdAt
+        position
+        tags {
+          id
+          name
+        }
+        role
+        liked
+        company {
+          id
+          name
+          slug
+        }
+      }
     }
-    role
-    liked
-    company {
-      id
-      name
-      slug
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
     }
   }
 }
