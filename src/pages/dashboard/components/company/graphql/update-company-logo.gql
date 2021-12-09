@@ -1,0 +1,6 @@
+mutation UpdateCompanyLogo($input: UpdateCompanyLogoInput!) {
+  updateCompanyLogo(input: $input) {
+    id
+    logoUrl
+  }
+}

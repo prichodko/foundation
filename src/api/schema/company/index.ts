@@ -5,7 +5,9 @@ import type { JobsFilter } from '~/types/graphql'
 export * from './get-company'
 export * from './get-company-by-slug'
 export * from './get-companies'
+export * from './create-company'
 export * from './update-company'
+export * from './update-company-logo'
 export * from './view-company'
 export * from './search-companies'
 
@@ -19,6 +21,7 @@ export const Company = objectType({
     t.string('email')
     t.string('slug')
     t.string('description')
+    t.nullable.string('logoUrl')
     t.string('website')
     t.int('viewCount')
     t.nullable.string('twitter')
@@ -47,14 +50,25 @@ export const Company = objectType({
     t.field('jobs', {
       type: list('Job'),
       resolve: async (parent, _args, ctx) => {
-        const jobs = await ctx.prisma.company
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .user()
-          .jobs()
+        const company = await ctx.prisma.company.findUnique({
+          where: {
+            id: parent.id,
+          },
+          include: {
+            user: {
+              include: {
+                jobs: {
+                  where: {
+                    status: 'Live',
+                  },
+                },
+              },
+            },
+          },
+          rejectOnNotFound: true,
+        })
 
-        return jobs
+        return company.user.jobs
       },
     })
   },

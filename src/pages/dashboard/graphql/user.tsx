@@ -1,3 +1,4 @@
+
 import { gql } from 'urql'
 import * as Urql from 'urql'
 
@@ -50,6 +51,7 @@ export type UserQuery = {
           slug: string
           email: string
           website: string
+          logoUrl?: string | null | undefined
           twitter?: string | null | undefined
         }
       | null
@@ -106,6 +108,7 @@ export const UserDocument = /*#__PURE__*/ gql`
         slug
         email
         website
+        logoUrl
         twitter
       }
       likes {

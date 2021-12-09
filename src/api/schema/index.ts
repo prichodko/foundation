@@ -8,6 +8,7 @@ import * as checkout from './checkout'
 import * as city from './city'
 import * as company from './company'
 import * as feedback from './feedback'
+import * as imageUpload from './image-upload'
 import * as job from './job'
 import * as scalars from './scalars'
 import * as tag from './tag'
@@ -30,6 +31,7 @@ export const schema = makeSchema({
     city,
     alert,
     feedback,
+    imageUpload,
   ],
   contextType: {
     module: path.join(process.cwd(), 'src/api/context.ts'),
