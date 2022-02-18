@@ -3,6 +3,7 @@ query CompanyBySlug($slug: String!) {
     id
     name
     slug
+    logoUrl
     twitter
     description
     website

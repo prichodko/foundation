@@ -22,6 +22,7 @@ type Company {
   email: String!
   id: ID!
   jobs: [Job!]!
+  logoUrl: String
   name: String!
   slug: String!
   subscribed: Boolean!
@@ -53,6 +54,15 @@ type CreateCheckoutSessionResult {
   sessionUrl: String!
 }
 
+input CreateCompanyInput {
+  description: String!
+  email: String!
+  name: String!
+  slug: String!
+  twitter: String
+  website: String!
+}
+
 input CreateFeedbackInput {
   email: String
   message: String!
@@ -72,6 +82,10 @@ input CreateJobInput {
 
 input CreateTagInput {
   name: String!
+}
+
+type CreateUploadUrlResult {
+  uploadUrl: String!
 }
 
 """
@@ -109,6 +123,30 @@ type Job {
   type: JobType!
   updatedAt: DateTime!
   viewCount: Int!
+}
+
+type JobConnection {
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types
+  """
+  edges: [JobEdge!]!
+
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
+  """
+  pageInfo: PageInfo!
+}
+
+type JobEdge {
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor
+  """
+  cursor: String!
+
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-Node
+  """
+  node: Job!
 }
 
 enum JobRole {
@@ -161,19 +199,48 @@ type Mutation {
   createCheckoutSession(
     input: CreateCheckoutSessionInput!
   ): CreateCheckoutSessionResult!
+  createCompany(input: CreateCompanyInput!): Company!
   createCompanyAlert(companyId: String!): Alert!
   createFeedback(input: CreateFeedbackInput!): SuccessResult!
   createJob(input: CreateJobInput!): Job!
   createTag(input: CreateTagInput!): Tag!
+  createUploadUrl: CreateUploadUrlResult!
   publishJob(id: ID!): Job!
   removeAlert(id: ID!): SuccessResult!
+  removeCompanyAlert(id: ID!): SuccessResult!
   removeLike(id: ID!): Job!
   unpublishJob(id: ID!): Job!
   updateCompany(input: UpdateCompanyInput!): Company!
+  updateCompanyLogo(input: UpdateCompanyLogoInput!): Company!
   updateJob(input: UpdateJobInput!): Job!
   updateUser(input: UpdateUserInput!): User!
   viewCompany(id: ID!): Company!
   viewJob(id: ID!): Job!
+}
+
+"""
+PageInfo cursor, as defined in https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
+"""
+type PageInfo {
+  """
+  The cursor corresponding to the last nodes in edges. Null if the connection is empty.
+  """
+  endCursor: String
+
+  """
+  Used to indicate whether more edges exist following the set defined by the clients arguments.
+  """
+  hasNextPage: Boolean!
+
+  """
+  Used to indicate whether more edges exist prior to the set defined by the clients arguments.
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  The cursor corresponding to the first nodes in edges. Null if the connection is empty.
+  """
+  startCursor: String
 }
 
 type Query {
@@ -182,7 +249,18 @@ type Query {
   company(id: ID!): Company!
   companyBySlug(slug: String!): Company!
   job(id: ID!): Job!
-  jobs(filter: JobsFilter!): [Job!]!
+  jobs(
+    """
+    Returns the elements in the list that come after the specified cursor
+    """
+    after: String
+    filter: JobsFilter!
+
+    """
+    Returns the first n elements from the list.
+    """
+    first: Int!
+  ): JobConnection!
   searchCities(country: String!, name: String!): [City!]!
   searchCompanies(name: String!, not: [String!]!): [CompanySearch!]!
   searchTags(name: String!, not: [String!]!): [TagSearch!]!
@@ -211,6 +289,11 @@ input UpdateCompanyInput {
   name: String!
   twitter: String
   website: String!
+}
+
+input UpdateCompanyLogoInput {
+  id: ID!
+  imageId: String!
 }
 
 input UpdateJobInput {

@@ -1,0 +1,157 @@
+{
+  "tagName": "mjml",
+  "children": [
+    {
+      "tagName": "mj-head",
+      "children": [
+        {
+          "tagName": "mj-attributes",
+          "children": [
+            { "tagName": "mj-all", "attributes": { "padding": "0px" } }
+          ],
+          "attributes": {}
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "tagName": "mj-body",
+      "children": [
+        {
+          "tagName": "mj-wrapper",
+          "attributes": {
+            "background-color": "#fff",
+            "border-radius": "8px",
+            "padding": "40px 30px 45px"
+          },
+          "children": [
+            {
+              "tagName": "mj-section",
+              "children": [
+                {
+                  "tagName": "mj-column",
+                  "children": [
+                    {
+                      "tagName": "mj-divider",
+                      "attributes": {
+                        "border-width": "1px",
+                        "border-color": "lightgrey",
+                        "padding": "30px 0"
+                      }
+                    }
+                  ],
+                  "attributes": {}
+                }
+              ],
+              "attributes": {}
+            },
+            {
+              "tagName": "mj-section",
+              "children": [
+                {
+                  "tagName": "mj-column",
+                  "children": [
+                    {
+                      "tagName": "mj-text",
+                      "attributes": {
+                        "line-height": "1.6",
+                        "font-size": "14px"
+                      },
+                      "content": "Please verify your email, so we know it’s really you."
+                    }
+                  ],
+                  "attributes": {}
+                }
+              ],
+              "attributes": {}
+            },
+            {
+              "tagName": "mj-section",
+              "attributes": { "text-align": "center", "padding": "30px 0" },
+              "children": [
+                {
+                  "tagName": "mj-column",
+                  "children": [
+                    {
+                      "tagName": "mj-button",
+                      "attributes": {
+                        "font-family": "Helvetica",
+                        "background-color": "#000",
+                        "color": "white",
+                        "border-radius": "6px",
+                        "width": "200px",
+                        "line-height": "20px",
+                        "font-size": "14px",
+                        "href": "[url]"
+                      },
+                      "content": "Verify"
+                    }
+                  ],
+                  "attributes": {}
+                }
+              ]
+            },
+            {
+              "tagName": "mj-section",
+              "children": [
+                {
+                  "tagName": "mj-column",
+                  "children": [
+                    {
+                      "tagName": "mj-text",
+                      "attributes": {
+                        "line-height": "1.6",
+                        "font-size": "14px"
+                      },
+                      "content": "Or paste this link into your browser:"
+                    },
+                    {
+                      "tagName": "mj-text",
+                      "attributes": {
+                        "line-height": "1.6",
+                        "font-size": "14px"
+                      },
+                      "content": "<a href=\"[url]\">[url]</a>"
+                    },
+                    {
+                      "tagName": "mj-divider",
+                      "attributes": {
+                        "border-width": "1px",
+                        "border-color": "lightgrey",
+                        "padding": "30px 0"
+                      }
+                    }
+                  ],
+                  "attributes": {}
+                }
+              ],
+              "attributes": {}
+            },
+            {
+              "tagName": "mj-section",
+              "children": [
+                {
+                  "tagName": "mj-column",
+                  "children": [
+                    {
+                      "tagName": "mj-text",
+                      "attributes": {
+                        "line-height": "1.6",
+                        "font-size": "12px"
+                      },
+                      "content": "If you have any questions just reply to this email."
+                    }
+                  ],
+                  "attributes": {}
+                }
+              ],
+              "attributes": {}
+            }
+          ]
+        }
+      ],
+      "attributes": {}
+    }
+  ],
+  "attributes": {}
+}

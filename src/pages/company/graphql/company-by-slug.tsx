@@ -1,63 +1,41 @@
-import { gql } from 'urql'
-import * as Urql from 'urql'
+import type * as Types from '../../../types/graphql';
 
-import type * as Types from '../../../types/graphql'
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+import { gql } from 'urql';
+import * as Urql from 'urql';
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CompanyBySlugQueryVariables = Types.Exact<{
-  slug: Types.Scalars['String']
-}>
+  slug: Types.Scalars['String'];
+}>;
 
-export type CompanyBySlugQuery = {
-  __typename?: 'Query'
-  companyBySlug: {
-    __typename?: 'Company'
-    id: string
-    name: string
-    slug: string
-    twitter?: string | null | undefined
-    description: string
-    website: string
-    viewCount: number
-    subscribed: boolean
-    jobs: Array<{
-      __typename?: 'Job'
-      id: string
-      position: string
-      description: JsonObject
-      tags: Array<{ __typename?: 'Tag'; id: string; name: string }>
-    }>
-  }
-}
+
+export type CompanyBySlugQuery = { __typename?: 'Query', companyBySlug: { __typename?: 'Company', id: string, name: string, slug: string, logoUrl?: string | null | undefined, twitter?: string | null | undefined, description: string, website: string, viewCount: number, subscribed: boolean, jobs: Array<{ __typename?: 'Job', id: string, position: string, description: JsonObject, tags: Array<{ __typename?: 'Tag', id: string, name: string }> }> } };
+
 
 export const CompanyBySlugDocument = /*#__PURE__*/ gql`
-  query CompanyBySlug($slug: String!) {
-    companyBySlug(slug: $slug) {
+    query CompanyBySlug($slug: String!) {
+  companyBySlug(slug: $slug) {
+    id
+    name
+    slug
+    logoUrl
+    twitter
+    description
+    website
+    viewCount
+    subscribed
+    jobs {
       id
-      name
-      slug
-      twitter
+      position
       description
-      website
-      viewCount
-      subscribed
-      jobs {
+      tags {
         id
-        position
-        description
-        tags {
-          id
-          name
-        }
+        name
       }
     }
   }
-`
-
-export function useCompanyBySlugQuery(
-  options: Omit<Urql.UseQueryArgs<CompanyBySlugQueryVariables>, 'query'> = {}
-) {
-  return Urql.useQuery<CompanyBySlugQuery>({
-    query: CompanyBySlugDocument,
-    ...options,
-  })
 }
+    `;
+
+export function useCompanyBySlugQuery(options: Omit<Urql.UseQueryArgs<CompanyBySlugQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<CompanyBySlugQuery>({ query: CompanyBySlugDocument, ...options });
+};

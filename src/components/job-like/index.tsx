@@ -18,7 +18,7 @@ export const JobLike = (props: Props) => {
     const { error } = await addLike({ jobId: id })
 
     if (error) {
-      console.log(error)
+      console.log('hero')
     }
   }
 

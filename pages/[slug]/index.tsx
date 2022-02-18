@@ -2,7 +2,8 @@ import type { GetStaticPaths, GetStaticProps } from 'next'
 
 import { prisma } from '~/api/lib/prisma'
 // import type { Props } from '~/pages/company'
-import { Company } from '~/pages/company'
+import { CompanyPage } from '~/pages/company'
+import type { CompanyBySlugQuery } from '~/pages/company/graphql/company-by-slug'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const companies = await prisma.company.findMany({})
@@ -28,6 +29,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       user: {
         include: {
           jobs: {
+            where: {
+              status: 'Live',
+            },
             include: {
               tags: true,
             },
@@ -46,27 +50,39 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   }
 
+  const cache: DeepRequired<CompanyBySlugQuery> = {
+    __typename: 'Query',
+    companyBySlug: {
+      __typename: 'Company',
+      id: company.id,
+      logoUrl: company.logoUrl,
+      name: company.name,
+      slug: company.slug,
+      twitter: company.twitter,
+      description: company.description,
+      website: company.website,
+      viewCount: company.viewCount,
+      subscribed: false,
+      jobs: company.user.jobs.map(job => ({
+        __typename: 'Job',
+        id: job.id,
+        position: job.position,
+        description: job.description as JsonObject,
+        tags: job.tags.map(tag => ({
+          __typename: 'Tag',
+          id: tag.id,
+          name: tag.name,
+        })),
+      })),
+    },
+  }
+
   return {
     props: {
-      company: {
-        id: company.id,
-        name: company.name,
-        slug: company.slug,
-        twitter: company.twitter,
-        description: company.description,
-        website: company.website,
-        viewCount: company.viewCount,
-        subscribed: false,
-        jobs: company.user.jobs.map(job => ({
-          id: job.id,
-          position: job.position,
-          description: job.description,
-          tags: job.tags.map(tag => ({ id: tag.id, name: tag.name })),
-        })),
-      },
+      company: cache.companyBySlug,
     },
     revalidate: 60,
   }
 }
 
-export default Company
+export default CompanyPage

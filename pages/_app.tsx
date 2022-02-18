@@ -41,6 +41,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   // @ts-ignore
   const layout: PageLayout = Component.getLayout ?? (page => page)
 
+  console.log(pageProps)
+
   return (
     <ThemeProvider
       attribute="class"
@@ -52,7 +54,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       disableTransitionOnChange
     >
       <SSRProvider>
-        <UrqlProvider>
+        <UrqlProvider initialState={pageProps.cache}>
           <IdProvider>
             <SessionProvider session={pageProps.session}>
               <div>

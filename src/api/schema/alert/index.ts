@@ -3,6 +3,7 @@ import { objectType } from 'nexus'
 export * from './create-alert'
 export * from './create-company-alert'
 export * from './remove-alert'
+export * from './remove-company-alert'
 
 export const Alert = objectType({
   name: 'Alert',

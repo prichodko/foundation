@@ -93,6 +93,7 @@ model Company {
   description String   @default("")
   email       String
   website     String
+  logoUrl     String?
   twitter     String?
   user        User     @relation(fields: [userId], references: [id])
   userId      String   @unique @map("user_id")
@@ -147,7 +148,7 @@ model Job {
   user        User        @relation(fields: [userId], references: [id])
   userId      String      @map("user_id")
   likedBy     UserLikes[]
-  tags        Tag[]
+  tags        JobTags[]
   viewCount   Int         @default(0) @map("view_count")
   status      JobStatus   @default(Draft)
   salaryMin   Int         @default(0) @map("salary_min")
@@ -157,11 +158,21 @@ model Job {
   @@map(name: "jobs")
 }
 
+model JobTags {
+  job     Job    @relation(fields: [jobId], references: [id])
+  jobId   String @map("job_id")
+  tag     Tag    @relation(fields: [tagName], references: [name])
+  tagName String @map("tag_name")
+
+
+  @@id([jobId, tagName])
+  @@map(name: "job_tags")
+}
+
 model Tag {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  createdAt DateTime @default(now()) @map("created_at")
-  jobs      Job[]
+  name      String    @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+  jobs      JobTags[]
 
   @@map(name: "tags")
 }

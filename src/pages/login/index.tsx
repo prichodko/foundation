@@ -1,3 +1,5 @@
+import { useCallback, useState } from 'react'
+
 import type { Page } from 'next'
 import type { SignInResponse } from 'next-auth/react'
 import { signIn } from 'next-auth/react'
@@ -23,17 +25,35 @@ const schema: Describe<FormValues> = object({
   email: required(email()),
 })
 
+const useGoogleSignIn = (callbackUrl: string) => {
+  const [loading, setLoading] = useState(false)
+
+  const googleSignIn = useCallback(async () => {
+    try {
+      setLoading(true)
+      await signIn('google', {
+        redirect: false,
+        callbackUrl,
+      })
+    } catch (error) {}
+  }, [callbackUrl])
+
+  return [googleSignIn, { loading }] as const
+}
+
 export const LoginPage: Page = () => {
   useUrlQuery('error')
 
   const callbackUrl = useCallbackUrl('/dashboard')
 
-  const handleGoogleSignIn = async () => {
-    signIn('google', {
-      redirect: false,
-      callbackUrl,
-    })
-  }
+  const [googleSignIn, { loading }] = useGoogleSignIn(callbackUrl)
+
+  // const googleSignIn = async () => {
+  //   signIn('google', {
+  //     redirect: false,
+  //     callbackUrl,
+  //   })
+  // }
 
   const handleSubmit: FormSubmitHandler<FormValues> = async (
     values,
@@ -77,7 +97,7 @@ export const LoginPage: Page = () => {
           mode="onSubmit"
         >
           <div className="grid gap-4">
-            <Button width="full" onPress={handleGoogleSignIn}>
+            <Button width="full" onPress={googleSignIn} loading={loading}>
               Continue with Google
             </Button>
             <div className="flex items-center justify-center">

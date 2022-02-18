@@ -1,0 +1,9 @@
+mutation CreateCompany($input: CreateCompanyInput!) {
+  createCompany(input: $input) {
+    id
+    name
+    email
+    slug
+    description
+  }
+}

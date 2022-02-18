@@ -1,11 +1,12 @@
 // import { generateHTML } from '@tiptap/core'
 // import StarterKit from '@tiptap/starter-kit'
 import type { Page } from 'next'
+import { gql, useQuery } from 'urql'
 
 import { JobLike } from '~/components/job-like'
 import { Link } from '~/components/link'
 import { Tag } from '~/components/tag'
-// import { useUrlQuery } from '~/hooks/use-url-query'
+import { useUrlQuery } from '~/hooks/use-url-query'
 // import { styled, theme } from '~/styles/config'
 import { Button } from '~/system/button'
 import { Heading } from '~/system/heading'
@@ -13,7 +14,7 @@ import { Text } from '~/system/text'
 
 import { ShareButtons } from './components/share-buttons'
 import type { JobQuery } from './graphql/job'
-// import { useJobQuery } from './graphql/job'
+import { useJobQuery } from './graphql/job'
 import { useViewJob } from './hooks/use-view-job'
 
 export interface Props {
@@ -34,19 +35,34 @@ export interface Props {
 //   },
 // })
 
-export const Job: Page<Props> = props => {
+// const POKEMONS_QUERY = gql`
+//   query {
+//     pokemons(limit: 10) {
+//       id
+//       name
+//     }
+//   }
+// `
+
+export const JobPage: Page<Props> = props => {
   const { job } = props
 
   // console.log(props)
 
-  // const jobId = useUrlQuery('id')
+  const jobId = useUrlQuery('id')
 
-  // const [{ data }] = useJobQuery({
-  //   variables: {
-  //     id: jobId!,
-  //   },
-  //   pause: !jobId,
-  // })
+  const [{ data, operation }] = useJobQuery({
+    variables: {
+      id: jobId!,
+    },
+    pause: !jobId,
+    requestPolicy: 'cache-and-network',
+  })
+
+  console.log('exists', !!data, operation?.key)
+  // console.log('FETCHI?NG', !!ree[0].data, ree)
+
+  // const reeee = useQuery({ query: POKEMONS_QUERY })
 
   useViewJob(job.id)
 
@@ -64,9 +80,9 @@ export const Job: Page<Props> = props => {
     company,
     viewCount,
     liked,
-  } = job
+  } = data!.job
 
-  console.log(description)
+  console.log(position)
 
   return (
     <>
@@ -133,9 +149,7 @@ export const Job: Page<Props> = props => {
             }}
           /> */}
 
-          <pre>
-            <code>{JSON.stringify(description, null, 2)}</code>
-          </pre>
+          <pre>{/* <code>{JSON.stringify(description, null, 2)}</code> */}</pre>
 
           <Button>Apply</Button>
         </div>

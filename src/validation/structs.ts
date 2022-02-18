@@ -72,7 +72,7 @@ export function enums<Key extends keyof NexusGenEnums>(
 ): Struct<NexusGenEnums[Key], any> {
   return define('enums', value => {
     return (
-      typeof value === 'string' ||
+      (typeof value === 'string' && value !== '') ||
       `Expected ${key} enum, but received: ${value}`
     )
   })

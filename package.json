@@ -124,6 +124,7 @@
     "prettier": "^2.5.0",
     "prisma": "^3.5.0",
     "tailwindcss": "^2.2.19",
+    "ts-essentials": "^9.0.0",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.12.0",

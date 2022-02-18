@@ -101,6 +101,7 @@ export const Workverse = () => {
           <Button
             onPress={() => setAfter(data.jobs.pageInfo.endCursor!)}
             loading={fetching}
+            variant="minimal"
           >
             Load More
           </Button>

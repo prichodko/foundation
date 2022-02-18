@@ -39,6 +39,7 @@ const config = {
       green: 'var(--colors-green11)',
       yellow: 'var(--colors-yellow11)',
       blue: 'var(--colors-blue11)',
+      white: '#fff',
     },
     colors: {
       transparent: 'transparent',
