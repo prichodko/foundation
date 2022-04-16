@@ -14,6 +14,7 @@
     "generate": "graphql-codegen --config codegen.yml",
     "type-check": "tsc",
     "lint": "next lint",
+    "test:e2e": "playwright test",
     "analyze": "ANALYZE=true yarn build"
   },
   "dependencies": {

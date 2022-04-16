@@ -10,7 +10,6 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "type-check": "tsc",
     "format": "prettier --write 'packages/**/*.{ts,tsx,css,json,md,mdx,html}'",
-    "test:e2e": "playwright test",
     "prepare": "husky install"
   },
   "devDependencies": {
