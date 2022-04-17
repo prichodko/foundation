@@ -12,6 +12,9 @@
     "format": "prettier --write 'packages/**/*.{ts,tsx,css,json,md,mdx,html}'",
     "prepare": "husky install"
   },
+  "dependencies": {
+    "graphql": "^16.3.0"
+  },
   "devDependencies": {
     "@playwright/test": "^1.16.3",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
