@@ -38,6 +38,7 @@
     "@graphql-codegen/typescript": "2.4.8",
     "@graphql-codegen/typescript-operations": "2.3.5",
     "@graphql-codegen/typescript-urql": "^3.4.0",
+    "@graphql-codegen/typescript-urql-graphcache": "^2.2.10",
     "@next/bundle-analyzer": "^12.1.5",
     "@types/node": "^17.0.24",
     "@types/react": "^18.0.5",

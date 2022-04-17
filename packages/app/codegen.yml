@@ -1,18 +1,26 @@
 overwrite: true
-schema: "../src/api/schema.graphql"
+schema: "../api/src/schema.graphql"
 documents: "src/**/*.gql"
 hooks:
   afterAllFileWrite:
-    - prettier --write
     - eslint --fix
+    - prettier --write
 generates:
   src/types/graphql.ts:
     plugins:
       - "typescript"
+      - 'typescript-urql-graphcache'
     config:
+      strictScalars: true
       constEnums: true
+      allowEnumStringTypes: true
+      # immutableTypes: true
+      # avoidOptionals:
+      #   inputValue: true
+      # inputMaybeValue: T | null | undefined
       scalars:
         DateTime: Date
+        JSONObject: JsonObject
   src/:
     preset: near-operation-file
     presetConfig:
@@ -22,13 +30,12 @@ generates:
       - "typescript-operations"
       - "typescript-urql"
     config:
+      arrayInputCoercion: false
       pureMagicComment: true
       strictScalars: true
       useTypeImports: true
+      # immutableTypes: true
       gqlImport: urql#gql
       scalars:
         DateTime: Date
-
-
-
-
+        JSONObject: JsonObject
