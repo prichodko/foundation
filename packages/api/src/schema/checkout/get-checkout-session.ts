@@ -1,9 +1,6 @@
 import { idArg, objectType, queryField } from 'nexus'
-import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2020-08-27',
-})
+import { stripe } from '../../lib/stripe'
 
 export const CheckoutSession = queryField('checkoutSession', {
   type: objectType({
