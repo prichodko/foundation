@@ -16,8 +16,8 @@ export const GetStartedPage: Page = () => {
   }
 
   return (
-    <div className="flex items-center h-screen">
-      <div className="w-full max-w-sm mx-auto">
+    <div className="flex h-screen items-center">
+      <div className="mx-auto w-full max-w-sm">
         <Heading align="center" size="32" className="mb-3">
           Create Account
         </Heading>
@@ -32,7 +32,7 @@ export const GetStartedPage: Page = () => {
           onSubmit={handleSubmit}
           defaultValues={{ email: '', password: '' }}
         >
-          <div className="grid gap-3 mb-6">
+          <div className="mb-6 grid gap-3">
             <TextInput
               name="email"
               label="Email"

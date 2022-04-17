@@ -48,7 +48,7 @@ const Button = (props: Props, ref: Ref<HTMLButtonElement>) => {
     >
       {loading && (
         <svg
-          className="animate-spin absolute left-[9px] top-[9px]"
+          className="absolute left-[9px] top-[9px] animate-spin"
           fill="none"
           viewBox="0 0 24 24"
           width={16}

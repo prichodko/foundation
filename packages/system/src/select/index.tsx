@@ -55,7 +55,7 @@ const Select = (props: Props, ref: Ref<HTMLSelectElement>) => {
         {children}
       </Trigger>
       <ChevronDownIcon
-        className="h-3.5 w-3.5 absolute top-[11px] right-3 pointer-events-none"
+        className="pointer-events-none absolute top-[11px] right-3 h-3.5 w-3.5"
         aria-hidden
         focusable={false}
       />

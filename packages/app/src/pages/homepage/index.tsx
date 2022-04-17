@@ -36,7 +36,7 @@ const Section = ({
   return (
     <div className="h-[80vh] py-32">
       <Heading className="mb-8">{heading}</Heading>
-      <div className="border rounded flex items-center justify-center min-h-[600px] gap-2 font p-10 bg-gray-2">
+      <div className="font bg-gray-2 flex min-h-[600px] items-center justify-center gap-2 rounded border p-10">
         <div className={clsx('w-full', { 'text-center': center })}>
           {children}
         </div>
@@ -51,10 +51,10 @@ export const Homepage: Page = () => {
   const [radioValue, setRadioValue] = useState('hello')
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto max-w-4xl">
       <Navbar />
 
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex h-screen items-center justify-center">
         <Text weight="500" className="text-[128px] leading-none">
           Build
           <br />

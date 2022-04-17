@@ -38,16 +38,16 @@ const Dialog = (props: Props) => {
           <Text as={Title} weight="500" size="16">
             {title}
           </Text>
-          <div className="flex items-center ml-3 h-7">
+          <div className="ml-3 flex h-7 items-center">
             <Close>
               <Icon label="Close">
-                <Cross2Icon className="w-6 h-6" />
+                <Cross2Icon className="h-6 w-6" />
               </Icon>
             </Close>
           </div>
         </Header>
         <Body>
-          <div className="border-2 border-dashed rounded-lg border-gray-7 h-96">
+          <div className="border-gray-7 h-96 rounded-lg border-2 border-dashed">
             {children}
           </div>
         </Body>

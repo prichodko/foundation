@@ -18,7 +18,7 @@ export const ThemeSwitcher = ({}: Props) => {
   return (
     <BaseButton
       onPress={handlePress}
-      className="p-1 rounded hover:bg-primary text"
+      className="hover:bg-primary text rounded p-1"
     >
       {theme === 'light' ? <MoonIcon /> : <SunIcon />}
     </BaseButton>

@@ -15,8 +15,8 @@ export const LoginPage: Page = () => {
   }
 
   return (
-    <div className="flex items-center h-screen">
-      <div className="w-full max-w-sm mx-auto">
+    <div className="flex h-screen items-center">
+      <div className="mx-auto w-full max-w-sm">
         <Heading align="center" size="32" className="mb-3">
           Welcome Back
         </Heading>
@@ -31,7 +31,7 @@ export const LoginPage: Page = () => {
           defaultValues={{ email: '', password: '' }}
           onSubmit={handleSubmit}
         >
-          <div className="grid gap-3 mb-6">
+          <div className="mb-6 grid gap-3">
             <TextInput
               name="email"
               label="Email"
@@ -52,7 +52,7 @@ export const LoginPage: Page = () => {
             Log In
           </Button>
         </Form>
-        <div className="flex flex-col items-center mt-6">
+        <div className="mt-6 flex flex-col items-center">
           <Link href="/" className="hover:underline">
             Forgot password?
           </Link>
