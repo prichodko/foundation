@@ -1392,6 +1392,11 @@
     debug "^4.1.1"
     minimatch "^3.0.4"
 
+"@humanwhocodes/env@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@humanwhocodes/env/-/env-2.2.0.tgz#58a6bd3d3601e491ff3f5f0bf84ad23cd7341f74"
+  integrity sha512-L2+9dTj3w2IG59IN1tNfYGkOg9C0HKXgCRc9VpFfwNeYcwyDb2gIokxZlg3Ss8wycrfnllaFXkfinDJpEuzp7g==
+
 "@humanwhocodes/object-schema@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"

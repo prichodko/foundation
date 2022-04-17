@@ -17,6 +17,7 @@
     "prisma:studio": "prisma studio"
   },
   "dependencies": {
+    "@humanwhocodes/env": "^2.2.0",
     "@prisma/client": "^3.5.0",
     "apollo-server-errors": "^3.3.1",
     "apollo-server-micro": "^3.6.7",

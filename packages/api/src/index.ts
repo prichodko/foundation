@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server-micro'
 import { applyMiddleware } from 'graphql-middleware'
 
+import { env } from './config/env'
 import { prisma } from './lib/prisma'
 import { permissions } from './permissions'
 import { schema } from './schema'
@@ -28,4 +29,4 @@ export const server = new ApolloServer({
   introspection: true,
 })
 
-export { prisma }
+export { env, prisma }
