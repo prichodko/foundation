@@ -1,7 +1,9 @@
+import { UrqlProvider } from '~/components/urql'
+
 import type { GetPageLayout, PageLayout } from 'next'
 
 const AppLayout: PageLayout = ({ children }) => {
-  return <div>{children}</div>
+  return <UrqlProvider>{children}</UrqlProvider>
 }
 
 export const getPageLayout: GetPageLayout = page => (
