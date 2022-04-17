@@ -6,10 +6,17 @@ import { ThemeProvider } from 'next-themes'
 
 import { useKeyboardShortcuts } from '~/hooks/use-keyboard-shortcuts'
 
+import type { GetPageLayout, Page } from 'next'
 import type { AppProps } from 'next/app'
 
-const App = ({ Component, pageProps }: AppProps) => {
+interface Props extends AppProps {
+  Component: Page
+}
+
+const App = ({ Component, pageProps }: Props) => {
   useKeyboardShortcuts()
+
+  const getLayout: GetPageLayout = Component.getLayout ?? (page => page)
 
   return (
     <ThemeProvider
@@ -21,9 +28,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       }}
       disableTransitionOnChange
     >
-      <IdProvider>
-        <Component {...pageProps} />
-      </IdProvider>
+      <IdProvider>{getLayout(<Component {...pageProps} />)}</IdProvider>
     </ThemeProvider>
   )
 }

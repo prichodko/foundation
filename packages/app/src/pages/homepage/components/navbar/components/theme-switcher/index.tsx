@@ -2,9 +2,7 @@ import { BaseButton } from '@example/system/src/button'
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import { useTheme } from 'next-themes'
 
-interface Props {}
-
-export const ThemeSwitcher = ({}: Props) => {
+export const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme()
 
   const handlePress = () => {

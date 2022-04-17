@@ -20,6 +20,8 @@ import {
 } from '@example/system'
 import clsx from 'clsx'
 
+import { getPageLayout } from '~/layouts/app'
+
 import { Navbar } from './components/navbar'
 import { useUserQuery } from './graphql/user'
 
@@ -304,3 +306,5 @@ export const Homepage: Page = () => {
     </div>
   )
 }
+
+Homepage.getLayout = getPageLayout
