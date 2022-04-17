@@ -9,7 +9,7 @@
     "test": "turbo run test",
     "clean": "turbo run clean && rm -rf node_modules",
     "type-check": "tsc",
-    "format": "prettier --write 'packages/**/*.{ts,tsx,css,json,md,mdx,html}'",
+    "format": "prettier --write 'packages/**/*.{ts,tsx,gql,css,json,md,mdx,html}'",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -40,7 +40,7 @@
     "*.{ts,tsx}": [
       "prettier --write"
     ],
-    "*.{css,json,md,mdx,html}": [
+    "*.{gql,css,json,md,mdx,html}": [
       "prettier --write"
     ]
   }
