@@ -1,5 +1,6 @@
-import type { UseControllerReturn, UseControllerProps } from 'react-hook-form'
 import { useController } from 'react-hook-form'
+
+import type { UseControllerProps, UseControllerReturn } from 'react-hook-form'
 
 interface Props {
   name?: string
