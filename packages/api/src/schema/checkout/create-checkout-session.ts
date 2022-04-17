@@ -1,6 +1,7 @@
 import { inputObjectType, mutationField, objectType } from 'nexus'
 
 import { stripe } from '../../lib/stripe'
+import { createCheckoutSessionSchema } from '../../validation/checkout-session'
 
 export const CreateCheckoutSession = mutationField('createCheckoutSession', {
   type: objectType({
@@ -20,15 +21,21 @@ export const CreateCheckoutSession = mutationField('createCheckoutSession', {
     }),
   },
 
-  async resolve(_root, { input: _input }, ctx) {
-    if (!ctx.user.stripeCustomerId) {
+  authorize: (_parent, _args, ctx) => ctx.auth.user,
+
+  async resolve(_root, { input }, ctx) {
+    const data = createCheckoutSessionSchema.create(input)
+
+    const user = ctx.user!
+
+    if (!user.stripeCustomerId) {
       const customer = await stripe.customers.create({
-        email: ctx.user.email,
+        email: user.email,
         metadata: {},
       })
 
       ctx.user = await ctx.db.user.update({
-        where: { id: ctx.user.id },
+        where: { id: user.id },
         data: {
           stripeCustomerId: customer.id,
         },
@@ -36,7 +43,7 @@ export const CreateCheckoutSession = mutationField('createCheckoutSession', {
     }
 
     const session = await stripe.checkout.sessions.create({
-      customer: ctx.user.stripeCustomerId!,
+      customer: user.stripeCustomerId!,
       payment_method_types: ['card'],
       line_items: [
         {

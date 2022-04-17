@@ -4,6 +4,7 @@ import { userSchema } from '../../validation/user'
 
 export const UpdateUser = mutationField('updateUser', {
   type: 'User',
+
   args: {
     input: inputObjectType({
       name: 'UpdateUserInput',
