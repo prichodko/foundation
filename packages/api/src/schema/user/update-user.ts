@@ -1,5 +1,7 @@
 import { inputObjectType, mutationField } from 'nexus'
 
+import { userSchema } from '../../validation/user'
+
 export const UpdateUser = mutationField('updateUser', {
   type: 'User',
   args: {
@@ -14,12 +16,14 @@ export const UpdateUser = mutationField('updateUser', {
   authorize: (_parent, _args, ctx) => ctx.auth.user,
 
   async resolve(_root, { input }, ctx) {
+    const data = userSchema.update.create(input)
+
     const user = await ctx.db.user.update({
       where: {
-        id: ctx.user.id,
+        id: ctx.user!.id,
       },
       data: {
-        name: input.name,
+        name: data.name,
       },
     })
 
