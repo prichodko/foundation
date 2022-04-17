@@ -1,8 +1,6 @@
-import { styled, theme } from '../../config'
+import { styled, theme } from '../config'
 
-import { Input as BaseInput } from '../input'
-
-export const Input = styled(BaseInput, {
+export const Input = styled('input', {
   display: 'block',
   width: '100%',
   padding: '8px 12px',
