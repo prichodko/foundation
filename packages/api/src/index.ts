@@ -6,6 +6,7 @@ import { env } from './config/env'
 import { createAuth } from './lib/auth'
 import { prisma } from './lib/prisma'
 import { schema } from './schema'
+import { stripeWebhook } from './webhooks'
 
 import type { Context } from './context'
 import type { NextApiRequest } from 'next'
@@ -52,3 +53,5 @@ export const server = new ApolloServer({
     return error
   },
 })
+
+export { env, prisma, stripeWebhook }
