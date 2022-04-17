@@ -1,4 +1,5 @@
 import { server } from '@example/api'
+
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const startServer = server.start()
