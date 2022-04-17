@@ -15,6 +15,13 @@ declare global {
       fieldName: FieldName,
       opts?: core.CommonInputFieldConfig<TypeName, FieldName>
     ): void // "DateTime";
+    /**
+     * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+     */
+    json<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
+    ): void // "JSONObject";
   }
 }
 declare global {
@@ -26,6 +33,13 @@ declare global {
       fieldName: FieldName,
       ...opts: core.ScalarOutSpread<TypeName, FieldName>
     ): void // "DateTime";
+    /**
+     * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+     */
+    json<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void // "JSONObject";
   }
 }
 
@@ -39,66 +53,13 @@ export interface NexusGenInputs {
     name: string // String!
     price: number // Int!
   }
-  CreateJobInput: {
-    // input type
-    applyUrl: string // String!
-    description: string // String!
-    position: string // String!
-    remote: boolean // Boolean!
-    role: NexusGenEnums['JobRole'] // JobRole!
-    tags: string[] // [ID!]!
-  }
-  CreateTagInput: {
-    // input type
-    name: string // String!
-  }
-  GetCitiesInput: {
-    // input type
-    country: string // String!
-    query: string // String!
-  }
-  GetJobsInput: {
-    // input type
-    query: NexusGenInputs['GetJobsInputQuery'] // GetJobsInputQuery!
-  }
-  GetJobsInputQuery: {
-    // input type
-    remote: boolean // Boolean!
-    tags: string[] // [ID!]!
-  }
-  GetTagsInput: {
-    // input type
-    notIn: string[] // [String!]!
-    query: string // String!
-  }
-  UpdateCompanyInput: {
-    // input type
-    email: string // String!
-    id: string // ID!
-    name: string // String!
-    twitter: string // String!
-    website: string // String!
-  }
-  UpdateJobInput: {
-    // input type
-    applyUrl: string // String!
-    description: string // String!
-    id: string // ID!
-    position: string // String!
-    remote: boolean // Boolean!
-    role: NexusGenEnums['JobRole'] // JobRole!
-    tags: string[] // [ID!]!
-  }
   UpdateUserInput: {
     // input type
     name: string // String!
   }
 }
 
-export interface NexusGenEnums {
-  JobRole: prisma.JobRole
-  JobStatus: prisma.JobStatus
-}
+export interface NexusGenEnums {}
 
 export interface NexusGenScalars {
   String: string
@@ -107,6 +68,7 @@ export interface NexusGenScalars {
   Boolean: boolean
   ID: string
   DateTime: Date
+  JSONObject: JsonObject
 }
 
 export interface NexusGenObjects {
@@ -115,12 +77,6 @@ export interface NexusGenObjects {
     amount: number // Int!
     id: string // String!
   }
-  City: {
-    // root type
-    label: string // ID!
-    value: string // String!
-  }
-  Company: prisma.Company
   CreateBillingPortalSessionResult: {
     // root type
     url: string // String!
@@ -129,14 +85,12 @@ export interface NexusGenObjects {
     // root type
     sessionUrl: string // String!
   }
-  Job: prisma.Job
   Mutation: {}
   Query: {}
   SuccessResult: {
     // root type
     success: boolean // Boolean!
   }
-  Tag: prisma.Tag
   User: prisma.User
 }
 
@@ -146,34 +100,13 @@ export interface NexusGenUnions {}
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes &
-  NexusGenScalars &
-  NexusGenEnums
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   CheckoutSessionResult: {
     // field return type
     amount: number // Int!
     id: string // String!
-  }
-  City: {
-    // field return type
-    label: string // ID!
-    value: string // String!
-  }
-  Company: {
-    // field return type
-    createdAt: NexusGenScalars['DateTime'] // DateTime!
-    description: string // String!
-    email: string // String!
-    id: string // ID!
-    jobs: NexusGenRootTypes['Job'][] // [Job!]!
-    name: string // String!
-    slug: string // String!
-    twitter: string | null // String
-    updatedAt: NexusGenScalars['DateTime'] // DateTime!
-    viewCount: number // Int!
-    website: string // String!
   }
   CreateBillingPortalSessionResult: {
     // field return type
@@ -183,66 +116,25 @@ export interface NexusGenFieldTypes {
     // field return type
     sessionUrl: string // String!
   }
-  Job: {
-    // field return type
-    applyUrl: string // String!
-    company: NexusGenRootTypes['Company'] // Company!
-    createdAt: NexusGenScalars['DateTime'] // DateTime!
-    description: string // String!
-    id: string // ID!
-    liked: boolean // Boolean!
-    position: string // String!
-    remote: boolean // Boolean!
-    role: NexusGenEnums['JobRole'] // JobRole!
-    status: NexusGenEnums['JobStatus'] // JobStatus!
-    tags: NexusGenRootTypes['Tag'][] // [Tag!]!
-    updatedAt: NexusGenScalars['DateTime'] // DateTime!
-    viewCount: number // Int!
-  }
   Mutation: {
     // field return type
-    addLike: NexusGenRootTypes['Job'] // Job!
     createBillingPortalSession: NexusGenRootTypes['CreateBillingPortalSessionResult'] // CreateBillingPortalSessionResult!
     createCheckoutSession: NexusGenRootTypes['CreateCheckoutSessionResult'] // CreateCheckoutSessionResult!
-    createJob: NexusGenRootTypes['Job'] // Job!
-    createTag: NexusGenRootTypes['Tag'] // Tag!
-    removeLike: NexusGenRootTypes['Job'] // Job!
-    updateCompany: NexusGenRootTypes['Company'] // Company!
-    updateJob: NexusGenRootTypes['Job'] // Job!
     updateUser: NexusGenRootTypes['User'] // User!
-    viewCompany: NexusGenRootTypes['Company'] // Company!
-    viewJob: NexusGenRootTypes['Job'] // Job!
   }
   Query: {
     // field return type
     checkoutSession: NexusGenRootTypes['CheckoutSessionResult'] // CheckoutSessionResult!
-    cities: NexusGenRootTypes['City'][] // [City!]!
-    companies: NexusGenRootTypes['Company'][] // [Company!]!
-    company: NexusGenRootTypes['Company'] // Company!
-    companyBySlug: NexusGenRootTypes['Company'] // Company!
-    job: NexusGenRootTypes['Job'] // Job!
-    jobs: NexusGenRootTypes['Job'][] // [Job!]!
-    tags: NexusGenRootTypes['Tag'][] // [Tag!]!
     user: NexusGenRootTypes['User'] // User!
   }
   SuccessResult: {
     // field return type
     success: boolean // Boolean!
   }
-  Tag: {
-    // field return type
-    count: number // Int!
-    id: string // ID!
-    name: string // String!
-  }
   User: {
     // field return type
-    company: NexusGenRootTypes['Company'] | null // Company
-    email: string | null // String
     id: string // ID!
-    jobs: NexusGenRootTypes['Job'][] // [Job!]!
-    likes: NexusGenRootTypes['Job'][] // [Job!]!
-    name: string | null // String
+    name: string // String!
   }
 }
 
@@ -252,25 +144,6 @@ export interface NexusGenFieldTypeNames {
     amount: 'Int'
     id: 'String'
   }
-  City: {
-    // field return type name
-    label: 'ID'
-    value: 'String'
-  }
-  Company: {
-    // field return type name
-    createdAt: 'DateTime'
-    description: 'String'
-    email: 'String'
-    id: 'ID'
-    jobs: 'Job'
-    name: 'String'
-    slug: 'String'
-    twitter: 'String'
-    updatedAt: 'DateTime'
-    viewCount: 'Int'
-    website: 'String'
-  }
   CreateBillingPortalSessionResult: {
     // field return type name
     url: 'String'
@@ -279,140 +152,43 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     sessionUrl: 'String'
   }
-  Job: {
-    // field return type name
-    applyUrl: 'String'
-    company: 'Company'
-    createdAt: 'DateTime'
-    description: 'String'
-    id: 'ID'
-    liked: 'Boolean'
-    position: 'String'
-    remote: 'Boolean'
-    role: 'JobRole'
-    status: 'JobStatus'
-    tags: 'Tag'
-    updatedAt: 'DateTime'
-    viewCount: 'Int'
-  }
   Mutation: {
     // field return type name
-    addLike: 'Job'
     createBillingPortalSession: 'CreateBillingPortalSessionResult'
     createCheckoutSession: 'CreateCheckoutSessionResult'
-    createJob: 'Job'
-    createTag: 'Tag'
-    removeLike: 'Job'
-    updateCompany: 'Company'
-    updateJob: 'Job'
     updateUser: 'User'
-    viewCompany: 'Company'
-    viewJob: 'Job'
   }
   Query: {
     // field return type name
     checkoutSession: 'CheckoutSessionResult'
-    cities: 'City'
-    companies: 'Company'
-    company: 'Company'
-    companyBySlug: 'Company'
-    job: 'Job'
-    jobs: 'Job'
-    tags: 'Tag'
     user: 'User'
   }
   SuccessResult: {
     // field return type name
     success: 'Boolean'
   }
-  Tag: {
-    // field return type name
-    count: 'Int'
-    id: 'ID'
-    name: 'String'
-  }
   User: {
     // field return type name
-    company: 'Company'
-    email: 'String'
     id: 'ID'
-    jobs: 'Job'
-    likes: 'Job'
     name: 'String'
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
-    addLike: {
-      // args
-      id: string // ID!
-    }
     createCheckoutSession: {
       // args
       input: NexusGenInputs['CreateCheckoutSessionInput'] // CreateCheckoutSessionInput!
     }
-    createJob: {
-      // args
-      input: NexusGenInputs['CreateJobInput'] // CreateJobInput!
-    }
-    createTag: {
-      // args
-      input: NexusGenInputs['CreateTagInput'] // CreateTagInput!
-    }
-    removeLike: {
-      // args
-      id: string // ID!
-    }
-    updateCompany: {
-      // args
-      input: NexusGenInputs['UpdateCompanyInput'] // UpdateCompanyInput!
-    }
-    updateJob: {
-      // args
-      input: NexusGenInputs['UpdateJobInput'] // UpdateJobInput!
-    }
     updateUser: {
       // args
       input: NexusGenInputs['UpdateUserInput'] // UpdateUserInput!
-    }
-    viewCompany: {
-      // args
-      id: string // ID!
-    }
-    viewJob: {
-      // args
-      id: string // ID!
     }
   }
   Query: {
     checkoutSession: {
       // args
       id: string // ID!
-    }
-    cities: {
-      // args
-      input: NexusGenInputs['GetCitiesInput'] // GetCitiesInput!
-    }
-    company: {
-      // args
-      id: string // ID!
-    }
-    companyBySlug: {
-      // args
-      slug: string // String!
-    }
-    job: {
-      // args
-      id: string // ID!
-    }
-    jobs: {
-      // args
-      input: NexusGenInputs['GetJobsInput'] // GetJobsInput!
-    }
-    tags: {
-      // args
-      input: NexusGenInputs['GetTagsInput'] // GetTagsInput!
     }
   }
 }
@@ -425,7 +201,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects
 
 export type NexusGenInputNames = keyof NexusGenInputs
 
-export type NexusGenEnumNames = keyof NexusGenEnums
+export type NexusGenEnumNames = never
 
 export type NexusGenInterfaceNames = never
 

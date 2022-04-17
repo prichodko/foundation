@@ -1,4 +1,4 @@
-import { mutationField, inputObjectType } from 'nexus'
+import { inputObjectType, mutationField } from 'nexus'
 
 export const UpdateUser = mutationField('updateUser', {
   type: 'User',

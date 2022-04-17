@@ -26,7 +26,7 @@ export const schema = makeSchema({
   },
   shouldExitAfterGenerateArtifacts: Boolean(process.env.NEXUS_REFLECTION),
   outputs: {
-    typegen: path.join(process.cwd(), '../api/types/nexus.ts'),
+    typegen: path.join(process.cwd(), '../api/src/typings/nexus.d.ts'),
     schema: path.join(process.cwd(), '../api/schema.graphql'),
   },
   prettierConfig: path.join(process.cwd(), '../../.prettierrc'),
