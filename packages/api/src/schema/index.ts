@@ -1,22 +1,17 @@
-import { GraphQLDateTime } from 'graphql-scalars'
-import { decorateType, makeSchema } from 'nexus'
+import { makeSchema } from 'nexus'
 import path from 'path'
 
 import * as checkout from './checkout'
 import * as objects from './objects'
+import * as scalars from './scalars'
 import * as user from './user'
-
-const DateTime = decorateType(GraphQLDateTime, {
-  sourceType: 'Date',
-  asNexusMethod: 'date',
-})
 
 export const schema = makeSchema({
   nonNullDefaults: {
     input: true,
     output: true,
   },
-  types: [DateTime, objects, user, checkout],
+  types: [scalars, objects, user, checkout],
   contextType: {
     module: path.join(process.cwd(), '../api/src/context.ts'),
     export: 'Context',
