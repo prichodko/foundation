@@ -21,6 +21,7 @@ import {
 import clsx from 'clsx'
 
 import { Navbar } from './components/navbar'
+import { useUserQuery } from './graphql/user'
 
 import type { Page } from 'next'
 
@@ -49,6 +50,12 @@ export const Homepage: Page = () => {
   const [checkboxValue, setCheckboxValue] = useState(false)
   const [switchValue, setSwitchValue] = useState(false)
   const [radioValue, setRadioValue] = useState('hello')
+
+  const [{ data: user }] = useUserQuery({
+    variables: {},
+  })
+
+  console.log({ user })
 
   return (
     <div className="mx-auto max-w-4xl">
