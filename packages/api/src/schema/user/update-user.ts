@@ -10,6 +10,9 @@ export const UpdateUser = mutationField('updateUser', {
       },
     }),
   },
+
+  authorize: (_parent, _args, ctx) => ctx.auth.user,
+
   async resolve(_root, { input }, ctx) {
     const user = await ctx.db.user.update({
       where: {

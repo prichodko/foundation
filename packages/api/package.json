@@ -21,12 +21,11 @@
     "@prisma/client": "^3.5.0",
     "apollo-server-errors": "^3.3.1",
     "apollo-server-micro": "^3.6.7",
-    "graphql-middleware": "6.0.9",
     "graphql-scalars": "^1.13.6",
-    "graphql-shield": "^7.5.0",
     "micro": "^9.3.4",
     "nexus": "^1.1.0",
-    "stripe": "^8.217.0"
+    "stripe": "^8.217.0",
+    "superstruct": "^0.15.4"
   },
   "devDependencies": {
     "@types/node": "^17.0.24",

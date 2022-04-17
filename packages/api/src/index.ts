@@ -1,9 +1,10 @@
-import { ApolloServer } from 'apollo-server-micro'
-import { applyMiddleware } from 'graphql-middleware'
+import { ApolloServer, UserInputError } from 'apollo-server-micro'
+import { getToken } from 'next-auth/jwt'
+import { StructError } from 'superstruct'
 
 import { env } from './config/env'
+import { createAuth } from './lib/auth'
 import { prisma } from './lib/prisma'
-import { permissions } from './permissions'
 import { schema } from './schema'
 
 import type { Context } from './context'
@@ -13,21 +14,41 @@ interface Options {
   req: NextApiRequest
 }
 
-const context = async ({}: Options): Promise<Context> => {
-  // const user = await prisma.user.findUnique({
-  //   where: {
-  //     // id: '',
-  //   },
-  // })
+const getUser = async (req: NextApiRequest): Promise<Context['user']> => {
+  const session = await getToken({ req, secret: env.auth.secret })
 
-  return { db: prisma, user: null }
+  if (!session) {
+    return null
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session.email!,
+    },
+  })
+
+  return user
+}
+
+const context = async ({ req }: Options): Promise<Context> => {
+  const user = await getUser(req)
+
+  const auth = createAuth(user)
+
+  return { db: prisma, user, auth }
 }
 
 export const server = new ApolloServer({
-  schema: applyMiddleware(schema, permissions),
+  schema,
   context,
   introspection: true,
+  formatError: error => {
+    if (error instanceof StructError) {
+      return new UserInputError(error.message, {
+        // path: error.path.join('.'),
+        // message: error.failures()[0].message,
+      })
+    }
+    return error
+  },
 })
-
-export { env, prisma }
-export * from './webhooks'

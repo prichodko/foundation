@@ -1,4 +1,5 @@
-import { makeSchema } from 'nexus'
+import { ForbiddenError } from 'apollo-server-errors'
+import { fieldAuthorizePlugin, makeSchema } from 'nexus'
 import path from 'path'
 
 import * as checkout from './checkout'
@@ -11,6 +12,13 @@ export const schema = makeSchema({
     input: true,
     output: true,
   },
+  plugins: [
+    fieldAuthorizePlugin({
+      formatError: () => {
+        return new ForbiddenError('Not Authorized')
+      },
+    }),
+  ],
   types: [scalars, objects, user, checkout],
   contextType: {
     module: path.join(process.cwd(), '../api/src/context.ts'),
