@@ -65,13 +65,13 @@ const AlertDialog = (props: Props) => {
       <Footer>
         <Button
           ref={cancelRef}
-          onPress={handleCancel}
+          onClick={handleCancel}
           variant="outline"
           disabled={loading}
         >
           {cancelLabel}
         </Button>
-        <Button variant={variant} onPress={handleAction} loading={loading}>
+        <Button variant={variant} onClick={handleAction} loading={loading}>
           {actionLabel}
         </Button>
       </Footer>

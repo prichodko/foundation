@@ -1,4 +1,4 @@
-import { cloneElement, useState } from 'react'
+import { useState } from 'react'
 
 import { Root, Trigger } from '@radix-ui/react-dropdown-menu'
 import {
@@ -43,9 +43,7 @@ const MenuTrigger = (props: Props) => {
 
   return (
     <Root open={open} onOpenChange={setOpen}>
-      <Trigger asChild>
-        {cloneElement(trigger, { onPress: () => setOpen(true) })}
-      </Trigger>
+      <Trigger asChild>{trigger}</Trigger>
       {content}
     </Root>
   )

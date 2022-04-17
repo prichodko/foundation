@@ -1,7 +1,6 @@
-import { styled, theme } from '../../config'
-import { BaseButton } from '../base-button'
+import { styled, theme } from '../config'
 
-export const Root = styled(BaseButton, {
+export const Root = styled('button', {
   fontSize: theme.fontSizes[12],
   fontWeight: theme.fontWeights[500],
   position: 'relative',

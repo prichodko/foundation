@@ -53,10 +53,10 @@ const Dialog = (props: Props) => {
         </Body>
       </Container>
       <Footer>
-        <Button onPress={close} variant="outline">
+        <Button onClick={close} variant="outline">
           {cancelLabel}
         </Button>
-        <Button onPress={handleAction}>{actionLabel}</Button>
+        <Button onClick={handleAction}>{actionLabel}</Button>
       </Footer>
     </Content>
   )
