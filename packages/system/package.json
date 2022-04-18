@@ -11,7 +11,8 @@
   },
   "sideEffects": false,
   "scripts": {
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
