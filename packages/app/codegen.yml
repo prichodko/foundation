@@ -1,12 +1,12 @@
 overwrite: true
-schema: "../api/src/schema.graphql"
+schema: "../api/schema.graphql"
 documents: "src/**/*.gql"
 hooks:
   afterAllFileWrite:
-    - eslint --fix
+    - next lint --fix --file
     - prettier --write
 generates:
-  src/types/graphql.ts:
+  src/types/graphql.d.ts:
     plugins:
       - "typescript"
       - 'typescript-urql-graphcache'
@@ -25,7 +25,7 @@ generates:
     preset: near-operation-file
     presetConfig:
       extension: .tsx
-      baseTypesPath: types/graphql.ts
+      baseTypesPath: types/graphql.d.ts
     plugins:
       - "typescript-operations"
       - "typescript-urql"

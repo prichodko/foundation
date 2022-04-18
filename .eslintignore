@@ -1,3 +1,4 @@
 **/dist
 **/node_modules
-**/types/nexus.d.ts
+packages/api/src/types/nexus.d.ts
+packages/app/src/types/graphql.d.ts

@@ -1,7 +1,7 @@
 import { gql } from 'urql'
 import * as Urql from 'urql'
 
-import type * as Types from '../../../types/graphql'
+import type * as Types from '../../../types/graphql.d'
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 export type UserQueryVariables = Types.Exact<{ [key: string]: never }>
