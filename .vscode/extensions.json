@@ -3,6 +3,9 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
-    "heybourn.headwind"
+    "ms-playwright.playwright",
+    "mikestead.dotenv",
+    "graphql.vscode-graphql",
+    "Prisma.prisma"
   ]
 }

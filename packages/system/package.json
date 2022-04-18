@@ -1,0 +1,45 @@
+{
+  "name": "@example/system",
+  "private": true,
+  "version": "1.0.0",
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<REPO>/<NAME>.git",
+    "directory": "packages/system"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^2.8.8",
+    "@radix-ui/colors": "^0.1.8",
+    "@radix-ui/react-accessible-icon": "^0.1.4",
+    "@radix-ui/react-alert-dialog": "^0.1.7",
+    "@radix-ui/react-checkbox": "^0.1.5",
+    "@radix-ui/react-compose-refs": "^0.1.0",
+    "@radix-ui/react-dialog": "^0.1.7",
+    "@radix-ui/react-dropdown-menu": "^0.1.6",
+    "@radix-ui/react-icons": "^1.1.0",
+    "@radix-ui/react-id": "^0.1.5",
+    "@radix-ui/react-label": "^0.1.5",
+    "@radix-ui/react-popover": "^0.1.6",
+    "@radix-ui/react-radio-group": "^0.1.5",
+    "@radix-ui/react-switch": "^0.1.5",
+    "@radix-ui/react-tabs": "^0.1.5",
+    "@radix-ui/react-toggle-group": "^0.1.5",
+    "@radix-ui/react-visually-hidden": "^0.1.4",
+    "@react-aria/button": "^3.4.3",
+    "@stitches/react": "^1.2.7",
+    "react-hook-form": "^7.30.0"
+  },
+  "devDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8 || ^17.0 || ^18.0"
+  }
+}

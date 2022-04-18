@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "allowJs": true
+  },
+  "include": ["next-env.d.ts", "next.config.js", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}

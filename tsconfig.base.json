@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "declaration": true,
+    "declarationMap": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    // "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "downlevelIteration": true,
+    "noImplicitReturns": true,
+    // "noUncheckedIndexedAccess": true,
+    // "noPropertyAccessFromIndexSignature": true /* Enforces using indexed accessors for keys declared using an indexed type */,
+    "skipLibCheck": true,
+    "pretty": true
+  }
+}
