@@ -7,7 +7,7 @@ module.exports = {
   reactOptions: {
     fastRefresh: true,
   },
-  stories: ['../src'],
+  stories: ['../src/**/*.stories.tsx'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -28,22 +28,7 @@ module.exports = {
       modules: [path.resolve(__dirname, '..'), 'node_modules'],
       alias: {
         ...config.resolve.alias,
-        ...convertTsConfigPathsToWebpackAliases(),
       },
     },
   }),
-}
-
-function convertTsConfigPathsToWebpackAliases() {
-  const rootDir = path.resolve(__dirname, '../').replace('/*', '')
-  const tsconfig = require('../tsconfig.json')
-  const tsconfigPaths = Object.entries(tsconfig.compilerOptions.paths)
-
-  return tsconfigPaths.reduce((aliases, [realPath, mappedPath]) => {
-    const trimmedRealPath = realPath.replace('/*', '')
-    const trimmedMappedPath = mappedPath[0].replace('/*', '')
-
-    aliases[trimmedRealPath] = path.join(rootDir, trimmedMappedPath)
-    return aliases
-  }, {})
 }

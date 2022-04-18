@@ -11,7 +11,9 @@
   },
   "sideEffects": false,
   "scripts": {
-    "type-check": "tsc",
+    "dev": "yarn storybook",
+    "storybook": "start-storybook -p 3001",
+    "storybook:build": "build-storybook",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
@@ -38,7 +40,12 @@
   },
   "devDependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "@storybook/addon-actions": "^6.4.0",
+    "@storybook/addon-essentials": "^6.4.0",
+    "@storybook/addon-links": "^6.4.0",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/react": "^6.4.0"
   },
   "peerDependencies": {
     "react": "^16.8 || ^17.0 || ^18.0"
