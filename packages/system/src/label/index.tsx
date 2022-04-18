@@ -1,8 +1,7 @@
-import type { ReactNode } from 'react'
-
 import { Text } from '../text'
-
 import { Root } from './style'
+
+import type { ReactNode } from 'react'
 
 interface Props {
   label: React.ReactNode

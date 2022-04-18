@@ -1,10 +1,10 @@
 import { useId } from '@radix-ui/react-id'
 
-import type { FormFieldProps } from '../form'
 import { useField } from '../form'
 import { Label } from '../label'
+import { Indicator, Item, Root } from './style'
 
-import { Root, Item, Indicator } from './style'
+import type { FormFieldProps } from '../form'
 
 interface Props extends FormFieldProps {
   value?: string

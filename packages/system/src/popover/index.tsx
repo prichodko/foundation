@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-import type { PopoverContentProps } from '@radix-ui/react-popover'
 import { Root, Trigger } from '@radix-ui/react-popover'
 
 import { Content } from './style'
+
+import type { PopoverContentProps } from '@radix-ui/react-popover'
 
 interface TriggerProps {
   children: [React.ReactElement, React.ReactElement]
@@ -24,7 +25,7 @@ const PopoverTrigger = (props: TriggerProps) => {
   )
 }
 
-interface PopoverProps extends PopoverContentProps {}
+type PopoverProps = PopoverContentProps
 
 const Popover = (props: PopoverProps) => {
   const { children, ...contentProps } = props
@@ -38,4 +39,4 @@ const Popover = (props: PopoverProps) => {
   )
 }
 
-export { PopoverTrigger, Popover }
+export { Popover, PopoverTrigger }

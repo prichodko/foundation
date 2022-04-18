@@ -1,16 +1,16 @@
 import { forwardRef } from 'react'
-import type { Ref } from 'react'
 
 import { composeRefs } from '@radix-ui/react-compose-refs'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { useId } from '@radix-ui/react-id'
 
-import type { FieldProps } from '../field'
 import { Field } from '../field'
-import type { FormFieldProps } from '../form'
 import { useField } from '../form'
-
 import { Trigger } from './style'
+
+import type { FieldProps } from '../field'
+import type { FormFieldProps } from '../form'
+import type { Ref } from 'react'
 
 interface Props extends FieldProps, FormFieldProps {
   children: React.ReactElement[]
