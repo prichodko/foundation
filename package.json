@@ -7,8 +7,8 @@
     "dev": "turbo run dev --no-cache --parallel --continue",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "type-check": "turbo run type-check",
     "clean": "turbo run clean && rm -rf node_modules",
-    "type-check": "tsc",
     "format": "prettier --write 'packages/**/*.{ts,tsx,gql,css,json,md,mdx,html}'",
     "prepare": "husky install"
   },

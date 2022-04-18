@@ -10,6 +10,9 @@
     "directory": "packages/system"
   },
   "sideEffects": false,
+  "scripts": {
+    "type-check": "tsc"
+  },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
     "@radix-ui/colors": "^0.1.8",

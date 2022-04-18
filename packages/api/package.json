@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
     "reflect": "NEXUS_REFLECTION=true ts-node src/index.ts",
+    "type-check": "tsc",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio"
