@@ -14,7 +14,7 @@
     "dev": "yarn storybook",
     "storybook": "start-storybook -p 3001",
     "storybook:build": "build-storybook",
-    "type-check": "tsc"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
