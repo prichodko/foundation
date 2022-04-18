@@ -5,7 +5,8 @@
     "import",
     "simple-import-sort",
     "react",
-    "jsx-a11y"
+    "jsx-a11y",
+    "testing-library"
   ],
   "extends": [
     "eslint:recommended",
@@ -62,6 +63,11 @@
     "import/no-named-as-default-member": "error",
     "import/no-duplicates": "error",
 
+    "eslint-comments/disable-enable-pair": [
+      "error",
+      { "allowWholeFile": true }
+    ],
+
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/consistent-type-imports": [
       1,
@@ -82,5 +88,15 @@
     //     }
     //   }
     // }
-  }
+  },
+  "overrides": [
+    // Only uses Testing Library lint rules in test files
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ]
 }

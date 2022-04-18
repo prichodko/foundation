@@ -14,6 +14,8 @@
     "generate": "graphql-codegen --config codegen.yml",
     "type-check": "tsc",
     "lint": "next lint",
+    "test": "jest --watch",
+    "test:ci": "jest --ci",
     "test:e2e": "playwright test",
     "analyze": "ANALYZE=true yarn build",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
